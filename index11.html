@@ -26,6 +26,50 @@
     </style>
 </head>
 <body>
+
+<div style="margin-bottom: 20px;">
+<label><input checked="" id="mitCheckbox" type="checkbox"/> MIT</label>
+<label><input checked="" id="wiredCheckbox" type="checkbox"/> Wired</label>
+<label><input checked="" id="techcrunchCheckbox" type="checkbox"/> TechCrunch</label>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mitCheckbox = document.getElementById("mitCheckbox");
+        const wiredCheckbox = document.getElementById("wiredCheckbox");
+        const techcrunchCheckbox = document.getElementById("techcrunchCheckbox");
+
+        function filterArticles() {
+            const articles = document.querySelectorAll(".news-item");
+            articles.forEach(article => {
+                const headline = article.querySelector(".headline");
+                const text = headline.textContent.toLowerCase();
+
+                const isMIT = text.includes("mit:");
+                const isWired = text.includes("wired:");
+                const isTechCrunch = text.includes("techcrunch:");
+
+                const showMIT = mitCheckbox.checked;
+                const showWired = wiredCheckbox.checked;
+                const showTechCrunch = techcrunchCheckbox.checked;
+
+                if ((isMIT && !showMIT) ||
+                    (isWired && !showWired) ||
+                    (isTechCrunch && !showTechCrunch)) {
+                    article.style.display = "none";
+                } else {
+                    article.style.display = "";
+                }
+            });
+        }
+
+        mitCheckbox.addEventListener("change", filterArticles);
+        wiredCheckbox.addEventListener("change", filterArticles);
+        techcrunchCheckbox.addEventListener("change", filterArticles);
+
+        filterArticles(); // initial filtering
+    });
+</script>
+
     <div class="container">
 
     <div class="news-item">
