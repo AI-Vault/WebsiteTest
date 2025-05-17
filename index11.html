@@ -31,12 +31,14 @@
 <label><input checked="" id="mitCheckbox" type="checkbox"/> MIT</label>
 <label><input checked="" id="wiredCheckbox" type="checkbox"/> Wired</label>
 <label><input checked="" id="techcrunchCheckbox" type="checkbox"/> TechCrunch</label>
+<label><input checked="" id="guardianCheckbox" type="checkbox"/> theGuardian</label>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const mitCheckbox = document.getElementById("mitCheckbox");
         const wiredCheckbox = document.getElementById("wiredCheckbox");
         const techcrunchCheckbox = document.getElementById("techcrunchCheckbox");
+        const guardianCheckbox = document.getElementById("guardianCheckbox");
 
         function filterArticles() {
             const articles = document.querySelectorAll(".news-item");
@@ -47,14 +49,17 @@
                 const isMIT = text.includes("mit:");
                 const isWired = text.includes("wired:");
                 const isTechCrunch = text.includes("techcrunch:");
+                const isGuardian = text.includes("the guardian:");
 
                 const showMIT = mitCheckbox.checked;
                 const showWired = wiredCheckbox.checked;
                 const showTechCrunch = techcrunchCheckbox.checked;
+                const showGuardian = guardianCheckbox.checked;
 
                 if ((isMIT && !showMIT) ||
                     (isWired && !showWired) ||
-                    (isTechCrunch && !showTechCrunch)) {
+                    (isTechCrunch && !showTechCrunch) ||
+                    (isGuardian && !showGuardian)) {
                     article.style.display = "none";
                 } else {
                     article.style.display = "";
@@ -65,6 +70,7 @@
         mitCheckbox.addEventListener("change", filterArticles);
         wiredCheckbox.addEventListener("change", filterArticles);
         techcrunchCheckbox.addEventListener("change", filterArticles);
+        guardianCheckbox.addEventListener("change", filterArticles);
 
         filterArticles(); // initial filtering
     });
