@@ -1,37 +1,49 @@
-# Toekomst van fotonische chips ligt (mede) in handen van het Eindhovense SMART Photonics
+# 1.Toekomst van fotonische chips ligt (mede) in handen van het Eindhovense SMART Photonics
 Views: 98 (2025-05-07) [link](https://www.youtube.com/watch?v=d8wIAQTBiQM)
 
 
- ## Inleiding
-In deze aflevering van de podcast bespreken de hosts Daniel en Ben het bedrijf Smart Photonics en de opkomende technologie van fotonica. Ze hebben Johan Veenster, een belangrijke speler binnen het bedrijf, te gast en behandelen de relevantie van Smart Photonics voor de toekomst van technologie in Nederland en de wereld.
+ In de aflevering van De Technoloog 441 zijn presentatoren Daniel en Ben in gesprek met Johan Veenster van Smart Photonics. De aflevering behandelt een aantal onderwerpen rondom de ontwikkelingen en de impact van fotonische chips.
 
-## Wat is Smart Photonics?
-Smart Photonics is een Nederlands bedrijf dat chips produceert die werken op basis van licht (fotonen) in plaats van elektronen. Deze innovatieve benadering belooft energie-efficiëntere en snellere verbindingen te bieden voor de technologische sector. De chips worden geproduceerd via een complex proces dat 400 tot 450 stappen omvat en ongeveer 3 tot 6 maanden in beslag neemt.
+## Smart Photonics: Een Cruciaal Bedrijf
 
-## Geschiedenis van Fotonica en Smart Photonics
-- Smart Photonics is in 2012 opgericht, maar de ontwikkeling van optische componenten begon al bij Philips in de jaren '00.
-- De TU Eindhoven speelde ook een cruciale rol in het onderzoek naar geïntegreerde fotonica.
-- Smart Photonics richt zich vanaf het begin op het produceren van chips in plaats van zich alleen te concentreren op ontwerp en IP, wat een revolutionaire stap was binnen het huidige chip-ecosysteem.
+- **Wat is Smart Photonics?**  
+  Smart Photonics produceert chips gebaseerd op licht in plaats van elektronen. Dit brengt voordelen met zich mee zoals energiezuinigheid en snellere verbindingen.
 
-## Verschil tussen Fotonische en Elektronische Chips
-De basisprincipes van fotonische chips verschillen aanzienlijk van traditionele elektronische chips:
-- Elektronen zijn massief en vereisen spanning om te bewegen, terwijl fotonen geen massa hebben en zonder energieverlies van punt A naar B bewegen.
-- Fotonische chips kunnen veel meer informatie tegelijkertijd verwerken door gebruik te maken van verschillende kleuren licht, wat leidt tot snellere en meer efficiënte communicatie.
+- **Chips en Productieproces**  
+  Het proces om een chip te vervaardigen omvat 400 tot 450 verschillende stappen en kan 3 tot 6 maanden duren. Dit maakt de productie complex en uitdagend.
 
-## Toepassingen van Fotonica
-Toepassingen van fotonica zijn onder andere:
-- Het inzetten van fotonische chips in vliegtuigvleugels voor het meten van luchtstroom.
-- Gevoelige temperatuursensoren die veranderingen in het bloed detecteren na injecties.
-- Fotonica heeft grote potentie in datacenters, waar het gebruik van optische communicatie steeds gebruikelijker wordt.
+- **Fotonica vs. Elektronica**  
+  Johan legt het verschil uit tussen fotonische chips (op basis van licht) en traditionele elektronische chips (op basis van elektriciteit). Fotonische chips hebben andere eigenschappen en mogelijkheden, zoals de mogelijkheid om meerdere signalen tegelijk over te dragen.
 
-## Concurrentie en Marktpositie
-Smart Photonics opereert in een groeiende markt, waar steeds meer grote bedrijven interesse tonen in fotonica-technologie. Ondanks de relatief kleine schaal van Smart Photonics heeft het bedrijf de kans om een leidende rol te spelen door zijn monopolistische capaciteiten op het gebied van zowel actieve als passieve componenten op één chip.
+## Toepassingen van Fotonische Technologie
 
-## Innovatieve werkprocessen
-Smart Photonics maakt gebruik van een zogenaamde 'multiproject wafer service', waarbij klanten hun ontwerpen kunnen testen en delen van de kosten met andere gebruikers. Dit model maakt het eenvoudiger voor startups en kleinere bedrijven om toegang te krijgen tot fotonische technologie.
+- **Luchtstroommeting in Vliegtuigen**  
+  Een toepassing van fotonische chips is het meten van de luchtstroom over vliegtuigvleugels. Dit kan in real-time en met hoge precisie plaatsvinden, wat bijdraagt aan de veiligheid en efficiëntie.
 
-## Investeringen en Economische Context
-De behoefte aan kunstmatige chips in Europa groeit, wat leidt tot discussies over investeringen en ondersteuning van de fotonica-industrie. Johan benadrukt dat hoewel er in Nederland en Europa meer aandacht is voor de ontwikkeling van technologie, er nog steeds barrières zijn in termen van financiering en schaalvergroting in vergelijking met de VS en Azië.
+- **Medische Toepassingen**  
+  Een andere interessante toepassing is het gebruik van temperatuursensoren die in staat zijn om veranderingen in de temperatuur van bloed te meten na een injectie. Dit kan cruciale informatie bieden over de effectiviteit van medicijnen.
 
-## Conclusies
-De ontwikkeling van de fotonica-industrie in Nederland is essentieel voor de toekomst van technologie en industrie. Er is een duidelijke behoefte aan zowel samenwerking binnen de sector als met beleidsmakers om een sterk ecosysteem te creëren dat kan concurreren op wereldniveau. De innovatie en toepassing van fotonica zijn een belangrijke factor voor de economische groei en technologische vooruitgang in Europa.
+## Geopolitieke Impact op de Chipindustrie
+
+- **Geopolitieke Situatie**  
+  Johan wijst op de recente aandacht voor de chipindustrie als gevolg van geopolitieke spanning. De verplaatsing van chipproductie naar Azië in het verleden blijkt nu problematisch, en er is een groeiende behoefte om deze productie naar Europa terug te brengen.
+
+## Verwachtingen van de Markt
+
+- **Concurrentie**  
+  Smart Photonics concurreert met grote bedrijven zoals TSMC, die momenteel het grootste deel van de chipproductie in handen hebben. Johan vermeldt dat zijn bedrijf met verschillende materialen werkt die hen in staat stellen complexe chips te produceren.
+
+- **Vraag naar Fotonica**  
+  De vraag naar fotonische chips groeit, vooral in data centers. Bedrijven zoals Nvidia beginnen ook te investeren in optische communicatiesystemen, wat een grote kans biedt voor Smart.
+
+## Innovatie en Investering in Europa
+
+- **Investering in Technologie**  
+  Johan stelt dat ondanks de goede steun van de overheid, er sneller en consistenter beleid nodig is om innovatie te stimuleren, vooral bij scale-ups.
+
+- **Samenwerking in de Brainport Regio**  
+  De samenwerking binnen het ecosysteem van de Brainport regio is essentieel. Johan benadrukt hoe belangrijk partnerschappen zijn voor de ontwikkeling en implementatie van nieuwe technologieën.
+
+## Conclusie
+
+De aflevering ter sprake zal ingaan op de mogelijkheden van Smart Photonics en de bredere fotonica-industrie, met een sterke focus op samenwerking en innovatie die nodig zijn om te concurreren met grote spelers in de chipindustrie. De uitdaging ligt niet alleen in de technologie zelf, maar ook in het creëren van een ondersteunend ecosysteem in Europa om deze technologische vooruitgang te ondersteunen.
