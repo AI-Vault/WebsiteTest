@@ -1,41 +1,38 @@
-# Zoeken is voor het Nederlandse Elastic een miljardenbusiness geworden
+# 3.Zoeken is voor het Nederlandse Elastic een miljardenbusiness geworden
 Views: 151 (2025-04-17) [link](https://www.youtube.com/watch?v=f7JU0LX2hvo)
 
 
- De aflevering bevat een diepgaand gesprek met Jeroen Berkkamp over Elastic, een dataplatform dat bekend staat om zijn krachtige zoek- en analysemogelijkheden. De geschiedenis van Elastic, zijn ontwikkeling, en de impact van AI-tools worden besproken, evenals de uitdagingen en mogelijkheden in de huidige technologische en geopolitieke context.
+ ## Introductie
+In deze aflevering van Technologie 439 wordt er gesproken met Jeroen Berkkamp over Elastic, een toonaangevend Nederlands technologiebedrijf dat gespecialiseerd is in data-analyse en zoektechnologie. Er wordt ingegaan op de geschiedenis, de technologische oplossingen van de organisatie, en de rol van AI binnen hun producten.
 
-## Ontstaansgeschiedenis van Elastic
-Elastic is opgericht door Shai Ben Nun, die in Amsterdam woonde en de behoefte voelde aan een receptenapp met een krachtige zoekfunctie. Dit leidde tot het ontstaan van Elastic, dat zichzelf positioneert als het "Google voor bedrijven". Het bedrijf richt zich op data-analyse en zoektechnologie, met name voor organisaties die grote hoeveelheden ongestructureerde data beheren. Elastic is trots op zijn Nederlandse juridische entiteit en bedient een groot aantal overheidsklanten.
+## Ontstaan van Elastic
+Elastic werd opgericht door Shai Benhamou, die, uit persoonlijke motivatie om een receptenapp te ontwikkelen, begon met het maken van technologie voor het efficiënt doorzoeken van data. Elastic is sinds 2018 beursgenoteerd en heeft zich sindsdien internationaal gepositioneerd als een belangrijk speler in het data-analytics landschap. Hun oplossing is geïnspireerd op de dadatabases aan de frontlinie van grote datastromen.
 
-## Kernfunctionaliteiten van Elastic
-Het belangrijkste kenmerk van Elastic is de mogelijkheid om grote hoeveelheden data op een effectieve en efficiënte manier doorzoekbaar te maken. Dit wordt mogelijk gemaakt door data op te splitsen in kleine stukjes, wat leidt tot schaalbaarheid en snelheid. Klanten zoals Booking.com verwerken enorme hoeveelheden gegevens (tot 350 TB per dag) en maken gebruik van Elastic's technologie om hun data te beheren en doorzoeken.
+## Belangrijke Technologieën en Functionaliteiten
+Elastic biedt een schaalbaar data-analyse en zoekplatform. Belangrijke kenmerken zijn onder andere:
 
-## Het Belang van AI
-Hoewel Elastic geen large language model (LLM) ontwikkelt, speelt het een cruciale rol in de samenwerking met LLM's door de koppeling van privédata aan deze modellen mogelijk te maken. Dit helpt bij het verbeteren van de nauwkeurigheid van zoekopdrachten en het verhogen van de contextuele relevantie, wat "hallucinatie" van AI vermindert.
+- **Schaalbaarheid en Snelheid**: Elastic splitst data in kleine stukjes voor efficiënter zoeken en kan enorme hoeveelheden data in realtime verwerken, tot 350 TB per dag, zoals bij Booking.com.
+- **Zoekfunctionaliteiten**: Gericht op zowel gestructureerde als ongestructureerde data, waar het aanbieden van betekenisonafhankelijke zoekoplossingen centraal staat.
+- **Integratie met AI**: Hun technologie maakt gebruik van AI-modellen zoals Jennii, waarbij private data en large language models worden verbonden om de zoekresultaten te verrijken.
 
-## Specifieke Use Cases
-### Defensie
-Een voorbeeld van hoe Elastic wordt gebruikt in beveiliging kan worden gezien met de samenwerking met het ministerie van Defensie. Hier werd een semantische zoekomgeving gecreëerd voor interne data, zodat verschillende gebruikers bij Defensie betere, contextspecifieke zoekresultaten krijgen.
+### AI Implementaties
+Elastic positioneert zich als een "Search AI" bedrijf, en is actief in het ontwikkelen van oplossingen die gebruik maken van machine learning sinds 2017. Elk product kan voordelen bieden van AI door betere zoekresultaten te geven door semantic search. Aangezien AI steeds meer gebruikers aanspreekt, blijven bedrijven zoals Booking.com en Defensie de zoekfunctionaliteit van Elastic benutten voor hun specifieke databehoeften.
 
-### Retail
-Een retailer gebruikt Elastic om hun volledige ordermanagementproces te monitoren, waarbij ze de zoekfunctionaliteit van Elastic benutten voor het verkrijgen van inzichten en het optimaliseren van hun processen.
+## Gebruikscases
+### Booking.com
+Een van de belangrijkste klanten van Elastic, Booking.com, maakt gebruik van hun zoekfunctionaliteit om duizenden pagina's met relevante informatie te genereren. Ze gebruiken Elastic's vector database om de interactie van hun data met AI-modellen zoals OpenAI en Anthropic te optimaliseren.
 
-## Financieel Model en Open Source
-Elastic begon als open-source software, wat leidde tot gemeenschapsgestuurde productontwikkeling. Naarmate het bedrijf groeide, werd er een betaalde versie geïntroduceerd om de vereiste ondersteuning en ontwikkelingskosten te dekken. Klanten kunnen nu kiezen uit verschillende betaalde versies, afhankelijk van hun behoeften.
+### Ministerie van Defensie
+Defensie heeft samen met Elastic de "DEF GPT" applicatie ontwikkeld, een intern zoekplatform voor het doorzoeken van gevoelige documentatie. Dit toont aan hoe Elastic ook betrokken is bij veeleisende en kritische infrastructuurprojecten.
 
-## Geopolitieke Context en Soevereiniteit
-De samenwerking en de rol van Elastic worden beïnvloed door de geopolitieke situatie in Europa. Als Europees bedrijf biedt Elastic soevereiniteit aan klanten die zich zorgen maken over dataprivacy en -beveiliging, wat steeds belangrijker wordt in de huidige markt.
+## Geopolitieke Overwegingen
+Elastic benadrukt het belang van haar Nederlandse juridische entiteit, vooral in de context van de stijgende geopolitieke spanningen. De organisatie positioneert haar diensten als betrouwbaar voor overheidsinstellingen, wat de relevantie van lokale datagegevens versterkt.
 
-## Complexiteit van Data en Zoektechnologie
-Het zoeken naar data is complex, vooral met grote hoeveelheden ongestructureerde data. Een uitdaging ligt in het effectief integreren van verschillende datasilo's binnen organisaties, waardoor het cruciaal is om bestaande barrières en governance-structuren te overwinnen.
-
-## De Toekomst van Elastic
-Elastic blijft zich ontwikkelen met de nadruk op zoektechnologie en het creëren van eenvoudiger te begrijpen dataplatforms voor bedrijven. De groei in hun klantengroep komt voort uit het bouwen van op maat gemaakte zoekoplossingen die aansluiten bij specifieke bedrijfsbehoeften.
+## Toekomst en Huidige Trends
+Elastic is er zich van bewust dat de software-industrie onderhevig is aan constante verandering en dat er sprake is van snelle technologische ontwikkelingen. Het bedrijf ziet kansen in verdere groei, vooral binnen de AI-sector en bij het gebruik van open source software.
 
 ## Ethische Overwegingen
-Het gebruik van open-source technologieën roept ethische vragen op, zoals het risico dat technologie wordt ingezet voor schadelijke doeleinden. Elastic positioneert zich echter als een positieve kracht in de veiligheidsketen, vooral in industriële en defensiegerelateerde contexten.
+De discussie rond de ethiek van technologiegebruik, met name over de mogelijke inzet van hun open source software voor militaire doeleinden, is ook aangekaart. Jeroen benadrukte dat Elastic trots is op de rol die zij speelt in veiligheid en niet betrokken wil zijn bij destructieve toepassingen.
 
-## Slotopmerkingen
-Elastic is van groot belang voor zowel nationale als internationale klanten en speelt een sleutelrol in de digitaliseringsaspecten van bedrijven. Ondanks complexe uitdagingen in governance en data-integratie blijft Elastic trots op zijn Nederlandse roots en de impact die het heeft op de technologische wereld.
-
-De aflevering eindigt met een oproep tot meer bewustzijn en waardering voor Nederlandse technologiebedrijven zoals Elastic, die cruciaal zijn voor innovatie en ontwikkeling op het gebied van data-analyse en zoektechnologie.
+## Conclusie
+Elastic toont een sterke evolutie en animo voor duurzame technologie door zijn gebruik van innovatieve data-analyse en zoekoplossingen, gecombineerd met een solide ethische basis en de wens om een bijdrage te leveren aan belangrijke sectoren zoals overheid en defensie. De bespreking laat tevens zien dat er nog veel groeimogelijkheden zijn in de wereld van data-analytics en semantic search, met een heldere blik op AI en machine learning als belangrijke drijfveren voor de toekomst.
