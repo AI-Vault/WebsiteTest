@@ -75,51 +75,56 @@
 <body>
 
   <div class="controls">
-    <button id="loadAllBtn">📄 Laad alles</button>
+    <button id="prevBtn">⬅️ Vorige</button>
+    <button id="nextBtn">➡️ Volgende</button>
   </div>
 
-  <div id="status">Druk op 'Laad alles' om te beginnen.</div>
+  <div id="status">Pagina nog niet geladen.</div>
   <div class="container" id="content"></div>
 
   <script>
+    let index = 0;
     const contentDiv = document.getElementById('content');
     const statusDiv = document.getElementById('status');
-    const loadAllBtn = document.getElementById('loadAllBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
-    async function loadAllPages() {
-      contentDiv.innerHTML = '';
-      statusDiv.textContent = 'Laden...';
-      let i = 0;
-      let foundOne = false;
+    function loadPage(i) {
+      const filename = `index${i}.md`;
 
-      while (true) {
-        const filename = `index${i}.md`;
-        try {
-          const res = await fetch(filename);
-          if (!res.ok) break;
-          const md = await res.text();
+      fetch(filename)
+        .then(res => {
+          if (!res.ok) throw new Error('Niet gevonden');
+          return res.text();
+        })
+        .then(md => {
           const html = marked.parse(md);
           const item = document.createElement('div');
           item.className = 'news-item';
           item.innerHTML = html;
+          contentDiv.innerHTML = '';  // leegmaken bij paginawissel
           contentDiv.appendChild(item);
-          i++;
-          foundOne = true;
-        } catch (err) {
-          break;
-        }
-      }
-
-      if (foundOne) {
-        statusDiv.textContent = `Toont ${i} items.`;
-      } else {
-        statusDiv.textContent = 'Geen index-bestanden gevonden.';
-      }
-
-      loadAllBtn.disabled = true;
+          statusDiv.textContent = `Toont: ${filename}`;
+          index = i;
+          prevBtn.disabled = index <= 0;
+          nextBtn.disabled = false;
+        })
+        .catch(err => {
+          statusDiv.textContent = `Einde bereikt: ${filename} bestaat niet.`;
+          nextBtn.disabled = true;
+        });
     }
 
-    loadAllBtn.addEventListener('click', loadAllPages);
+    nextBtn.addEventListener('click', () => {
+      loadPage(index + 1);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (index > 0) loadPage(index - 1);
+    });
+
+    // Start bij index0.md
+    loadPage(0);
   </script>
 
 </body>
