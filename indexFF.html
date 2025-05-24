@@ -55,14 +55,12 @@
     .news-item h4, 
     .news-item h5, 
     .news-item h6 {
-      font-size: 1.1rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem;
     }
 
     .news-item p, 
     .news-item li {
-      font-size: 1.1rem;
       margin-bottom: 1rem;
     }
 
@@ -75,23 +73,25 @@
 <body>
 
   <div class="controls">
-    <button id="loadAllBtn">📄 Laad alles</button>
+    <button id="prevBtn">← Previous</button>
+    <button id="nextBtn">Next →</button>
   </div>
 
-  <div id="status">Druk op 'Laad alles' om te beginnen.</div>
+  <div id="status">Laden...</div>
   <div class="container" id="content"></div>
 
   <script>
     const contentDiv = document.getElementById('content');
     const statusDiv = document.getElementById('status');
-    const loadAllBtn = document.getElementById('loadAllBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-    async function loadAllPages() {
-      contentDiv.innerHTML = '';
-      statusDiv.textContent = 'Laden...';
+    let allMarkdown = [];
+    let currentIndex = 0;
+    const step = 1;
+
+    async function fetchAllMarkdown() {
       let i = 0;
-      let foundOne = false;
-
       while (true) {
         const filename = `index${i}.md`;
         try {
@@ -99,27 +99,51 @@
           if (!res.ok) break;
           const md = await res.text();
           const html = marked.parse(md);
-          const item = document.createElement('div');
-          item.className = 'news-item';
-          item.innerHTML = html;
-          contentDiv.appendChild(item);
+          allMarkdown.push(html);
           i++;
-          foundOne = true;
         } catch (err) {
           break;
         }
       }
-
-      if (foundOne) {
-        statusDiv.textContent = `Toont ${i} items.`;
-      } else {
+      if (allMarkdown.length === 0) {
         statusDiv.textContent = 'Geen index-bestanden gevonden.';
+      } else {
+        statusDiv.textContent = `Er zijn ${allMarkdown.length} items geladen.`;
+        renderItems();
       }
-
-      loadAllBtn.disabled = true;
     }
 
-    loadAllBtn.addEventListener('click', loadAllPages);
+    function renderItems() {
+      contentDiv.innerHTML = '';
+      const start = Math.max(0, currentIndex);
+      const end = Math.min(allMarkdown.length, currentIndex + 2);
+      for (let i = start; i < end; i++) {
+        const item = document.createElement('div');
+        item.className = 'news-item';
+        item.innerHTML = allMarkdown[i];
+        contentDiv.appendChild(item);
+      }
+
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex + 2 >= allMarkdown.length;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex -= step;
+        renderItems();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex + 2 < allMarkdown.length) {
+        currentIndex += step;
+        renderItems();
+      }
+    });
+
+    // Automatisch laden bij openen
+    fetchAllMarkdown();
   </script>
 
 </body>
