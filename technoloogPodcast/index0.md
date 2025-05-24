@@ -1,5 +1,5 @@
 ## Overview
-In this discussion, Jelle Prins, an AI guru and co-founder of Cradle, explains the transformative potential of AI agents in automating workflow processes. The conversation touches on various use cases, advancements in AI technology, the shortcomings of current tools, and the future implications of AI on industries.
+In this discussion, Jelle Prins, an AI  guru and co-founder of Cradle, explains the transformative potential of AI agents in automating workflow processes. The conversation touches on various use cases, advancements in AI technology, the shortcomings of current tools, and the future implications of AI on industries.
 
 ## AI Agents vs. Traditional Tools
 AI agents represent a significant evolution from traditional large language models (LLMs) and chatbots. While chatbots provide simple interaction, AI agents can autonomously perform tasks across platforms, such as sending emails, writing code, and analyzing results. They are capable of making decisions based on initial prompts and can self-assess the outputs they generate, enhancing efficiency and reducing manual input for users.
