@@ -2,40 +2,20 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Markdown Navigator</title>
+  <title>Markdown Nieuwsweergave</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
+      background-color: #FAF9F6;
       font-family: Georgia, serif;
-      color: #111;
-      background-color: #fff;
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-      line-height: 1.6;
+      margin: 20px;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin: 1rem 0 0.5rem;
+    .controls {
+      margin-bottom: 20px;
     }
 
-    p, li {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-
-    a {
-      color: #0000EE;
-      text-decoration: underline;
-    }
-
-    .nav-buttons {
-      margin-bottom: 2rem;
-    }
-
-    button {
+    .controls button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
       margin-right: 1rem;
@@ -45,27 +25,62 @@
       font-family: sans-serif;
     }
 
-    button:disabled {
+    .controls button:disabled {
       background-color: #ddd;
       cursor: not-allowed;
     }
 
     #status {
-      margin-bottom: 1.5rem;
+      margin-bottom: 20px;
       color: #666;
       font-style: italic;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .news-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .news-item h1, 
+    .news-item h2, 
+    .news-item h3, 
+    .news-item h4, 
+    .news-item h5, 
+    .news-item h6 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .news-item p, 
+    .news-item li {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .news-item a {
+      color: #0000EE;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="nav-buttons">
+  <div class="controls">
     <button id="prevBtn">⬅️ Vorige</button>
     <button id="nextBtn">➡️ Volgende</button>
   </div>
 
   <div id="status">Pagina nog niet geladen.</div>
-  <div id="content">...</div>
+  <div class="container" id="content"></div>
 
   <script>
     let index = 0;
@@ -84,21 +99,19 @@
         })
         .then(md => {
           const html = marked.parse(md);
-          contentDiv.innerHTML = html;
+          const item = document.createElement('div');
+          item.className = 'news-item';
+          item.innerHTML = html;
+          contentDiv.innerHTML = '';  // leegmaken bij paginawissel
+          contentDiv.appendChild(item);
           statusDiv.textContent = `Toont: ${filename}`;
           index = i;
-
-          // Knoppenstatus aanpassen
           prevBtn.disabled = index <= 0;
           nextBtn.disabled = false;
         })
         .catch(err => {
-          statusDiv.textContent = `Bestand ${filename} bestaat niet.`;
-          if (i > index) {
-            nextBtn.disabled = true;
-          } else {
-            prevBtn.disabled = true;
-          }
+          statusDiv.textContent = `Einde bereikt: ${filename} bestaat niet.`;
+          nextBtn.disabled = true;
         });
     }
 
@@ -107,9 +120,7 @@
     });
 
     prevBtn.addEventListener('click', () => {
-      if (index > 0) {
-        loadPage(index - 1);
-      }
+      if (index > 0) loadPage(index - 1);
     });
 
     // Start bij index0.md
