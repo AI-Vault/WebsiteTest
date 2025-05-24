@@ -1,52 +1,69 @@
-# De tien grote techverhalen van 2024 volgens Ben van der Burg
+# 14. De tien grote techverhalen van 2024 volgens Ben van der Burg
 Views: 137 (2025-01-02) [link](https://www.youtube.com/watch?v=DgQ3Xx2xGws)
 
 
- ## Inleiding en Toelichting
-De aflevering begint met een informele conversatie tussen host Mark en redacteur Daniel over het nieuwe jaar en vuurwerk. Hun gesprek gaat snel over de trends in de technologie van het afgelopen jaar, waarbij ze de belangrijkste onderwerpen en afleveringen uit de podcast bespreken.
+ ## Introductie en Aftrap
+De aflevering begint met een terugblik op het afgelopen jaar, inclusief persoonlijke ervaringen met vuurwerk tijdens de jaarwisseling. De hosts, Mark en Daniel, zijn van plan om de tien belangrijkste technologische trends van het jaar te bespreken, gebaseerd op eerdere afleveringen en actuele ontwikkelingen in de technologie.
 
-## Belangrijke Trends in Technologie
-### Afhankelijkheid van de VS en China
-De aflevering behandeld als een belangrijk punt de afhankelijkheid van Europa van de VS en China op technologiegebied. Dit probleem is besproken in eerdere afleveringen, waar experts als Bert Huber hebben gewezen op de noodzaak voor Europa om digitaal soeverein en autonoom te worden.
+## Europa's Technologieafhankelijkheid
+Een van de eerste besproken onderwerpen is de afhankelijkheid van Europa van technologie uit de VS en China. Dit probleem werd aan het begin van het jaar besproken en is gedurende het jaar prominent in het nieuws geweest. De discussie benadrukt dat Europa digitale soevereiniteit en autonomie nodig heeft om competitief te blijven. 
 
-### De Technologie Stapel
-Daniel legt uit dat Europa een sterke basis heeft in het produceren van grondstoffen en machines (zoals ASML), maar achterloopt op andere gebieden zoals chipproductie en cloud diensten. Dit legt de nadruk op de noodzaak om te investeren in diepere technologieën zoals quantumcomputing en de toekomst van AI.
+### Kernpunten
+- Afhankelijkheid van Amerikaanse en Chinese technologie.
+- Noodzaak voor fundamentele discussie over digitale onafhankelijkheid.
+- Belang van Europese initiatieven en software ontwikkeling.
 
-### Cloud Diensten
-Er is een kritische discussie over de afhankelijkheid van EU-landen van Amerikaanse cloud-diensten zoals AWS en Microsoft. Het idee komt naar voren dat, hoewel deze diensten comfortabel en efficiënt zijn gebleken, ze ook problematisch zijn gezien de geopolitieke context.
+## Cloud-Diensten en Competitie
+Er wordt ook ingegaan op de cloud-infrastructuur en de dominantie van Amerikaanse bedrijven zoals AWS. De hosts bespreken de uitdagingen die Europese bedrijven ondervinden bij het concurreren met deze giganten en benadrukken dat er meer steun vanuit de overheid nodig is voor lokale initiatieven. 
 
-### Europese Autonomie
-De podcast benadrukt de rol van gemeenten in de afhankelijkheid van technologieën, zoals cloud-oplossingen, en de noodzaak voor Europese alternatieven om strategische autonomie te waarborgen.
+### Belangrijkste Use Cases
+- Overheidssystemen die gezamenlijk worden ontwikkeld door meerdere gemeentes.
+- Het gestroomlijnde gebruik van lokale softwareoplossingen versus Amerikaanse alternatieven.
 
-## Innovaties en Technologie Implementaties
-### ASML en Chip Technologie
-Het gesprek gaat verder over ASML en hun rol in de chiptechnologie. De CEO's van grote technologiebedrijven worden geprezen om hun technische kennis en betrokkenheid bij hun producten.
+## De Aanpak van Legacy Software
+De aflevering benadrukt het idee dat legacy software vaak als verouderd wordt gezien, terwijl het in veel gevallen stabiel en betrouwbaar is. Er wordt gepleit voor een meer subtiele benadering van oudere systemen in plaats van ze onmiddellijk te vervangen.
 
-### AI en Advertenties
-Mark noemt het gebruik van AI bij bedrijven zoals Meta (voorheen Facebook), die honderd miljard dollar investeren in het ontwikkelen van AI-technologieën. Dit werd opgemerkt als toekomstbestendig en essentieel voor hun advertentiemodel.
+### Kernideeën
+- Stabiliteit versus innovatie.
+- Het belang van zorgvuldig beheer van bestaande systemen.
 
-## Ethiek in Technologie
-De aflevering behandelt ook ethische overwegingen rondom AI en technologie. Het gebruik van sociale media in de politieke ruimte komt ter sprake, evenals de manier waarop desinformatie het democratische proces beïnvloedt. 
+## AI en Ethiek
+Er komt een breed scala aan ethische vraagstukken naar voren rondom AI, met aandacht voor de invloed op democratie en desinformatie. De gasten reflecteren op de rol van sociale media, en hoe deze platforms conversaties hebben beïnvloed.
 
-## Toekomstige Technologieën
-### Virtual Reality en Augmented Reality
-Een discussie over de verwachtingen voor virtual en augmented reality, waarbij de Apple Vision Pro en andere brillen worden genoemd. Er wordt gespeculeerd over de toepassingen in werk en entertainment.
+### Belangrijke Probleemstellingen
+- De verantwoordelijkheid van techbedrijven en sociale media.
+- Impact van algoritmen op publieke opinie.
 
-### De Rol van AI in Creatieve Sectoren
-De impact van AI op creativiteit en innovatie wordt besproken, met de vraag of machines ooit creatiever zullen worden dan mensen. Dit was een onderwerp dat ook tijdens eerdere afleveringen in de technoloog aan bod is gekomen.
+## Virtual Reality en Immersive Experiences
+Een belangrijke trend die besproken wordt is de ontwikkeling van augmented en virtual reality. De Apple Vision Pro en andere apparaten worden genoemd als hoopvolle innovaties, maar er wordt ook sceptisch gekeken naar hun impact en nut in het dagelijks leven.
 
-## Conclusie
-De aflevering eindigt met reflectie op de besproken trends en technologieën, en de rol van innovatie in het bevorderen van Europese autonomie. Er is een oproep tot meer betrokkenheid met Europese technologieën en het vinden van oplossingen voor huidige afhankelijkheden.
+### Use Cases
+- Gezondheidszorg en onderwijs als voorname afnemers van VR-technologie.
+- Directe toepassingsmogelijkheden in industriële omgevingen.
 
-## Sleutelonderwerpen
-- Europese afhankelijkheid van VS en China
-- Noodzaak voor strategische autonomie in technologie
-- Rol van cloud-diensten en uitdagingen voor gemeenten
-- Ethiek en AI in de politieke ruimte
-- Innovaties in VR en AR
+## Toekomst van Blockchain en Cryptocurrencies
+De aflevering gaat verder naar Bitcoin en cryptocurrencies, met een discussie over hun functie in de moderne economie en de mogelijkheid van adoptie door traditionele financiële instellingen.
 
-## AI Nieuws
-Mark en Daniel bespreken recente innovaties binnen de AI-sector, vooral gericht op marketing en advertentie-optimalisatie door bedrijven zoals Meta, en hoe deze innovaties de toekomst van de reclame-industrie vormgeven.
+### Hoofdpunten
+- "Digitaal goud" en de waardepropositie van Bitcoin.
+- De rol van decentralisatie in financiële systemen.
 
-## Eindopmerkingen
-De dynamiek tussen de hosts en de diepgang van de discussies maken deze aflevering tot een waardevolle reflectie op de huidige technologische landschap en de toekomst ervan.
+## Nieuwe Technologieën en Innovaties
+Er worden diverse innovatieve technologieën besproken die opkomen in Nederland, zoals slimme fabrieken en akoestische cameratechnologie. Het belang van schaalvergroting en samenwerking voor de groei van deze technologieën wordt benadrukt.
+
+### Gebruikscases
+- Toepassingen in productie en asset management.
+- Startups die innovatieve technologieën ontwikkelen en implementeren.
+
+## De Impact van Big Tech
+De aflevering sluit af met reflecties over de rol van big tech bedrijven en hun invloed op de democratie en samenleving. De discussies gaan verder op hoe huidige technologieën invloed uitoefenen op de publieke opinie en ons dagelijks functioneren.
+
+### Belangrijke Reflecties
+- Het belang van 'informatie vrijgegeven' technologie voor de toekomst.
+- Het debat over de verantwoordelijkheid van grote technologiebedrijven in de ontwikkeling van ethische richtlijnen. 
+
+## Afsluiting en Vooruitblik
+De hosts verkennen de impact van recente ontwikkelingen en kijken vooruit naar de toekomst van technologie, met in gedachten hoe de sector verandert en wat dat betekent voor Europese landen. 
+
+### Eindconclusie
+Er wordt een sterke noodzaak onderstreept voor gezamenlijke inspanningen in Europa om technologie onafhankelijk en autonoom ontwikkelingsprofielen te creëren, met aandacht voor ethiek in tech en de impact op de samenleving.
