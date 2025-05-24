@@ -1,4 +1,4 @@
-# 3.Zoeken is voor het Nederlandse Elastic een miljardenbusiness geworden
+# 3. Zoeken is voor het Nederlandse Elastic een miljardenbusiness geworden
 Views: 151 (2025-04-17) [link](https://www.youtube.com/watch?v=f7JU0LX2hvo)
 
 
