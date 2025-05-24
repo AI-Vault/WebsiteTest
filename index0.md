@@ -1,4 +1,4 @@
-# AI Agents en hun Impact op Werkprocessen
+# AI Agents en hun Impact op Werkprocessen 0
 
 ## Aanwezigheid van AI Agents
 In deze aflevering van de podcast "De Technoloog" is Jelle Prins, co-founder van Cradle en AI-expert, te gast om het onderwerp AI agents te bespreken. AI agents, die workflows kunnen automatiseren, worden steeds relevanter en toegankelijker voor individuen en bedrijven.
