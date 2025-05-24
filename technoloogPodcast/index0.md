@@ -1,5 +1,6 @@
 # Hoe AI-agents de wereld veroveren en nu al het verschil maken
-Views: 1593 (2025-05-08) [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)
+Views: 1593 (2025-05-08) 
+[link](https://www.youtube.com/watch?v=1mK1CZ5d_io)
 
 ## Introductie tot AI Agents
 In deze aflevering van de podcast is Jelle Prins, AI expert en medeoprichter van Cradle, te gast. Het gesprek draait om AI agents en hun groeiende rol in workflows. Jelle deelt ervaringen waarmee hij zijn werkprocessen aanzienlijk heeft geoptimaliseerd, waaronder het automatiseren van e-mails en scripts met slechts een paar klikken.
