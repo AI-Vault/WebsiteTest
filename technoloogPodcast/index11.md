@@ -1,43 +1,39 @@
-# Hoe AI organisaties fundamenteel verandert – en wat jij ermee kunt doen
+# 11. Hoe AI organisaties fundamenteel verandert – en wat jij ermee kunt doen
 Views: 311 (2025-02-06) [link](https://www.youtube.com/watch?v=gIvmlMPjuG4)
 
 
  ## Inleiding
-Mark Beekhuis en gast Marco Derksen bespreken de implementatie van kunstmatige intelligentie (AI) binnen organisaties, met een focus op het onderscheid tussen digitale transformatie en AI-transformatie.
+Mark Beekhuis interviewt Marco Derksen over de implementatie en transformatie van kunstmatige intelligentie (AI) binnen organisaties. Het gesprek gaat in op de betekenis van digitale transformatie en hoe AI hierin kan functioneren als een katalysator.
 
 ## Digitale vs. AI-transformatie
-- **Digitale Transformatie**: Het optimaliseren van bestaande processen (digitalisering) versus fundamenteel anders organiseren en werken (digitale transformatie). Digitale transformatie is echter minder voorspelbaar.
+Marco maakt een duidelijk onderscheid tussen digitalisering en digitale transformatie. Digitalisering is het optimaliseren van bestaande processen, terwijl digitale transformatie fundamenteel andere manieren van organiseren en werken vereist. AI wordt niet alleen gezien als een hulpmiddel in de digitalisering, maar als een systeemtechnologie die digitale transformatie mogelijk maakt.
 
-- **AI als Catalysator**: AI wordt gezien als een systeemtechnologie die kan dienen als een katalysator voor digitale transformatie. Het maakt zowel automatisering mogelijk als het herstructureren van businessmodellen.
+## Praktische Voorbeelden
+Enkele praktische voorbeelden van AI-toepassingen worden besproken:
 
-## Voorbeelden van AI in Actie
-- **Zorgsector**: AI wordt gebruikt voor beeldanalyse, en er zijn onderzoeken die aantonen dat AI en radiologen samen betere resultaten behalen. Voorbeeld: AI-modellen voor het voorspellen van patiënten die niet opdagen bij afspraken.
+- **Zorgsector**: AI wordt gebruikt voor beeldanalyse in radiologie, waar het werkt ter versterking van de radioloog's beoordeling. De rol van AI kan de efficiëntie verhogen en sneller diagnoses mogelijk maken.
+  
+- **No-show voorspellingen**: In ziekenhuizen kunnen AI-modellen de kans voorspellen dat patiënten niet komen opdagen, wat de opkomst met 20% kan verbeteren.
 
-- **Retail**: Dynamische prijsstelling kan het businessmodel ingrijpend veranderen, wat als transformatie wordt gezien.
+- **Dynamic Pricing**: In de retail kan AI helpen bij het bepalen van prijsstrategieën, wat leidt tot nieuwe businessmodellen.
 
-- **Buitengewone Vooruitzichten**: Dirk Marquering van de UvA benadrukt dat veel onderzoeken nuance tussen AI's effectiviteit bij medische beeldvorming.
+## Transformatieproces
+Marco legt uit dat er geen universeel stappenplan voor transformatie bestaat omdat elke organisatie zijn eigen context heeft. Het proces van innovatie en implementatie omvat:
 
-## Transformatie en Innovatie
-- **Processen en Stappenplan**: Er bestaat geen universeel stappenplan voor AI-transformatie; elke organisatie moet casus-specifiek aanpakken. 
-- **Leiderschap**: Cruciaal in digitale transformatie; leiderschap moet niet alleen technologie aansteken, maar ook mensen en processen meepakken.
-- **Integraal Innovatieproces**: Van idee naar opschaling vereist duidelijke stappen, bekend als ‘appendix E’, om succesvolle innovaties duurzaam in te voeren.
+1. **Idee-generatie**: Het ontwikkelen van ideeën en concepten.
+2. **Pilot-fase**: Proberen van de ideeën in een kleinschalige setting.
+3. **Integratie**: Evalueren van piloten en het integreren in de bredere organisatie.
 
-## AI Geletterdheid en Ethiek
-- **AI Geletterdheid**: Het is essentieel dat medewerkers goed begrijpen hoe AI werkt en hoe het ethisch toegepast moet worden. Dit omvat voorlichting en training.
+De uitdaging ligt in betrokkenheid van alle stakeholders, van directie tot de medewerkers die de technologie uiteindelijk gebruiken.
 
-## Europese AI-Initiatieven
-- Er is behoefte aan meer Europese infrastructuur en de ontwikkeling van AI-modellen die ethisch verantwoord zijn. Voorbeelden zijn publiek-private samenwerkingen en de rol van het Knowledge project in Nederland.
+## AI Geletterdheid
+Een belangrijk aspect van de implementatie is AI-geletterdheid. Volgens de nieuwe EU-wetgeving is het essentieel dat alle medewerkers begrijpen wat AI is en hoe ze het op een ethische manier kunnen gebruiken. Dit vereist investeringen in training en onderwijs.
 
-## Vooruitzicht
-- **Vraagstuk van AI**: AI wordt zowel als een kans gezien voor efficiëntieverbeteringen, maar kan ook risico's met zich meebrengen. Het is belangrijk om AI als een hulpmiddel te beschouwen voor creativiteit en niet als een vervanging.
-- **Technologische Standaard**: Het gebrek aan consistente AI-implementatie en de afhankelijkheid van Amerikaanse en Chinese infrastructuren zijn thema's die tijdens de discussie terugkomen.
+## Europese Infrastructuur
+Marco benadrukt de noodzaak voor Europese infrastructuren voor AI, zoals open-source modellen en samenwerkingen. Hij pleit voor de ontwikkeling van Europese AI-technologieën ter ondersteuning van lokale organisaties, in tegenstelling tot volledige afhankelijkheid van Amerikaanse en Chinese systemen.
 
-## Slotgedachten
-De aflevering eindigt met de opmerking dat AI moet worden gebruikt om verder te transformeren in plaats van enkel efficiëntie te verhogen. Hierbij is het belangrijk om creatief te blijven en AI optimaal in te zetten als een aanvullend hulpmiddel bij menselijke creativiteit.
+## Creativiteit en AI
+Het gesprek eindigt met een discussie over de rol van AI in creatieve processen. Marco denkt dat AI kan helpen bij creatieve taken maar dat het essentieel is om de menselijke emoties en ervaringen te behouden in het werk. Hij moedigt creatieven aan om samen te werken met AI in plaats van het als een bedreiging te beschouwen.
 
-## AI Nieuws
-Er worden gedachten gedeeld over het gebruik van AI in de creatieve sector en de terughoudendheid van artiesten om AI te gebruiken in hun creatieve processen. De belangrijkheid van samenwerking tussen AI en menselijke creativiteit wordt benadrukt.
-
---- 
-
-Deze samenvatting brengt de belangrijkste onderwerpen en thema's uit de podcast in kaart. Let op de relatieve impact van AI binnen organisaties en hoe de concepten van digitale transformatie zich verder ontwikkelen.
+## Afsluiting
+Het gesprek benadrukt dat AI een bijzondere rol kan spelen in de digitale transformatie van organisaties, mits er goed over nagedacht wordt en met de juiste strategieën om de invloed op de organisatiecultuur en de mensen in het oog te houden.
