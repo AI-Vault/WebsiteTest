@@ -1,41 +1,42 @@
-# IOT klimt uit de trog van desilussie en werkt nu eindelijk 'goed'
+# 2.IOT klimt uit de trog van desilussie en werkt nu eindelijk 'goed'
 Views: 78 (2025-04-24) [link](https://www.youtube.com/watch?v=n8g5P17LHqI)
 
 
- ## Afleveringnummer en introductie 
-De aflevering begint met enige onzekerheid over het afleveringnummer, waarbij er suggesties van 439 en 440 worden gedaan. Bruce en Daniel vragen zich af of er een luisteraar is die dit kan bevestigen, met de wens om dit gedoe met de nummers te verhelpen. Het gesprek springt naar het onderwerp van Manus AI, dat zich bezighoudt met autonoom script schrijven en categoriseren van muziek in een Excel-sheet.
+ ## Aflevering Nummer
+De aflevering betreft het nummer 440, wat met enige geschiedenis en verwarring is omringd. Een voorstel werd gedaan om een luisteraar de verantwoordelijkheid te geven om in de toekomst het juiste nummer bij te houden.
 
-## Gast en IOT-update
-Winke Gieman, co-founder van The Things Industries, is de gast in de show en biedt een update over de Internet of Things (IoT) na een afwezigheid van drie jaar. Hij bespreekt de ontwikkeling van de industrie en de groei in productiviteit en gebruikmaking van sensordata, met diverse toepassingen in bedrijfsprocessen.
+## Manus AI
+Er wordt gesproken over Manus AI, een AI-agentsysteem dat gebruikt wordt om scripts autonoom te schrijven en data te categoriseren. Voor deze aflevering wordt Manus AI gebruikt om Italo disco-nummers te classificeren in een Excel-bestand, wat de efficiëntie van de workflow in de uitzending verhoogt. Dit toont aan hoe AI kan worden ingezet om repetitieve taken sneller en nauwkeuriger uit te voeren.
 
-## Groei en gestegen productiviteit
-The Things Industries heeft de afgelopen drie jaar een groei van 40% ervaren, met een focus op sensoren die data vanuit operationele processen naar IT-systemen van bedrijven delen. Gieman noemt voorbeelden van klanten, waaronder fastfoodrestaurants die temperatuurmonitoring van koelkasten willen, en scholen die CO2-waarden in klaslokalen meten. Hij legt uit dat de vraag naar IoT-oplossingen toeneemt door de behoefte aan efficiëntie in het bedrijfsleven.
+## Gast: Winke Gieeman
+Winke Gieeman, co-founder van The Things Industries, verschijnt als gast. Zijn rol is om een update te geven over de ontwikkelingen binnen het Internet of Things (IoT) sector in de afgelopen drie jaar. De presentatie focust op hoe IoT-technologieën door de Gartner hypecyclus gaan, van hype naar teleurstelling, en hoe het nu naar een plateau van productiviteit gaat.
 
-## Toepassingen van IoT
-Diverse gebruiksscenario's worden besproken, zoals:
-- **Temperatuurmonitoring** in restaurants.
-- **CO2-monitoring** in klaslokalen voor betere luchtkwaliteit.
-- **Waterleidingmonitoring** voor wettelijke compliance.
-- **Agricultuur** met sensoren voor bodemvocht en irrigatiebeheer.
+### Belangrijkste Ontwikkelingen in IoT
+- **Groei**: The Things Industries heeft in de afgelopen drie jaar een jaarlijkse groei van 40% gezien in het gebruik van hun platform, wat aangeeft dat de IoT-markt in het B2B-segment aan kracht wint.
+- **Gegevensbehoefte**: Bedrijven gebruiken sensordata voor het optimaliseren van operationele processen, waarbij meetgegevens bijvoorbeeld van koelkasten in fastfoodrestaurants worden verzameld voor voedselveiligheid.
+
+### Case Studies en Use Cases
+- Voorbeelden van IoT-toepassingen zijn onder meer:
+  - Temperatuurmonitoring van koelkasten in fastfoodrestaurants.
+  - CO2-monitoring in klaslokalen om het leerklimaat te verbeteren.
+  - Sensortechnologie die ervoor zorgt dat waterleidingen worden gecontroleerd voor naleving van regels.
+  
+Het rapport benadrukt hoe dergelijke toepassingen productiviteit verhogen en efficiëntie verbeteren in de B2B-sector.
 
 ## Cyber Resilience Act
-Een significante ontwikkeling in de industrie is de aankomende Cyber Resilience Act, die producenten verantwoordelijk maakt voor de softwarebeveiliging van hun hardware over een periode van vijf jaar. Deze nieuwe regelgeving vereist dat fabrikanten continue updates en ondersteuning bieden voor hun producten. Dit kan de businessmodellen van bedrijven herstructureren en brengt met zich mee dat bedrijven na verkoop verantwoordelijk blijven voor de veiligheid van hun apparaten.
+De Cyber Resilience Act, die in 2027 van kracht gaat in Europa, wordt besproken. Dit wetgevingsvoorstel verplicht fabrikanten om verantwoordelijkheden te nemen voor de security en privacy van hun producten. Dit zal gevolgen hebben voor het businessmodel van veel IoT-leveranciers, aangezien zij in de toekomst niet alleen producten verkopen, maar ook verantwoordelijk zijn voor de dienstverlening en updates over een periode van vijf jaar.
 
-## Standaardisatie en compliance
-De discussie gaat verder over de rol van compliance en regelgeving, zoals CE- en FCC-certificering, en de impact daarvan op IoT-producten. Gieman benadrukt het belang van het gebruik van open standaarden en het voldoen aan regelgeving om markstandaarden te verbeteren.
+## EU Data Act
+De EU Data Act, die in september 2024 van kracht wordt, reguleert dat gebruikers eigenaar blijven van de data die door apparaten wordt verzameld. Dit zal invloed hebben op hoe IoT-bedrijven hun databeheer structureren, vooral rond dataproducten in de landbouw en andere sectoren.
 
-## Verschillen tussen B2B en B2C
-De gast legt ook uit dat de B2B-markt aanzienlijk beter presteert dan de B2C-markt, waar naar producten als slimme woningen nog steeds wantrouwen vanuit gebruikers bestaat. De smart home markt wordt als minder volwassen en nog steeds in de "trogh van desillusie" gezien, wat leidt tot minder adoptie onder consumenten.
+## Smart Home en Technologie Trenden
+Er wordt een vergelijking gemaakt tussen de B2B IoT-markt en de consumentenmarkt, waarbij het wordt opgemerkt dat de smart home-technologie nog steeds in de trog van teleurstelling zit. Er zijn zorgen dat consumenten niet echt behoefte hebben aan deze technologieën, en dat ze vaak vastlopen in een complex gebruik van slimme apparaten.
 
-## Opmerkingen over de toekomst van IoT
-Gieman is optimistisch over de toekomst van IoT, gezien de directe voordelen en de toenemende noodzaak voor sensoren in verschillende sectoren. Ondanks de uitdagingen van fragmentatie en standaardisatie in de IoT-markt, is hij ervan overtuigd dat de aanhoudende groei en de evolutie van oplossingen een kans biedt voor verdere ontwikkeling en adoptie. 
+### Standaardisatie in Smart Home
+Materiaal over de Connectivity Standards Alliance en de implementatie van het "Matter"-protocol wordt besproken, wat moet zorgen voor een betere interoperabiliteit tussen smart home-apparaten. De volgorde van adoptie en de vraag of consumenten echt in deze technologie willen investeren, zijn echter nog steeds onduidelijk.
+
+## Toekomst van IoT
+Laatste inzichten geven aan dat de IoT-industrie misschien al meer richting standaardisatie gaat, wat kan leiden tot commodificatie. Innovaties en verbeteringen blijven noodzakelijk om het systeem gebruiksvriendelijk te maken en een grotere acceptatie te bewerkstelligen. Er wordt opgeroepen om die ontwikkelingen in de gaten te houden en actief deel te nemen aan toekomstige formaties en conferenties over IoT-mogelijkheden.
 
 ## Conclusie
-De aflevering sluit af met een reflectie op de status van IoT en de vooruitgang die de sector heeft geboekt, waarbij de belangrijkheid van samenwerking, productontwikkeling en klanteducatie wordt benadrukt. Gieman en Daniel nodigen luisteraars uit om vooral naar de conferentie van The Things Industries te komen, waar ze verder kunnen leren over de ontwikkelingen in de sector.
-
-## Feiten en cijfers
-- The Things Industries heeft sinds de laatste update 40% groei ervaren in gebruik van hun platform, met inmiddels 3 miljoen sensoren aangesloten.
-- De totale waarde van de installaties op hun platform is geschat op 3,6 miljard euro, namens de efficiëntieverbeteringen die geïmplementeerd zijn via IoT-systemen.
-- De Cyber Resilience Act in Europa brengt nieuwe verantwoordelijkheden voor fabrikanten met betrekking tot cybersecurity. 
-
-De aflevering prikte een aantal essentiële punten aan over de huidige status, kansen en uitdagingen van IoT in zowel de B2B als de consumentenmarkt, en zet de luisteraar aan het denken over de evolutie van technologie en regelgeving.
+De aflevering benadrukt de opmerkelijke veranderingen en adopties binnen de IoT-wereld en de ambivalente rol van smart home-technologie in consumentenlevens. Het gesprek biedt waardevolle inzichten en voorspellingen voor zowel de professionals in de IoT-sector als het publiek dat geïnteresseerd is in de evolutionaire trends van technologie.
