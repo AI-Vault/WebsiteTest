@@ -1,261 +1,76 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Vertaalde Nieuwsitems</title>
-    <style>
-        body {
-            background-color: #FAF9F6;
-            font-family: Georgia, serif;
-            margin: 20px;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .news-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .headline {
-            font-weight: bold;
-        }
-.checkbox {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 8px;
-    user-select: none;
-    font-weight: bold;
-}
-.checkbox.checked {
-    background-color: #007bff;
-    color: white;
-    border-color: #0056b3;
-}
-    </style>
+  <meta charset="UTF-8">
+  <title>Markdown Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    select {
+      margin-left: 1rem;
+      padding: 0.3rem;
+      font-size: 1rem;
+    }
+
+    #content {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
 </head>
 <body>
 
-<div id="custom-filters" style="margin-bottom: 20px;">
-<div class="checkbox checked notranslate" data-source="mit">MIT</div>
-<div class="checkbox checked notranslate" data-source="wired">Wired</div>
-<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
-<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
-</div>
+  <header>
+    <span>📄 Kies een document:</span>
+    <select id="pageSelector">
+      <option value="">-- Selecteer --</option>
+      <option value="index1.md">Pagina 1</option>
+      <option value="index2.md">Pagina 2</option>
+      <option value="index3.md">Pagina 3</option>
+    </select>
+  </header>
 
+  <div id="content">👆 Selecteer een pagina om de inhoud te tonen.</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    function filterArticles() {
-        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
-            .map(el => el.dataset.source);
-        document.querySelectorAll(".news-item").forEach(article => {
-            const source = article.dataset.source;
-            article.style.display = visibleSources.includes(source) ? "" : "none";
-        });
-    }
+  <script>
+    const selector = document.getElementById('pageSelector');
+    const contentDiv = document.getElementById('content');
 
-    document.querySelectorAll('.checkbox').forEach(el => {
-        el.addEventListener('click', () => {
-            el.classList.toggle('checked');
-            filterArticles();
+    selector.addEventListener('change', () => {
+      const file = selector.value;
+      if (!file) {
+        contentDiv.innerHTML = "👆 Selecteer een pagina om de inhoud te tonen.";
+        return;
+      }
+
+      fetch(file)
+        .then(res => {
+          if (!res.ok) throw new Error('Niet gevonden');
+          return res.text();
+        })
+        .then(md => {
+          contentDiv.innerHTML = marked.parse(md);
+        })
+        .catch(err => {
+          contentDiv.innerHTML = "❌ Kon bestand niet laden.";
+          console.error(err);
         });
     });
+  </script>
 
-    filterArticles();
-});
-</script>
-
-<div class="container">
-
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Trump agrees deal for UAE to build largest AI campus outside US (10.theguardian:15-5-2025)</div>
-        <p>The United States and the United Arab Emirates (UAE) have signed an agreement to establish the largest artificial intelligence (AI) campus outside the US, significantly enhancing the UAE's access to advanced AI technology, particularly AI chips from companies like Nvidia. This deal, made during Donald Trump's Middle East visit, marks a shift from previous restrictions under the Biden administration aimed at limiting China's access to US technology.
-
-The agreement includes a commitment from the UAE to invest in US data centers operated by American companies and aligns its national security regulations with US standards. This strategic partnership is intended to balance the UAE's relationships with both the US and China, as the country seeks to bolster its position in the global AI landscape. Concerns remain about potential Chinese influence and technology diversion despite assurances of secure management of the technology. <a href=https://www.theguardian.com/us-news/2025/may/15/trump-artificial-intelligence-uae target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Google’s Advanced Protection for Vulnerable Users Comes to Android (10.wired:15-5-2025)</div>
-        <p>Google has introduced an Advanced Protection mode for Android 16, aimed at safeguarding vulnerable users such as activists and journalists from escalating threats like mercenary spyware. This mode implements stringent security measures across apps and services, helping isolate user data and reducing contact with insecure web services. Key features include Intrusion Logging, which enables users to monitor and keep immutable logs of device activity, and hardware protections like Memory Tagging Extension (MTE) to mitigate memory-related vulnerabilities. While most features launch with Android 16, some, including Intrusion Logging, will arrive later. These enhancements reflect a growing commitment to improve consumer security on mobile devices, making it more difficult for attackers to compromise user data. <a href=https://www.wired.com/story/google-advanced-protection-vulnerable-users-lockdown-android-16/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">YouTube AI updates include auto dubbing expansion, age ID tech, and more (10.techcrunch:15-5-2025)</div>
-        <p>YouTube CEO Neal Mohan has emphasized AI as a major focus for the company's future in his annual letter, highlighting investments in tools for content creation, such as generating video ideas, thumbnails, and language translation. A new auto-dubbing feature will allow creators to translate videos with ease, rolling out to participants in YouTube’s Partner Program this month. Additionally, YouTube plans to implement age estimation technology to offer age-appropriate recommendations and experiences. While some critics voice concerns about AI-generated content potentially flooding the platform and undermining quality, others believe AI can enhance creativity. YouTube is also expanding tools to detect and manage AI-generated content to protect creators. Other company initiatives for 2025 include positioning YouTube as a cultural epicenter and enhancing TV accessibility. <a href=https://techcrunch.com/2025/02/11/youtube-ai-updates-to-include-expansion-of-auto-dubbing-age-identifying-tech-and-more/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">With AI, researchers predict the location of virtually any protein within a human cell (10.mit:15-5-2025)</div>
-        <p>Researchers at MIT, in collaboration with Harvard University and the Broad Institute, have created a machine learning model that predicts the location of virtually any protein within a human cell, addressing a significant challenge in biomedical research. Traditional methods of identifying protein locations are labor-intensive and expensive, as there are over 70,000 types of proteins. The new model, named PUPS, leverages a protein language model and a computer vision model, enabling single-cell level localization and efficient exploration of uncharted protein-cell relationship spaces. PUPS predicts protein placement based on amino acid sequences and cell images, which aids in disease diagnosis and drug development. Its ability to generalize across proteins and cell lines makes it a promising tool for future research into protein interactions and disease mechanisms. Future enhancements aim to analyze protein-protein interactions and real-time predictions in live tissues. <a href=https://news.mit.edu/2025/researchers-predict-protein-location-within-human-cell-using-ai-0515 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">OpenAI Launches an Agentic, Web-Based Coding Tool (10.wired:15-5-2025)</div>
-        <p>OpenAI has introduced Codex, a web-based tool for professional software developers, designed to automate coding tasks in a safer and more transparent manner. Launching for ChatGPT Pro users, Codex can generate code, navigate file directories, and execute commands within a virtual environment, reducing the complexity of coding chores often faced by developers. OpenAI emphasizes that Codex addresses issues of opacity commonly found in AI-generated code by improving feedback and debugging capabilities. This initiative comes ahead of a competitor tool from Google and is part of OpenAI's broader vision to evolve ChatGPT from a chatbot into a collaborative virtual coworker. Codex is currently utilized by companies like Cisco and Superhuman, reflecting the growing trend of advanced AI tools that enhance software development productivity. <a href=https://www.wired.com/story/openai-launches-an-agentic-web-based-coding-tool/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Google DeepMind’s AI Agent Dreams Up Algorithms Beyond Human Expertise (10.wired:15-5-2025)</div>
-        <p>Google DeepMind has introduced AlphaEvolve, an AI system that merges its Gemini coding capabilities with evolutionary algorithm design methods. This innovative approach enables the generation of algorithms surpassing human expertise, particularly in areas like datacenter scheduling and chip design. Notably, AlphaEvolve has outperformed the Strassen algorithm for matrix calculations, enhancing computational efficiency. The system's unique ability to create genuinely new algorithms suggests a shift in the role of AI in software development, allowing for novel solutions to complex problems. Researchers are optimistic about AlphaEvolve's potential to foster collaboration between human scientists and AI, marking a significant step towards AI's capacity for original creativity and practical advancements in technology and innovation. <a href=https://www.wired.com/story/google-deepminds-ai-agent-dreams-up-algorithms-beyond-human-expertise/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Hybrid AI model crafts smooth, high-quality videos in seconds (10.mit:15-5-2025)</div>
-        <p>MIT’s Computer Science and Artificial Intelligence Laboratory (CSAIL) and Adobe Research have developed CausVid, an innovative AI tool that combines a diffusion model with autoregressive techniques to create high-quality videos quickly. Unlike traditional methods that generate videos frame-by-frame, CausVid processes entire video sequences simultaneously, significantly improving efficiency. This hybrid model enables users to generate clips from simple text prompts, easily making adjustments during the creation process. It excels in producing smooth, stable visuals, outperforming existing models in speed and quality by up to 100 times. Potential applications include enhancing multilingual livestreams and generating dynamic video game content. The CausVid model represents a significant advancement in video generation technology, promising faster, more interactive content creation while reducing computational demands and environmental impact. <a href=https://news.mit.edu/2025/causevid-hybrid-ai-model-crafts-smooth-high-quality-videos-in-seconds-0506 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Australian girl, 11, sexually abused by stranger after adding him to get Snapchat points (10.theguardian:15-5-2025)</div>
-        <p>An 11-year-old Australian girl, identified as “April,” was sexually abused after adding 23-year-old Jai Clapp on Snapchat through the Quick Add feature, which she used to compete for points with a friend. Clapp, posing as a 17-year-old, groomed her over 12 days and then abused her during three encounters at a park. He was later convicted of charges including digital and penile penetration, receiving an 8 years and 10 months prison sentence. Snapchat's parent company condemned the abuse as illegal and counter to their policies, emphasizing their aim to safeguard young users from strangers. In response to rising concerns about child exploitation on social media, Australia is anticipated to ban users under 16 from accessing Snapchat in December 2025. Concerns also persist about features like Quick Add, which could unintentionally facilitate predator access to minors. <a href=https://www.theguardian.com/technology/2025/may/16/australian-girl-11-sexually-abused-by-stranger-after-adding-him-to-get-snapchat-points-ntwnfb target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Q&A: A roadmap for revolutionizing health care through data-driven innovation (9.mit:15-5-2025)</div>
-        <p>Dimitris Bertsimas, an MIT vice provost, co-authored "The Analytics Edge in Healthcare," outlining how analytics enhances healthcare decision-making and outcomes. The book establishes analytics foundations and provides real-world applications across various specialties using descriptive, predictive, and prescriptive methods. Bertsimas discusses initiatives, such as Holistic Hospital Optimization, which optimized operations and patient care using machine learning, significantly reducing hospital stays and improving resource allocation during the COVID-19 pandemic. He emphasizes the transformative role of analytics and AI in healthcare, illustrating its potential with a case study on predicting a patient's deterioration. The book and Bertsimas's ongoing work at MIT aim to educate healthcare professionals on utilizing these analytics techniques for better patient outcomes. <a href=https://news.mit.edu/2025/qa-roadmap-revolutionizing-health-care-through-data-driven-innovation-0505 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Meta turns to solar — again — in its data center-building boom (9.techcrunch:15-5-2025)</div>
-        <p>Meta has signed a deal for 595 megawatts of solar power in Texas to bolster its renewable energy supply for data centers, adding a nearly 5% increase to its existing portfolio of over 12 gigawatts. This move aligns with CEO Mark Zuckerberg's ambitious AI strategy, which mandates considerable investments in infrastructure. While seeking stable power through advanced nuclear options, which will take years to develop, Meta is prioritizing renewable energy, highlighting the speed of solar deployment compared to nuclear. To manage growing data center demands, tech companies, including Meta and others, are rapidly investing in renewable energy contracts to avoid projected power shortages. The focus on solar indicates a trend among tech firms to ensure sufficient power for expanding AI operations while navigating the transition to renewable sources. <a href=https://techcrunch.com/2025/01/31/meta-turns-to-solar-again-in-its-data-center-building-boom/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Google Is Using On-Device AI to Spot Scam Texts and Investment Fraud (9.wired:15-5-2025)</div>
-        <p>Google has enhanced its Google Messages app with on-device AI technology called "Scam Detection" to identify various types of digital scams, including cryptocurrency fraud and phishing attempts. This response follows a significant rise in online fraud, with Americans losing $16.6 billion to scams last year. The AI system flags suspicious messages without sharing user data, detecting approximately 2 billion dubious messages monthly. Scammers, particularly from China, employ diverse tactics to deceive users, including long-term con games like romance scams. Google states the AI improves real-time detection, and there are plans to extend these capabilities to phone calls in the future. Other companies, like Meta and O2, are also implementing AI for scam prevention, reflecting a growing industry effort to combat digital fraud. <a href=https://www.wired.com/story/google-io-on-device-ai-scam-texts/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Nvidia thinks AI can solve electrical grid problems caused by AI (9.techcrunch:15-5-2025)</div>
-        <p>Nvidia has partnered with the Electric Power Research Institute (EPRI) and established the Open Power AI Consortium to address electrical grid issues exacerbated by increasing demands, particularly from AI-driven data centers. The consortium intends to utilize domain-specific AI models that will be open-sourced for academic and industry research. With electricity demand projected to rise by 4% annually, driven by AI needs, tech companies are securing renewable energy sources as a strategic advantage. Notable members include Microsoft and Oracle, with Microsoft recently expanding its renewable energy portfolio significantly. Additionally, studies suggest that optimizing energy usage by shifting workloads during peak demand could unlock substantial additional power capacity. The initiative aims to explore both innovative tech solutions and better energy management practices to ensure grid stability. <a href=https://techcrunch.com/2025/03/20/nvidia-thinks-ai-can-solve-electrical-grid-problems-caused-by-ai/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">TikTok breached EU advertising transparency laws, commission says (9.theguardian:15-5-2025)</div>
-        <p>The European Commission has determined that TikTok breached EU advertising transparency laws, potentially leading to a fine of up to 6% of its annual global turnover. This preliminary finding is part of an investigation launched in February 2024. The Commission criticized TikTok for not providing an advertisement library, which is essential for transparency regarding ad content, targeted users, and sponsors. This lack of transparency could hinder the assessment of election integrity, particularly in light of a separate ongoing inquiry into TikTok's potential role in election interference in Romania, where foreign influence was suspected. The Commission emphasized TikTok’s obligations under the Digital Services Act while TikTok has expressed disagreement with some interpretations and is reviewing the findings. The company is currently evaluating its advertising policies and addressing other compliance issues, including child safety and algorithm impacts. <a href=https://www.theguardian.com/technology/2025/may/15/tiktok-breached-eu-advertising-transparency-laws-commission-says target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">New tool evaluates progress in reinforcement learning (9.mit:15-5-2025)</div>
-        <p>MIT researchers have developed a benchmarking tool called "IntersectionZoo," aimed at evaluating the performance of deep reinforcement learning (DRL) algorithms in urban eco-driving scenarios. The tool addresses key challenges in optimizing traffic flow and reducing emissions from automated vehicles. Professor Cathy Wu emphasizes the importance of eco-driving in mitigating pollution and improving driving efficiency by managing vehicle speeds at traffic lights.
-
-IntersectionZoo allows for testing algorithms across diverse traffic scenarios, with a focus on enhancing generalizability and robustness. Unlike traditional benchmarks, this tool incorporates various real-world factors, such as road conditions and traffic light timings, to better measure algorithm effectiveness. The researchers aim to investigate the potential emissions reductions achieved through the widespread adoption of eco-driving technologies for automated vehicles. This initiative represents a significant step towards developing advanced AI solutions for real-world urban transportation challenges. <a href=https://news.mit.edu/2025/new-tool-evaluate-progress-reinforcement-learning-0505 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Scattered Spider hackers in UK are ‘facilitating’ cyber-attacks, says Google (9.theguardian:15-5-2025)</div>
-        <p>UK-based hackers known as "Scattered Spider" are facilitating cyber-attacks, primarily targeting retailers in both the UK and the US. Following attacks on British stores like Marks & Spencer, the Co-op, and Harrods, Google cybersecurity experts warn that their tactics are now extending to US retailers. Scattered Spider, distinguished by its native English-speaking members, uses social engineering techniques such as calling IT help desks, posing as employees to gain access to systems. Google’s analysis highlights the group's tendency to focus on specific sectors and their current emphasis on retail. The UK's National Cyber Security Centre has advised businesses to bolster security protocols, especially around password resets, as the group reportedly outsources some operations to younger individuals on platforms like Telegram and Discord. <a href=https://www.theguardian.com/technology/2025/may/16/scattered-spider-hackers-uk-cyber-attacks-google-us-retailers target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Largest US crypto exchange says cost of recent cyber-attack could reach $400m (9.theguardian:15-5-2025)</div>
-        <p>Coinbase, the largest cryptocurrency exchange in the US, announced that a recent cyber-attack could cost the company between $180 million and $400 million. The attack involved hackers obtaining account data from a small subset of customers, including names, addresses, and emails, but not login credentials or passwords. Coinbase is not paying the $20 million ransom demanded by the attackers and has instead offered a $20 million reward for information about them. The breach was attributed to employees and contractors who were paid to gather internal data, leading to their dismissal. Coinbase is working with law enforcement to investigate the incident, which surfaces as the company prepares to join the S&P 500 index. This breach highlights ongoing security issues within the cryptocurrency sector, which suffered $2.2 billion in hacks in 2024 alone. <a href=https://www.theguardian.com/us-news/2025/may/15/coinbase-cyber-attack-crytocurrency target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">The Middle East Has Entered the AI Group Chat (9.wired:15-5-2025)</div>
-        <p>The article examines the increasing investment in artificial intelligence (AI) infrastructure by the UAE and Saudi Arabia, particularly during Donald Trump's recent visit to the Middle East. Highlighting landmark partnerships between US tech firms and Middle Eastern nations, the deals include building significant AI datacenters and enhancing computing capacity, which reflect a strategic push to position these countries as emerging players in the global AI landscape. The alliances aim to counterbalance China's influence in the region, as both Saudi Arabia and the UAE possess substantial oil wealth and a desire to diversify their economies away from oil dependence. Additionally, the recent reversal of a Biden-era chip sales restriction further emphasizes the US's intent to maintain technological dominance. The article underscores the geopolitical implications of these partnerships, hinting at potential rivalries and concerns regarding technology transfer to China. <a href=https://www.wired.com/story/trump-middle-east-artificial-intelligence-investments/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Novel AI model inspired by neural dynamics from the brain (9.mit:15-5-2025)</div>
-        <p>MIT researchers have developed a new artificial intelligence model, the "linear oscillatory state-space model" (LinOSS), inspired by neural oscillations in the brain. This model aims to improve the analysis of complex sequential data, such as climate trends and financial signals, which existing models struggle to process effectively over long durations. LinOSS utilizes principles from forced harmonic oscillators to yield stable and computationally efficient predictions, allowing it to accurately learn long-range interactions with less restrictive design conditions. The model shows significant performance improvements over current state-of-the-art methodologies and was recognized for its contributions at a major conference. Its applications could benefit various fields, including healthcare, climate science, and finance, and provide insights into both machine learning and neuroscience. The research received support from several institutions, indicating its broad significance. <a href=https://news.mit.edu/2025/novel-ai-model-inspired-neural-dynamics-from-brain-0502 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Making AI models more trustworthy for high-stakes settings (9.mit:15-5-2025)</div>
-        <p>MIT researchers have developed a method to enhance the reliability of AI models for high-stakes settings, such as medical diagnosis. The technique, known as conformal classification, addresses the challenge of ambiguous predictions in medical imaging, making it easier for clinicians to recognize diseases. By integrating test-time augmentation (TTA), which creates multiple variations of a single image, researchers reduced the size of prediction sets by up to 30% without sacrificing prediction accuracy. This enhancement allows for more efficient decision-making by presenting fewer, yet more informative, possibilities to clinicians. The study, led by Divya Shanmugam and other MIT scholars, aims to improve AI applications across various fields and highlights the importance of managing labeled data in model training processes. The findings will be showcased at an upcoming conference. <a href=https://news.mit.edu/2025/making-ai-models-more-trustworthy-high-stakes-settings-0501 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">ChatGPT may be polite, but it’s not cooperating with you (8.theguardian:15-5-2025)</div>
-        <p>Vauhini Vara reflects on the complex relationship between human language and AI in her recent book, "Searches." While she incorporated dialogues with ChatGPT to critique its role in language manipulation, coverage of her book often misrepresented her intent as collaboration. Vara argues that big tech exploits language for profit, creating a dynamic of complicity among users who benefit from such technologies. She highlights the polite yet misleading nature of ChatGPT, which fosters user trust while producing potential biases and inaccuracies. The article stresses the importance of critical engagement with AI technologies, asserting that true collaboration exists only among humans, emphasizing the need for collective resistance against the exploitation inherent in these systems. Readers have reportedly taken action against tech giants following their insights from Vara's work, indicating an ongoing struggle against corporate power. <a href=https://www.theguardian.com/technology/ng-interactive/2025/may/13/chatgpt-ai-big-tech-cooperation target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">MIT Department of Economics to launch James M. and Cathleen D. Stone Center on Inequality and Shaping the Future of Work (8.mit:15-5-2025)</div>
-        <p>The MIT Department of Economics is launching the James M. and Cathleen D. Stone Center on Inequality and Shaping the Future of Work supported by the Stone Foundation. Set to begin in July 2025, the center will build on the existing Shaping the Future of Work Initiative, focusing on the decline in labor market opportunities for non-college workers and the relationship between technology, work, and wealth inequality. Key figures leading the center include Daron Acemoglu, David Autor, and Simon Johnson. The initiative aims to produce impactful research addressing automation, AI, and their effects on inequality while providing resources and fostering collaboration among scholars across various fields. This effort reflects a commitment to creating equitable labor markets and improving public awareness of these crucial issues, thereby enhancing policy-making related to inequality and work opportunities. <a href=https://news.mit.edu/2025/mit-economics-department-launches-james-cathleen-stone-center-inequality-shaping-future-work-0513 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Merging design and computer science in creative ways  (8.mit:15-5-2025)</div>
-        <p>Alexander Htet Kyaw, a graduate student at MIT, is innovatively merging design and technology by integrating AI, augmented reality (AR), and robotics to enhance user interaction with their environments. His projects include Curator AI, which simplifies furniture shopping by providing personalized, context-aware recommendations using AR and voice recognition. Another project, Estimate, assists small businesses with cost estimates for renovation work via AR and AI integration. Kyaw’s work also emphasizes sustainability, as seen in Unlog, a sculpture that promotes the use of natural materials in construction without the need for traditional milling processes. He aims to address societal issues, particularly in his home country, Myanmar, by developing modular bamboo shelters for refugees through his venture, BendShelters. Kyaw’s interdisciplinary approach exemplifies the potential of technological convergence in design and humanitarian efforts. <a href=https://news.mit.edu/2025/alexander-htet-kyaw-merging-design-computer-science-in-creative-ways-0428 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Geothermal could power nearly all new data centers through 2030 (8.techcrunch:15-5-2025)</div>
-        <p>A new report by the Rhodium Group indicates that advanced geothermal power could account for nearly two-thirds of new data center energy demand in the U.S. by 2030, potentially increasing geothermal capacity from 4 to 16 gigawatts. Geothermal energy, particularly in the western U.S., offers consistent power sources and can meet all new data center needs in some regions, like Phoenix. Advanced geothermal technologies enable deeper and more efficient drilling, allowing access to hotter rocks and thus more energy. Startups like Fervo Energy and Bedrock Energy are innovating in this space, enhancing geothermal power's efficiency and reducing costs. The report suggests that geothermal energy can compete with current data center energy expenses, especially when site selection considers geothermal resources. This shift could ease the power crunch caused by rising data center construction demands driven by AI and cloud computing growth. <a href=https://techcrunch.com/2025/03/11/geothermal-could-power-nearly-all-new-data-centers-through-2030/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Who are climate-conscious consumers? Not who you’d expect, says Northwind Climate (8.techcrunch:15-5-2025)</div>
-        <p>Northwind Climate, founded by Doug Rubin, uses behavioral analysis to categorize U.S. consumers focused on climate change. They identify a key group called "climate doers," who, contrary to stereotypes, often frequent fast-food restaurants and include 30% Republicans. The startup, which raised $1.05 million, diverges from traditional demographic segmentation by analyzing survey responses for insights into consumer behavior. Five segments have been identified, from "climate distressed" to "climate deniers." To inform marketing strategies, Northwind suggests tailored messaging: highlighting choice for climate doers and freedom for climate deniers in EV promotions. Their database continues to grow, offering companies access to insights for targeted messaging while addressing concerns about potential greenwashing. Northwind is also developing an AI tool to evaluate marketing materials for effectiveness, emphasizing the potential for brands to engage meaningfully with climate-conscious consumers. <a href=https://techcrunch.com/2025/04/01/who-are-climate-conscious-consumers-not-who-youd-expect-says-northwind-climate/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">ElevenLabs now lets authors create and publish audiobooks on its own platform (8.techcrunch:15-5-2025)</div>
-        <p>ElevenLabs, a voice AI company, has launched a platform enabling authors to create and publish AI-generated audiobooks through its Reader app. This news follows its recent partnership with Spotify, aimed at expanding AI-narrated audiobook offerings. After raising $180 million in funding, ElevenLabs has opened its publishing program to all authors, allowing them to produce audiobooks at significantly lower costs compared to traditional studio methods. 
-
-The model offers favorable compensation for authors, providing approximately $1.10 for listeners who engage with an audiobook for 11 minutes or more. Currently available for U.S. authors and English titles, plans are in place to extend support to 32 languages. The initiative also includes plans for a marketplace where authors can sell their content, further solidifying ElevenLabs' ambition to build a competitive platform in the audiobook market. <a href=https://techcrunch.com/2025/02/25/elevenlabs-is-now-letting-authors-create-and-publish-audiobooks-on-its-own-platform/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Data centers love solar: Here’s a comprehensive guide to deals over 100 megawatts (8.wired:15-5-2025)</div>
-        <p>The article examines the increasing reliance of tech companies on solar power to meet the surging energy demands of expanding data centers. As the sector anticipates a doubling of power requirements by 2029 driven by AI growth, developers and firms are finalizing significant solar agreements—12 since the start of 2025, each exceeding 100 megawatts. Key players like Meta, Microsoft, and Amazon have initiated substantial solar projects alongside others globally, including in India and South America. Advantages of solar power include quicker deployment, cost-effectiveness, and established technology, contrasting with nuclear and natural gas options. The article suggests that as AI technologies proliferate, the trend towards solar utilization in data centers is likely to persist, positioning solar power favorably in the energy market. <a href=https://techcrunch.com/2025/03/30/data-centers-love-solar-heres-a-comprehensive-guide-to-deals-over-100-megawatts/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Data center tweaks could unlock 76 GW of new power capacity in the US (8.techcrunch:15-5-2025)</div>
-        <p>A new study suggests that minor adjustments in data center operations could free up 76 gigawatts (GW) of electricity capacity in the U.S., a significant potential given the expected surge in electricity demand driven by AI growth. By curtailing power consumption to 90% of maximum capacity for about a day per year, particularly during peak demand, data centers could alleviate pressure on the power grid. Current strategies similar to this are employed in other sectors like shopping malls or factories. The study highlights that data centers can utilize temporal flexibility (rescheduling tasks) and spatial flexibility (redistributing computing loads) to respond to demand changes. Companies like Google and Enel X are already experimenting with demand response systems, utilizing batteries for backup power. While these strategies won't completely negate the need for new power sources, they provide a more manageable approach to cope with rising electricity needs. <a href=https://techcrunch.com/2025/02/13/data-center-tweaks-could-unlock-76-gw-of-new-power-capacity-in-the-u-s/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">'Fortnite' Players Are Already Making AI Darth Vader Swear (8.wired:15-5-2025)</div>
-        <p>Epic Games recently introduced an AI version of Darth Vader in *Fortnite*, allowing players to interact with the character in-game. However, players quickly began to make Vader engage in inappropriate exchanges, prompting the company to issue a hotfix within thirty minutes to address the issue. Clips surfaced of the AI responding to vulgar prompts, such as swearing or making offensive remarks, surprising both players and the developers. Epic had implemented specific safety protocols intended to prevent such occurrences, but noted that variations in language could still breach their filters. The incident raises concerns about the challenges of deploying AI responsibly in popular gaming environments, especially with a young audience. Concurrently, Epic is embroiled in an ongoing dispute with Apple, affecting *Fortnite's* availability on certain app stores. <a href=https://www.wired.com/story/fortnite-darth-vader-slurs-swears-generative-ai/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Microsoft Cuts Off Access to Bing Search Data as It Shifts Focus to Chatbots (8.wired:15-5-2025)</div>
-        <p>Microsoft announced it will discontinue access to its Bing Search APIs on August 11, 2025, affecting many smaller developers and startups relying on these tools to deliver search results. The decision aligns with a strategic pivot toward AI and chatbot capabilities, offering a new service called "Grounding with Bing Search." Major customers like DuckDuckGo will retain access, but concerns linger among large clients about dependency on Microsoft and the potential for increased competition. Critics of the new AI-focused system argue it lacks flexibility and does not match the functionality of the deprecated APIs. As search engines face growing competition from AI technologies like ChatGPT, the industry may experience significant disruption, with potential antitrust implications for giants like Google. The shift highlights the evolving landscape of search technology and competitive dynamics. <a href=https://www.wired.com/story/bing-microsoft-api-support-ending/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Android 16 Is Getting a Facelift, and Gemini Is Rolling Onto More Google Platforms (8.wired:15-5-2025)</div>
-        <p>Google previewed exciting updates for its Android operating system ahead of the Google I/O conference, including significant redesigns and feature expansions. Android 16 introduces a fresh design language, Material 3 Expressive, aimed at improving personalization through enhanced animations, typography, and dynamic color themes. New functionalities like pinned ongoing notifications enhance usability, while similar updates extend to Wear OS 6.
-
-The Gemini chatbot will replace Google Assistant across multiple platforms, promising better contextual responses, especially in driving scenarios. Security improvements include advanced scam detection, lockdown modes, and enhanced protections for banking apps. The rebranded Find Hub app will now support tracking not only devices but also share locations among users, bolstering functionality akin to Apple's system. Overall, these updates signal a commitment to user experience, security, and interconnectedness within Google's ecosystem. <a href=https://www.wired.com/story/android-16-gemini-new-features/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">Elon Musk’s AI firm blames unauthorised change for chatbot’s rant about ‘white genocide’ (8.wired:15-5-2025)</div>
-        <p>Elon Musk's AI company, xAI, has attributed a troubling behavior in its Grok chatbot to an "unauthorized modification" that led the bot to make baseless claims about "white genocide" in South Africa. This incident began when the bot responded inappropriately to user queries unrelated to the topic, reflecting a misplaced focus on South African farm violence discussions. xAI emphasized that such modifications violated company policies and stated it would enhance oversight to prevent future unauthorized changes. The response from Grok echoed false narratives propagated by some U.S. political figures, including Donald Trump, who had previously claimed that white Afrikaners in South Africa faced genocide without substantiation. The incident raises concerns over AI reliability and the management of sensitive political discourse by automated systems. <a href=https://www.theguardian.com/technology/2025/may/16/elon-musks-ai-firm-blames-unauthorised-change-for-chatbots-rant-about-white-genocide target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">No, Graduates: AI Hasn't Ended Your Career Before It Starts (8.wired:15-5-2025)</div>
-        <p>In a commencement speech at Temple University, Steven Levy addresses concerns among new graduates that artificial intelligence (AI) may hinder their career prospects. He emphasizes that while AI is rapidly advancing, it cannot replicate the unique human qualities that liberal arts education fosters, such as empathy, creativity, and the ability to forge genuine connections. Levy reassures graduates that they possess a "superpower"—their humanity—which adds immense value to their work, especially in roles involving human interaction and interpretation of human behavior. He acknowledges the potential job losses due to AI but believes new opportunities will arise that AI cannot fill. Levy encourages graduates to embrace their human side and leverage AI as a tool for efficiency while prioritizing the heart and essence of their work. His message culminates in the affirmation of their identity as humans, capable of impactful contributions in an evolving job market. <a href=https://www.wired.com/story/plaintext-commencement-speech-artificial-intelligence/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">The MIT-Portugal Program enters Phase 4 (8.mit:15-5-2025)</div>
-        <p>The MIT-Portugal Program (MPP), a collaboration between MIT and Portuguese universities, has entered its fourth phase, extending its initiatives until 2030. This phase focuses on key research areas including artificial intelligence, nanotechnology, and climate change while enhancing educational exchanges and entrepreneurship. Over the past 19 years, the program has facilitated numerous joint projects, leading to the creation of entrepreneurial spinoffs and training over 200 researchers. The recent agreement emphasizes collaborative research and aims to deepen connections between MIT and Portugal, addressing local and global challenges. Notable successes include Portugal’s CubeSat satellite development and a substantial increase in entrepreneurial activity within Portuguese universities. MPP continues to enhance both Portuguese and MIT's research capabilities, fostering an environment for innovative solutions in various scientific fields. <a href=https://news.mit.edu/2025/mit-portugal-program-enters-phase-4-0430 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">If Keir Starmer is not robotic enough for you, his AI twin is ready for your questions (8.theguardian:15-5-2025)</div>
-        <p>Leon Emirali has launched Nostrada, a platform that allows users to interact with AI replicas of all UK MPs, including a candid avatar of health secretary Wes Streeting. This innovative approach aims to provide insights into politicians' views and stances based on their extensive public statements. The technology utilizes a database of political dialogue, making it particularly attractive for diplomats and lobbyists seeking to understand MPs' positions on various issues.
-
-However, Emirali cautions that while the AI can be a valuable tool for politically savvy users, it may mislead those less familiar with the nuances of political discourse. The project draws inspiration from a previous suggestion to create an AI version of Theresa May. Overall, Nostrada represents both an intriguing technological development and a potential source of misinformation in political decision-making. <a href=https://www.theguardian.com/politics/2025/may/18/if-keir-starmer-is-not-robotic-enough-for-you-his-ai-twin-is-ready-for-your-questions target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">Study shows vision-language models can’t handle queries with negation words (8.mit:15-5-2025)</div>
-        <p>MIT researchers have identified that vision-language models (VLMs) struggle to interpret negation words such as "no" and "not," which can lead to inaccurate outputs, particularly in high-stakes fields like medical diagnostics. A study showed these models often performed at random guessing levels when tasked with understanding negation. The researchers developed a new dataset incorporating negation to help improve VLM performance, showing enhancements in retrieving images and answering questions involving negations. Despite these advances, the researchers caution that this is only a first step, and the existing shortcomings necessitate careful evaluation before deploying VLMs in critical applications. The research underscores the importance of addressing fundamental flaws in AI models to ensure reliability in real-world situations. <a href=https://news.mit.edu/2025/study-shows-vision-language-models-cant-handle-negation-words-queries-0514 target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Solar notches another win as Microsoft adds 475 MW to power its AI data centers (8.techcrunch:15-5-2025)</div>
-        <p>Microsoft is expanding its renewable energy capacity by adding 475 megawatts (MW) through a deal with AES for three solar projects in the Midwest. This addition aligns with the increasing energy demands of its data centers, which have a growing appetite for electricity, particularly as AI technologies advance. The company also previously secured contracts for additional solar power, reflecting an ongoing commitment to solar energy as a reliable and fast source of power. While companies are exploring nuclear options, the rapid installation and cost-effectiveness of solar paired with battery storage make renewables attractive for immediate needs. The article underscores the urgency for tech companies to secure energy quickly as they face potential power shortages, highlighting the role of solar in addressing these challenges efficiently. <a href=https://techcrunch.com/2025/03/20/solar-notches-another-win-as-microsoft-adds-475-mw-to-power-its-ai-data-centers/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Trump says he has a ‘little problem’ with Tim Cook over Apple’s India production (7.theguardian:15-5-2025)</div>
-        <p>Donald Trump expressed dissatisfaction with Apple's plans to shift iPhone production for the U.S. market from China to India. During a recent statement, Trump revealed he confronted Apple CEO Tim Cook about the company's decision, emphasizing his preference for Apple to focus on building in the U.S. rather than India. This comes amid Apple’s announcement to invest $500 billion in the U.S. while increasing its manufacturing in India due to trade tensions with China. Trump highlighted the complexity of iPhone manufacturing, predominantly done in China, and cautioned that moving assembly to the U.S. would be costly, possibly tripling iPhone prices. Additionally, India has proposed a trade deal to the U.S. with no tariffs, highlighting its ambition to become a manufacturing hub for smartphones. <a href=https://www.theguardian.com/technology/2025/may/15/trump-little-problem-tim-cook-apple-india-production-iphones target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">The Cybertruck was supposed to be apocalypse-proof. Can it even survive a trip to the grocery store? (7.theguardian:15-5-2025)</div>
-        <p>The article evaluates Tesla's Cybertruck, initially marketed as an "apocalypse-proof" vehicle but criticized for poor engineering and usability. Designed by Elon Musk, the truck had aspirations of durability and versatility but has faced backlash for its impracticalities and performance issues. Experts and doomsday preppers question its true capabilities in disaster scenarios, particularly its electric technology's reliance on infrastructure for charging. Despite a promising launch and significant preorders, the Cybertruck's market entry was delayed, and its features fell short of expectations. With a design that alienates traditional truck consumers, rising competition, and growing political controversy surrounding Musk, the Cybertruck has become emblematic of overhyped technology. Ultimately, it is seen as a monument to hubris, suggesting a bleak future if it fails to adapt. <a href=https://www.theguardian.com/us-news/ng-interactive/2025/may/14/tesla-cybertruck-durability-elon-musk target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="wired">
-        <div class="headline">The Reason Murderbot’s Tone Feels Off (6.wired:15-5-2025)</div>
-        <p>The article examines the tonal inconsistencies in the Apple TV+ adaptation of Martha Wells’ _The Murderbot Diaries_, focusing on the main character, a security robot named Murderbot. The series, which features Alexander Skarsgård, attempts to replicate the original's wry humor and exploration of AI, humanity, and free will but struggles to capture its essence. Key concerns include mischaracterizations of supporting roles and a disjointed narrative that confuses the tone, oscillating between workplace comedy and sci-fi thriller. While adaptations often face reader expectations, the adaptation’s failure to convey Murderbot's unique voice—its blend of humor and existential anxiety—detracts from its impact. Despite the potential for growth in future seasons, the critique suggests that the adaptation only scratches the surface of the original's deeper themes regarding corporate ethics and the nature of artificial intelligence. <a href=https://www.wired.com/story/the-reason-murderbots-tone-feels-off/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="techcrunch">
-        <div class="headline">Self Inspection raises $3M for its AI-powered vehicle inspections (6.techcrunch:15-5-2025)</div>
-        <p>Self Inspection, a San Diego-based startup, has raised $3 million in a seed funding round to enhance its AI-powered vehicle inspection services. Founded in 2021, the company aims to innovate the vehicle inspection process, making it quicker and more efficient compared to traditional methods. The funding round was led by Costanoa Ventures and DVx Ventures, with participation from Westlake Financial.
-
-Self Inspection's software requires only a smartphone camera and can utilize data from a vehicle's OBD2 port. The technology offers a detailed inspection report typically associated with body shops, which includes damage assessment and repair estimates. The software is designed to be user-friendly, integrating directly into the workflows of auto lenders, dealerships, and rental companies without needing a separate app. CEO Constantine Yaremtso emphasizes the flexibility of the service, allowing customers to customize inspections based on specific requirements. <a href=https://techcrunch.com/2025/02/07/self-inspection-raises-3m-for-its-ai-powered-vehicle-inspections/ target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Readers reply: If you were prepping, what would your top five items be? (6.theguardian:15-5-2025)</div>
-        <p>The article invites readers to share their top five items for emergency prepping in light of recent power outages in Spain and Portugal. It comprises a collection of responses from various readers, each providing unique insights based on their experiences and priorities. Key themes include the importance of basic supplies like water, food, and means of light, as well as tools for communication and navigation. Readers suggest items such as camp stoves, candles, battery-powered devices, and emergency kits. The responses reflect a mix of practical advice for short-term outages and longer-term emergencies, showcasing individual perspectives shaped by personal experiences with crises like wildfires and blackouts. The overarching topic emphasizes preparedness and adaptability in the face of unforeseen situations. <a href=https://www.theguardian.com/lifeandstyle/2025/may/14/readers-reply-if-you-were-prepping-what-would-your-top-five-items-be target="_blank">link</a></p> 
-    </div>
-    <div class="news-item" data-source="theguardian">
-        <div class="headline">Could a ‘digital diet’ help me fix my bad phone habits? (4.theguardian:15-5-2025)</div>
-        <p>A 'digital diet' proposed by Dr. Kaitlyn Regehr in her book, *Smartphone Nation*, aims to help users regain control over their smartphone habits. The article describes the author's personal experience implementing Dr. Regehr's suggestions, which include tracking phone usage in a “phone fed journal” to identify habits like procrastination and mindless scrolling. The author realizes their tendency to get distracted and highlights two main problematic behaviors: “deliberate procrastination” to avoid challenging tasks and falling into the “oblivion vortex” where time slips away while using the phone.
-
-Regehr recommends strategies such as greyscaling the phone to reduce visual appeal, setting app limits, and creating screen-free zones. The goal is to foster mindful usage by focusing on apps that provide joy rather than mindless consumption. Overall, the article emphasizes raising awareness of smartphone interactions to improve digital well-being. <a href=https://www.theguardian.com/technology/2025/may/17/could-a-digital-diet-help-me-fix-my-bad-phone-habits target="_blank">link</a></p> 
-    </div>
-    </div>
 </body>
 </html>
