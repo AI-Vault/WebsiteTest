@@ -1,4 +1,4 @@
-# Toekomst van fotonische chips ligt (mede) in handen van het Eindhovense SMART Photonics
+# Opvulling wegens kapotte link
 Views: 98 (2025-05-07) [link](https://www.youtube.com/watch?v=d8wIAQTBiQM)
 
 ## Introductie
