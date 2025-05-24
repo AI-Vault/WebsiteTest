@@ -1,5 +1,6 @@
 # Hoe AI-agents de wereld veroveren en nu al het verschil maken
 Views: 1593 (2025-05-08) [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)
+
 ## Introductie en Gast
 De podcast "De Technoloog" nummer 442 verwelkomt Jelle Prins, een AI-expert en medeoprichter van Cradle, een startup die zich richt op het gebruik van AI in verschillende industrieën. De aflevering richt zich voornamelijk op AI-agents en hun rol in het optimaliseren van workflows.
 
