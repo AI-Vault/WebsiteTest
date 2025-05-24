@@ -1,5 +1,5 @@
 # Hoe AI-agents de wereld veroveren en nu al het verschil maken
-Views: 1593 (2025-05-08) 
+Views: 1593 (2025-05-08)
 [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)
 
 ## Introductie
