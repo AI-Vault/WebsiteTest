@@ -1,5 +1,5 @@
 # Hoe AI-agents de wereld veroveren en nu al het verschil maken
- Views: 1593 (2025-05-08) [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)## Introductie van AI Agents
+Views: 1593 (2025-05-08) [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)## Introductie van AI Agents
 Jelle Prins, medeoprichter van Cradle, bespreekt in deze aflevering van de podcast de rol van AI agents in het vereenvoudigen van workflows, vergeleken met traditionele interfaces zoals chatbots. Door gebruik te maken van AI agents kunnen gebruikers taken, zoals het opstellen van e-mails en het bouwen van applicaties, in enkele klikken automatiseren, wat voorheen veel tijd zou kosten.
 
 ## Functies en Vooruitgang van AI Agents
