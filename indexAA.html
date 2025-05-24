@@ -2,20 +2,40 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Markdown Nieuwsweergave</title>
+  <title>Markdown Navigator</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
-      background-color: #FAF9F6;
       font-family: Georgia, serif;
-      margin: 20px;
+      color: #111;
+      background-color: #fff;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      line-height: 1.6;
     }
 
-    .controls {
-      margin-bottom: 20px;
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
     }
 
-    .controls button {
+    p, li {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: #0000EE;
+      text-decoration: underline;
+    }
+
+    .nav-buttons {
+      margin-bottom: 2rem;
+    }
+
+    button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
       margin-right: 1rem;
@@ -25,101 +45,75 @@
       font-family: sans-serif;
     }
 
-    .controls button:disabled {
+    button:disabled {
       background-color: #ddd;
       cursor: not-allowed;
     }
 
     #status {
-      margin-bottom: 20px;
+      margin-bottom: 1.5rem;
       color: #666;
       font-style: italic;
-    }
-
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .news-item {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .news-item h1, 
-    .news-item h2, 
-    .news-item h3, 
-    .news-item h4, 
-    .news-item h5, 
-    .news-item h6 {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin: 1rem 0 0.5rem;
-    }
-
-    .news-item p, 
-    .news-item li {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-
-    .news-item a {
-      color: #0000EE;
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="controls">
-    <button id="loadAllBtn">📄 Laad alles</button>
+  <div class="nav-buttons">
+    <button id="prevBtn">⬅️ Vorige</button>
+    <button id="nextBtn">➡️ Volgende</button>
   </div>
 
-  <div id="status">Druk op 'Laad alles' om te beginnen.</div>
-  <div class="container" id="content"></div>
+  <div id="status">Pagina nog niet geladen.</div>
+  <div id="content">...</div>
 
   <script>
+    let index = 0;
     const contentDiv = document.getElementById('content');
     const statusDiv = document.getElementById('status');
-    const loadAllBtn = document.getElementById('loadAllBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
-    async function loadAllPages() {
-      contentDiv.innerHTML = '';
-      statusDiv.textContent = 'Laden...';
-      let i = 0;
-      let foundOne = false;
+    function loadPage(i) {
+      const filename = `index${i}.md`;
 
-      while (true) {
-        const filename = `index${i}.md`;
-        try {
-          const res = await fetch(filename);
-          if (!res.ok) break;
-          const md = await res.text();
+      fetch(filename)
+        .then(res => {
+          if (!res.ok) throw new Error('Niet gevonden');
+          return res.text();
+        })
+        .then(md => {
           const html = marked.parse(md);
-          const item = document.createElement('div');
-          item.className = 'news-item';
-          item.innerHTML = html;
-          contentDiv.appendChild(item);
-          i++;
-          foundOne = true;
-        } catch (err) {
-          break;
-        }
-      }
+          contentDiv.innerHTML = html;
+          statusDiv.textContent = `Toont: ${filename}`;
+          index = i;
 
-      if (foundOne) {
-        statusDiv.textContent = `Toont ${i} items.`;
-      } else {
-        statusDiv.textContent = 'Geen index-bestanden gevonden.';
-      }
-
-      loadAllBtn.disabled = true;
+          // Knoppenstatus aanpassen
+          prevBtn.disabled = index <= 0;
+          nextBtn.disabled = false;
+        })
+        .catch(err => {
+          statusDiv.textContent = `Bestand ${filename} bestaat niet.`;
+          if (i > index) {
+            nextBtn.disabled = true;
+          } else {
+            prevBtn.disabled = true;
+          }
+        });
     }
 
-    loadAllBtn.addEventListener('click', loadAllPages);
+    nextBtn.addEventListener('click', () => {
+      loadPage(index + 1);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (index > 0) {
+        loadPage(index - 1);
+      }
+    });
+
+    // Start bij index0.md
+    loadPage(0);
   </script>
 
 </body>
