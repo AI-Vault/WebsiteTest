@@ -12,13 +12,21 @@
     }
 
     .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
     }
 
     .controls button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
-      margin-right: 1rem;
       background-color: #eee;
       border: 1px solid #ccc;
       cursor: pointer;
@@ -31,9 +39,9 @@
     }
 
     #status {
-      margin-bottom: 20px;
       color: #666;
       font-style: italic;
+      white-space: nowrap;
     }
 
     .container {
@@ -49,20 +57,25 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .news-item h1, 
-    .news-item h2, 
-    .news-item h3, 
-    .news-item h4, 
-    .news-item h5, 
-    .news-item h6 {
+    .news-item h1 {
       font-size: 1.1rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem;
     }
 
-    .news-item p, 
+    .news-item h2,
+    .news-item h3,
+    .news-item h4,
+    .news-item h5,
+    .news-item h6 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .news-item p,
     .news-item li {
-      font-size: 1.1rem;
+      font-size: 1rem;
       margin-bottom: 1rem;
     }
 
@@ -75,11 +88,13 @@
 <body>
 
   <div class="controls">
-    <button id="prevBtn">← Previous</button>
-    <button id="nextBtn">Next →</button>
+    <div class="button-group">
+      <button id="prevBtn">← Previous</button>
+      <button id="nextBtn">Next →</button>
+    </div>
+    <div id="status">Laden...</div>
   </div>
 
-  <div id="status">Laden...</div>
   <div class="container" id="content"></div>
 
   <script>
@@ -90,12 +105,12 @@
 
     let allMarkdown = [];
     let currentIndex = 0;
-    const step = 1;
+    const step = 2;
 
     async function fetchAllMarkdown() {
       let i = 0;
       while (true) {
-        const filename = `index${i}.md`;
+        const filename = `technoloogPodcast/index${i}.md`;
         try {
           const res = await fetch(filename);
           if (!res.ok) break;
@@ -118,7 +133,7 @@
     function renderItems() {
       contentDiv.innerHTML = '';
       const start = Math.max(0, currentIndex);
-      const end = Math.min(allMarkdown.length, currentIndex + 2);
+      const end = Math.min(allMarkdown.length, currentIndex + step);
       for (let i = start; i < end; i++) {
         const item = document.createElement('div');
         item.className = 'news-item';
@@ -127,7 +142,7 @@
       }
 
       prevBtn.disabled = currentIndex <= 0;
-      nextBtn.disabled = currentIndex + 2 >= allMarkdown.length;
+      nextBtn.disabled = currentIndex + step >= allMarkdown.length;
     }
 
     prevBtn.addEventListener('click', () => {
@@ -138,13 +153,12 @@
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentIndex + 2 < allMarkdown.length) {
+      if (currentIndex + step < allMarkdown.length) {
         currentIndex += step;
         renderItems();
       }
     });
 
-    // Automatisch laden bij openen
     fetchAllMarkdown();
   </script>
 
