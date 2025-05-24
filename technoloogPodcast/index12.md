@@ -1,33 +1,37 @@
-# DeepSeek is het gevolg van een hyperkapitalisch China
+# 12. DeepSeek is het gevolg van een hyperkapitalisch China
 Views: 294 (2025-01-30) [link](https://www.youtube.com/watch?v=7NPFkTx4zRg)
 
 
- ## Inleiding tot de Discussie
-De aflevering bespreekt de opkomst van AI, specifiek de technologie van "Diep Ziek" (DeepSeek) en hoe deze in de context van de Chinese innovatie staat. Daniel en zijn gasten, waaronder John, delen hun ervaringen en meningen over de huidige technologieontwikkelingen, trends, en de geopolitieke implicaties van AI in China.
+ ## De aanwezigheid van gasten
+Daniel Mol introduceert John Ly, die een expert is in het verkennen van de AI-innovaties vanuit China en de impact van geopolitiek op technologie.
 
-## Diep Ziek en zijn Impact
-Diep Ziek is een stevige concurrent in de AI-arena, met mogelijkheden die opvallen vanwege de kosteneffectiviteit. John benadrukt dat de Chinese technologie zich ontwikkelt tegen de achtergrond van wereldwijde geopolitieke spanningen. De angst dat China achterloopt in AI wordt snel onderuitgehaald, met de vaststelling dat Chinese bedrijven in staat zijn om kwalitatieve innovaties te realiseren ondanks strenge technologiebeperkingen.
+## Deep Zek en AI ontwikkelingen
+Het gesprek behandelt de opkomst van Deep Zek, een AI-ontwikkelingsbedrijf in China, dat in staat is om concurrerende AI-modellen te bouwen tegen lagere kosten dan westerse bedrijven zoals OpenAI. Er wordt benadrukt dat China zich met veel agressie richt op technologische innovaties, vooral op het gebied van kunstmatige intelligentie.
 
-## Innovaties in China
-De gesprekken brengen naar voren dat Chinese bedrijven zoals Diep Ziek optimaal gebruik maken van beperkte middelen. Zij hebben de mogelijkheid om zeer efficiënte AI-modellen te trainen op minder krachtige hardware dan hun Amerikaanse tegenhangers. Dit geeft hen een voordeel in termen van kosten en productiviteit. 
+## De rol van de Chinese overheid
+De Chinese overheid speelt een cruciale rol in het bevorderen van technologische ontwikkelingen. Subsidies en een relatief minder gereguleerde omgeving maken het gemakkelijker voor innovatieve bedrijven. De overheid heeft duidelijke richtlijnen en wetten opgesteld die het voor bedrijven mogelijk maken om snel te innoveren.
 
-### Technologische Ontwikkelingen en Onderzoek
-Diep Ziek wordt onderbouwd door een identificatie van de strategische voordelen van open-source-modellen en machine learning. Het model van Diep Ziek is een distillatie van andere modellen, wat betekent dat ze gebruik maken van al bestaande kennis in de techsector. Dit leidt tot een uitwisseling van ideeën en bevordering van innovatie die in het Westen misschien moeilijker te realiseren is door strikte regelgeving.
+## Vergelijkingen met Silicon Valley
+John Ly stelt dat de onderzoeken en innovaties in China misschien als een ‘Spoetnik-moment’ kunnen worden gezien, waarbij China plotseling sterke AI-capaciteiten toont. Dit wordt vergeleken met hoe de Russen in de ruimte kwamen, wat leidde tot een paniek in de VS.
 
-## De Rol van de Chinese Overheid
-Een belangrijke factor in de successen van Chinese techbedrijven is de actieve rol van de overheid. John legt uit dat de overheid bedrijven in de technologie sector stimuleert door regelgeving en financiële ondersteuning, wat resulteert in een combinatie van collectivisme en kapitalisme.
+## Onderwerpen die besproken zijn
+- Het gebruik van technologie en data in de Chinese markt en de impact op de AI-ontwikkelingen.
+- De perceptie dat China achterloopt, terwijl dat in werkelijkheid niet het geval is.
+- De verschillen in cultuur en beleid tussen China en het Westen, vooral wat betreft open source innovatie en regelgeving.
 
-### AI en Regelgeving
-De vertegenwoordiger van de Chinese overheid geeft aan dat ze de ontwikkeling van AI nauwgezet volgen en ervoor zorgen dat er duidelijke richtlijnen zijn voor de implementatie in social media en andere platforms. Deze aanpak staat in contrast met de verwarring en vertragingen die in het Westen optreden als gevolg van overregulering.
+## Deep Zek's model en hardware
+Er wordt gesproken over de hardware die Deep Zek gebruikt, waarbij ze gebruik maken van oudere GPU-technologie in plaats van de nieuwste technologie van Nvidia door Amerikaanse sancties. Dit heeft hen gedwongen slimmer te zijn in hun benadering, wat geleid heeft tot efficiënte software-optimalisatie.
 
-## Vergelijkingen tussen het Westen en China
-De dialoog verwijst naar de "Spoetnik-momenten" waarbij China zich kan positioneren als een gelijkwaardige speler in de AI-ruimte. De gasten reflecteren op de wederzijdse voordelen en de noodzaak om samen te werken in plaats van strijd te voeren. Er wordt een duidelijke scheidslijn getrokken tussen de meer robuuste startupcultuur in China die de ontwikkeling van ideeën en innovatie aanmoedigt, in tegenstelling tot de steeds moeilijker te navigeren hierarchieën in Westerse bedrijven.
+## Onderwijs en arbeidsmarkt
+Het gesprek wijst ook op het verschil in de arbeidsmarkt en onderwijsstructuur tussen China en het Westen. In China worden harde wetenschappen en technologie zeer aangemoedigd, wat leidt tot een overvloed aan hoogopgeleide, technische werknemers.
 
-### De Chinese Startup Cultuur
-In China, fungeren startups vaak in een meer gestructureerde en open omgeving, met een sterke nadruk op samenwerking en competitie. Dit verschilt van westerse bedrijven, waar vaak een meer hiërarchische structuur en bureaucratische benaderingen voorkomen.
+## Impact op globale markten
+De invloed van Chinese bedrijven op wereldwijde markten, zoals de auto-industrie en e-commerce, wordt besproken, evenals hoe deze bedrijven de Westerse bedrijven onder druk zetten. Het idee dat de Chinese bedrijven in feite een alternatief bieden voor consumenten wereldwijd wordt benadrukt.
 
-## Conclusie
-Het gesprek eindigt met een relevante reflectie over de toekomst van innovatie in China, de rol van AI, en de initiatieven van de Chinese overheid die het landschap verder zullen vormen. De mogelijkheid dat China zijn economisch model kan verbeteren in vergelijking met het Westen - en tegelijkertijd zijn concurrentiepositie kan vergroten - blijft een onderwerp van discussie en reflectie.
+## Conclusies over de toekomst
+Er wordt een beeld geschetst van de toekomst waarin China en de VS verschillende visies hebben op technologie en innovatie. China lijkt een pad in te slaan dat de nadruk legt op gemeenschap en collectivisme, terwijl het Westen gefocust is op competitieve individuele innovatie.
 
-## AI nieuws en Innovaties
-Er wordt geen specifiek recent nieuws in de AI besproken, maar de algemene trend dat Chinese bedrijven snel opkomen en de vorderingen in hun technologie worden benadrukt. Dit plaatst een sterke focus op de evolutie van AI in China, en het potentieel voor grotere internationale samenwerking in het toekomstig digitale tijdperk.
+## AI nieuws en toekomstvisies
+Er wordt gespeculeerd over de verdere ontwikkeling van AI in China en de mogelijke samenwerking met Westerse landen om kennis te delen en gemeenschappelijke innovaties te ontwikkelen. 
+
+Deze inzichten geven een brede kijk op de huidige status van AI in China en de uitdagingen van de westerse wereld als het gaat om technologische vooruitgang in de komende jaren.
