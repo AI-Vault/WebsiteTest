@@ -52,7 +52,7 @@
 
     .news-item {
       background: white;
-      padding: 8px 15px 15px 15px; /* top, right, bottom, left */
+      padding: 8px 15px 15px 15px; /* minder top-padding */
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
@@ -61,6 +61,11 @@
       font-size: 1.1rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem;
+    }
+
+    /* 👉 Specifiek: geen marge bovenaan de eerste kop */
+    .news-item h1:first-child {
+      margin-top: 0;
     }
 
     .news-item h2,
