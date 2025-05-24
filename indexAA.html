@@ -31,17 +31,21 @@
       text-decoration: underline;
     }
 
-    #nextBtn {
+    .nav-buttons {
+      margin-bottom: 2rem;
+    }
+
+    button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
-      margin-bottom: 2rem;
+      margin-right: 1rem;
       background-color: #eee;
       border: 1px solid #ccc;
       cursor: pointer;
       font-family: sans-serif;
     }
 
-    #nextBtn:disabled {
+    button:disabled {
       background-color: #ddd;
       cursor: not-allowed;
     }
@@ -55,15 +59,20 @@
 </head>
 <body>
 
-  <button id="nextBtn">➡️ Volgende</button>
+  <div class="nav-buttons">
+    <button id="prevBtn">⬅️ Vorige</button>
+    <button id="nextBtn">➡️ Volgende</button>
+  </div>
+
   <div id="status">Pagina nog niet geladen.</div>
   <div id="content">...</div>
 
   <script>
     let index = 0;
-    const btn = document.getElementById('nextBtn');
     const contentDiv = document.getElementById('content');
     const statusDiv = document.getElementById('status');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
     function loadPage(i) {
       const filename = `index${i}.md`;
@@ -77,21 +86,34 @@
           const html = marked.parse(md);
           contentDiv.innerHTML = html;
           statusDiv.textContent = `Toont: ${filename}`;
+          index = i;
+
+          // Knoppenstatus aanpassen
+          prevBtn.disabled = index <= 0;
+          nextBtn.disabled = false;
         })
         .catch(err => {
-          statusDiv.textContent = `Einde bereikt: ${filename} bestaat niet.`;
-          btn.disabled = true;
+          statusDiv.textContent = `Bestand ${filename} bestaat niet.`;
+          if (i > index) {
+            nextBtn.disabled = true;
+          } else {
+            prevBtn.disabled = true;
+          }
         });
     }
 
-    btn.addEventListener('click', () => {
-      loadPage(index);
-      index++;
+    nextBtn.addEventListener('click', () => {
+      loadPage(index + 1);
     });
 
-    // Start met index0.md bij het laden
-    loadPage(index);
-    index++;
+    prevBtn.addEventListener('click', () => {
+      if (index > 0) {
+        loadPage(index - 1);
+      }
+    });
+
+    // Start bij index0.md
+    loadPage(0);
   </script>
 
 </body>
