@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Nieuws in Twee Kolommen</title>
+  <title>Markdown Nieuwsweergave</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
@@ -49,18 +49,18 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .news-item h1,
-    .news-item h2,
-    .news-item h3,
-    .news-item h4,
-    .news-item h5,
+    .news-item h1, 
+    .news-item h2, 
+    .news-item h3, 
+    .news-item h4, 
+    .news-item h5, 
     .news-item h6 {
       font-size: 1.1rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem;
     }
 
-    .news-item p,
+    .news-item p, 
     .news-item li {
       font-size: 1.1rem;
       margin-bottom: 1rem;
@@ -75,50 +75,52 @@
 <body>
 
   <div class="controls">
-    <button id="prevBtn">⬅️ Vorige</button>
-    <button id="nextBtn">➡️ Volgende</button>
+    <button id="loadAllBtn">📄 Laad alles</button>
   </div>
 
-  <div id="status">Toont index0.md en index1.md</div>
+  <div id="status">Druk op 'Laad alles' om te beginnen.</div>
   <div class="container" id="content"></div>
 
   <script>
-    let startIndex = 0;
-
     const contentDiv = document.getElementById('content');
     const statusDiv = document.getElementById('status');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
+    const loadAllBtn = document.getElementById('loadAllBtn');
 
-    async function loadPair(i) {
+    async function loadAllPages() {
       contentDiv.innerHTML = '';
-      let loaded = 0;
+      statusDiv.textContent = 'Laden...';
+      let i = 0;
+      let foundOne = false;
 
-      for (let j = 0; j < 2; j++) {
-        const index = i + j;
-        const filename = `index${index}.md`;
-
+      while (true) {
+        const filename = `index${i}.md`;
         try {
           const res = await fetch(filename);
-          if (!res.ok) throw new Error();
+          if (!res.ok) break;
           const md = await res.text();
           const html = marked.parse(md);
-          const div = document.createElement('div');
-          div.className = 'news-item';
-          div.innerHTML = html;
-          contentDiv.appendChild(div);
-          loaded++;
+          const item = document.createElement('div');
+          item.className = 'news-item';
+          item.innerHTML = html;
+          contentDiv.appendChild(item);
+          i++;
+          foundOne = true;
         } catch (err) {
-          const div = document.createElement('div');
-          div.className = 'news-item';
-          div.innerHTML = `<p><em>index${index}.md niet gevonden.</em></p>`;
-          contentDiv.appendChild(div);
+          break;
         }
       }
 
-      statusDiv.textContent = `Toont index${i}.md en index${i + 1}.md`;
-      prevBtn.disabled = i <= 0;
+      if (foundOne) {
+        statusDiv.textContent = `Toont ${i} items.`;
+      } else {
+        statusDiv.textContent = 'Geen index-bestanden gevonden.';
+      }
+
+      loadAllBtn.disabled = true;
     }
 
-    nextBtn.addEventListener('click', () => {
-      startIndex++;
+    loadAllBtn.addEventListener('click', loadAllPages);
+  </script>
+
+</body>
+</html>
