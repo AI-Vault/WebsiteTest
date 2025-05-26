@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Slides & Tekst</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      font-family: sans-serif;
+      height: 100vh;
+    }
+    .left, .right {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .left img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+    .header select {
+      font-size: 1em;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="left">
+    <img id="slide-image" src="" alt="Slide afbeelding">
+  </div>
+  <div class="right">
+    <div class="header">
+      <label for="slide-selector">Kies slide: </label>
+      <select id="slide-selector" onchange="loadSlide(this.value)">
+        <!-- opties worden automatisch geladen -->
+      </select>
+    </div>
+    <div id="markdown-content"></div>
+  </div>
+
+  <script>
+    const totalSlides = 10; // <-- Pas dit aan op het aantal slides dat je hebt
+
+    function pad(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    function loadSlide(slideNum) {
+      const num = pad(slideNum);
+      document.getElementById('slide-image').src = `slides/biology/slide${num}.png`;
+      
+      fetch(`slides/biology/tekst${num}.md`)
+        .then(res => res.text())
+        .then(text => {
+          document.getElementById('markdown-content').innerHTML = marked.parse(text);
+        });
+    }
+
+    function populateSelector() {
+      const selector = document.getElementById('slide-selector');
+      for (let i = 1; i <= totalSlides; i++) {
+        const num = pad(i);
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `Slide ${i}`;
+        selector.appendChild(option);
+      }
+      selector.value = 1;
+      loadSlide(1);
+    }
+
+    populateSelector();
+  </script>
+</body>
+</html>
