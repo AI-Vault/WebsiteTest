@@ -2,100 +2,95 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Slides & Uitleg</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slide Viewer</title>
   <style>
     body {
+      font-family: sans-serif;
       margin: 0;
-      height: 100vh;
       display: flex;
-      font-family: Arial, sans-serif;
+      flex-direction: column;
+      height: 100vh;
     }
-    .left, .right {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .left img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-    }
+
     .header {
+      padding: 10px;
+      background-color: #f4f4f4;
       display: flex;
       justify-content: flex-end;
+      gap: 10px;
       align-items: center;
-      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
     }
-    .header label {
-      margin-right: 10px;
+
+    .container {
+      flex: 1;
+      display: flex;
+      height: 100%;
     }
-    select {
-      font-size: 1em;
-      padding: 5px;
+
+    .left-pane, .right-pane {
+      flex: 1;
+      overflow: auto;
+      padding: 10px;
+      box-sizing: border-box;
     }
-    #markdown-content h1, h2, h3 {
-      margin-top: 1em;
+
+    .left-pane img {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
     }
   </style>
 </head>
 <body>
-  <div class="left">
-    <img id="slide-image" src="" alt="Slide afbeelding">
+  <div class="header">
+    <label for="slideSelect">Kies een slide:</label>
+    <select id="slideSelect">
+      <option value="01">Slide 01</option>
+      <option value="02">Slide 02</option>
+      <option value="03">Slide 03</option>
+      <!-- Voeg hier meer opties toe indien nodig -->
+    </select>
   </div>
-  <div class="right">
-    <div class="header">
-      <label for="slide-selector">Kies slide:</label>
-      <select id="slide-selector" onchange="loadSlide(this.value)">
-        <!-- Opties worden hieronder toegevoegd -->
-      </select>
+  <div class="container">
+    <div class="left-pane">
+      <img id="slideImage" src="slide01.png" alt="Slide 01">
     </div>
-    <div id="markdown-content"></div>
+    <div class="right-pane">
+      <div id="markdownContent">Laden...</div>
+    </div>
   </div>
 
+  <!-- Marked.js (voor Markdown naar HTML conversie) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    const totalSlides = 8; // Pas dit aan op het werkelijke aantal slides
+    function loadSlide(slideNumber) {
+      const padded = slideNumber.padStart(2, '0');
+      document.getElementById('slideImage').src = `slides/biology/slide${padded}.png`;
 
-    function pad(num) {
-      return num.toString().padStart(2, '0');
-    }
-
-    function loadSlide(slideNum) {
-      const num = pad(slideNum);
-
-      // Afbeelding laden
-      document.getElementById('slide-image').src = `slides/biology/slide${num}.png`;
-
-      // Markdown ophalen en renderen
-      fetch(`slides/biology/tekst${num}.md`)
-        .then(res => {
-          if (!res.ok) throw new Error(`Markdown bestand niet gevonden: tekst${num}.md`);
-          return res.text();
+      fetch(`slides/biology/tekst${padded}.md`)
+        .then(response => {
+          if (!response.ok) throw new Error("Niet gevonden");
+          return response.text();
         })
-        .then(text => {
-          // Gebruik marked.parse om HTML te maken
-          const html = marked.parse(text);
-          document.getElementById('markdown-content').innerHTML = html;
+        .then(md => {
+          const html = marked.parse(md);
+          document.getElementById('markdownContent').innerHTML = html;
         })
         .catch(err => {
-          document.getElementById('markdown-content').innerHTML = `<p style="color:red;">Fout bij laden van tekst${num}.md: ${err.message}</p>`;
+          document.getElementById('markdownContent').innerHTML = "<p><em>Markdownbestand niet gevonden.</em></p>";
         });
     }
 
-    function populateSelector() {
-      const selector = document.getElementById('slide-selector');
-      for (let i = 1; i <= totalSlides; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = `Slide ${i}`;
-        selector.appendChild(option);
-      }
-      selector.value = 1;
-      loadSlide(1);
-    }
+    document.getElementById('slideSelect').addEventListener('change', function () {
+      loadSlide(this.value);
+    });
 
-    populateSelector();
+    window.addEventListener('load', () => {
+      loadSlide("01");
+    });
   </script>
 </body>
 </html>
