@@ -56,7 +56,7 @@
   </div>
   <div class="container">
     <div class="left-pane">
-      <img id="slideImage" src="slides/biology/slide01.png" alt="Slide 01">
+      <img id="slideImage" src="slide01.png" alt="Slide 01">
     </div>
     <div class="right-pane">
       <div id="markdownContent">Laden...</div>
@@ -68,9 +68,9 @@
   <script>
     function loadSlide(slideNumber) {
       const padded = slideNumber.padStart(2, '0');
-      document.getElementById('slideImage').src = `slides/biology/slide${padded}.png`;
+      document.getElementById('slideImage').src = `slide${padded}.png`;
 
-      fetch(`slides/biology/tekst${padded}.md`)
+      fetch(`tekst${padded}.md`)
         .then(response => {
           if (!response.ok) throw new Error("Niet gevonden");
           return response.text();
