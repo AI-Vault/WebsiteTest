@@ -1,6 +1,5 @@
 # WebsiteTest
 
-This is my first website page
 
 The address of this page is 
 
