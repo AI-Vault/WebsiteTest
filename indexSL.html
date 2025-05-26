@@ -55,7 +55,7 @@
   </div>
 
   <script>
-    const totalSlides = 9; // <-- PAS AAN AAN HET AANTAL SLIDES DAT JE HEBT
+    const totalSlides = 8; // Pas dit aan op het werkelijke aantal slides
 
     function pad(num) {
       return num.toString().padStart(2, '0');
@@ -64,30 +64,28 @@
     function loadSlide(slideNum) {
       const num = pad(slideNum);
 
-      // Laad afbeelding uit slides/biology/
-      const img = document.getElementById('slide-image');
-      img.src = `slides/biology/slide${num}.png`;
-      img.alt = `Slide ${slideNum}`;
+      // Afbeelding laden
+      document.getElementById('slide-image').src = `slides/biology/slide${num}.png`;
 
-      // Laad bijbehorende markdown uit slides/biology/
+      // Markdown ophalen en renderen
       fetch(`slides/biology/tekst${num}.md`)
         .then(res => {
           if (!res.ok) throw new Error(`Markdown bestand niet gevonden: tekst${num}.md`);
           return res.text();
         })
         .then(text => {
+          // Gebruik marked.parse om HTML te maken
           const html = marked.parse(text);
           document.getElementById('markdown-content').innerHTML = html;
         })
         .catch(err => {
-          document.getElementById('markdown-content').innerHTML = `<p style="color: red;">Fout bij laden van markdown: ${err.message}</p>`;
+          document.getElementById('markdown-content').innerHTML = `<p style="color:red;">Fout bij laden van tekst${num}.md: ${err.message}</p>`;
         });
     }
 
     function populateSelector() {
       const selector = document.getElementById('slide-selector');
       for (let i = 1; i <= totalSlides; i++) {
-        const num = pad(i);
         const option = document.createElement('option');
         option.value = i;
         option.textContent = `Slide ${i}`;
