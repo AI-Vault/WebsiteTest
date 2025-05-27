@@ -1,21 +1,25 @@
+# Uitleg over Grafen
+
 ## Grafen
+Een graaf wordt weergegeven door de tuple \( G = (V, X_V, E, X_E) \), waarbij:
 
-### Representatie van een graaf:
+- \( V \) de knopen zijn met kenmerken \( X_V \in \mathbb{R}^{|V| \times n} \)
+- \( E \) de randen zijn met kenmerken \( X_E \in \mathbb{R}^{|E| \times m} \)
 
-- Een graaf wordt weergegeven door de tupel \( G = (V, X_V, E, X_E) \), waarbij:
-  - \( V \) de knopen zijn met kenmerken \( X_V \) met dimensies \( \mathbb{R}^{|V| \times n} \)
-  - \( E \) de randen zijn met kenmerken \( X_E \) met dimensies \( \mathbb{R}^{|E| \times m} \)
+Hierbij zijn \( n \) en \( m \) de dimensies van de respectieve kenmerken.
 
-### Probleem met graafdata:
-
-- **Verschillende invoervormen en -groottes**: De data van grafen kunnen sterk variëren in structuur en formaat.
+## Probleem met grafgegevens
+- **Verschillende invoervormen en -groottes**: Grafen kunnen verschillende structuren en aantallen knopen/randen hebben, wat problemen kan veroorzaken bij de verwerking.
   
-- **Isomorfisme van grafen**: Het netwerk moet in staat zijn om niet-isomorfe grafen te onderscheiden, d.w.z. grafen die niet identiek zijn ondanks een soortgelijke structuur.
+- **Isomorfisme van Grafen**: Het netwerk moet in staat zijn om onderscheid te maken tussen niet-isomorfe grafen. Twee grafen zijn isomorf als ze dezelfde structuur hebben, ook al zijn de knopen anders benoemd.
 
-- **Permutatie-invariantie op graafniveau**: Netwerken moeten een output geven die niet verandert als knopen of randen binnen de graaf permuteren.
+- **Permutatie-invariantie op graafniveau**: Netwerken moeten in staat zijn om de output op graafniveau invariant te maken, wat betekent dat de volgorde van knopen en randen niet uitmaakt.
 
-- **Permutatie-equivalentie op knoopniveau**: Dit betekent dat als we de volgorde van knopen veranderen (permutatie), de output overeenkomstig moet veranderen op een voorspelbare manier, maar in dezelfde relatie tot de permutaties van de invoer.
+- **Permutatie-equiavriantie op knooppuntniveau**: Netwerken moeten zorgen voor gelijke output wanneer de knopen op dezelfde manier worden verwisseld.
 
-### Kenmerken van de grafiek:
+## Visuele Representatie
+- **Knoopkenmerken**: De kleur van de knopen in de graf stelt verschillende eigenschappen of waarden voor.
+  
+- **Randkenmerken**: De sterkte van de verbinding tussen knopen, die wordt weergegeven door de gewichten van de randen in de graf.
 
-- **K
+Met deze concepten in gedachten kunnen we grafen effectiever analyseren en benutten binnen machine learning en neurale netwerken.
