@@ -1,21 +1,22 @@
 # Uitleg van de Slide: Message Passing Layer
 
-## Inleiding
-De slide bespreekt het concept van "message passing" lagen, wat een essentieel onderdeel is van grafische neurale netwerken (GNNs). Het idee is dat knopen in een netwerk informatie uitwisselen, wat helpt bij het leren en maken van voorspellingen.
+## Message Passing Laag
 
-## Kernconcept
-- **Berichtenpassing**: Het basisidee is dat alle berichtenpassing lagen hetzelfde concept volgen, waarbij de parameter \( k \) staat voor de iteratie van het berichtenverkeer en \( v \) voor een specifieke knoop in het netwerk.
+- Alle message passing lagen volgen hetzelfde concept (waarbij \( k \) de iteratie van message passing is en \( v \) een knoop).
   
-  De updateformule is als volgt:
+- De update formule voor een knoop \( v \) is als volgt gedefinieerd:
   
-  \[
-  h^{(k+1)}_v = UPDATE(x_v, h^{(k)}_v, AGGREGATE(\{h^{(k)}_u | u \in N(v)\}))
-  \]
+\[ 
+h_v^{(k+1)} = \text{UPDATE}\left(x_v, h_v^{(k)}, \text{AGGREGATE}\left(\{h_u^{(k)} \,|\, u \in \mathcal{N}(v)\}\right)\right) 
+\]
 
-  Hierin:
-  - \( h^{(k)}_v \) is de status van knoop \( v \) op iteratie \( k \).
-  - \( x_v \) is de invoerfunctie voor knoop \( v \).
-  - \( N(v) \) zijn de buren van knoop \( v \), en van hen worden de berichten verzameld.
+### Uitleg van de Formule
 
-## Varianten van GNNs
-De verschillende types van grafische neurale netwerken zijn afhankelijk van de keuzes die gemaakt worden voor de functies `UPDATE` en
+- **\( h_v^{(k+1)} \):** Dit is de geüpdatete representatie van knoop \( v \) na \( k+1 \) iteraties.
+- **UPDATE:** Een functie die de knoop- en buurtrepresentaties combineert tot een nieuwe representatie.
+- **AGGREGATE:** Een functie die de representaties van de aangrenzende knopen (\( \mathcal{N}(v) \)) samenvoegt.
+  
+### Varianten van Graaf Neurale Netwerken (GNNs)
+
+- De verschillende varianten van GNNs hangen af van de keuze van de functies **UPDATE** en **AGGREGATE**. Bijvoorbeeld:
+  - **AGGREGATE:**
