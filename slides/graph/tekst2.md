@@ -1,13 +1,21 @@
-# Uitleg van de slide: "A Comprehensive Survey on Graph Neural Networks"
+# Uitleg van de Slide: A Comprehensive Survey on Graph Neural Networks
 
-## Samenvatting
+### Overzicht
 
-In de laatste jaren heeft deep learning veel verschillende machine learning-taken getransformeerd, zoals beeldclassificatie en videoprocessing, en zelfs gebieden zoals spraakherkenning en natuurlijke taalverwerking. De data voor deze taken zijn doorgaans georganiseerd in de Euclidische ruimte. Echter, er is een groeiende vraag naar toepassingen waarbij data afkomstig zijn uit niet-Euclidische domeinen en worden weergegeven als grafen, met complexe relaties en onderlinge afhankelijkheden tussen objecten. De complexiteit van het grafische data integreren vormt een uitdaging voor bestaande machine learning-algoritmen.
+Deze slide is een samenvatting van een overzichtsartikel over Graph Neural Networks (GNNs). Het artikel benadrukt de opkomst van deep learning in verschillende machine learning taken, zoals beeldclassificatie, videoprocessing, spraakherkenning en natuurlijke taalverwerking.
 
-Recent is er meer onderzoek gedaan naar de uitbreiding van deep learning-benaderingen voor datatypes die in grafvorm zijn georganiseerd. Dit artikel biedt een uitgebreide overzicht van graf neural networks (GNN's) en de ontwikkelingen in dit vakgebied. De auteurs stellen een nieuwe taxonomie voor om de huidige stand van zaken in GNN's te categoriseren, inclusief verschillende typen netwerken zoals reguliere GNN's en convolutionele netwerken.
+### Inhoud van de Samenvatting
 
-## Belangrijke punten
+1. **Revolutie in Deep Learning**: 
+   - Deep learning heeft veel machine learning taken in de afgelopen jaren aanzienlijk veranderd. Het biedt krachtige technieken voor het verwerken en begrijpen van verschillende vormen van gegevens.
 
-- **Deep Learning**: Heeft een grote impact op diverse machine learning-toepassingen.
-- **Grafische Data**: Complexiteit van grafen komt door relaties tussen objecten die niet eenvoudig in traditionele dataformaten passen.
-- **Onderzoek naar GNN's**: Recent ontwikkeld om oplossingen te bieden
+2. **Complexiteit van Grafische Gegevens**:
+   - Gegevens in deze taken worden doorgaans weergegeven in de Euclidische ruimte. Echter, een groeiend aantal toepassingen genereert data uit niet-Euclidische domeinen, die worden weergegeven als grafieken met complexe relaties en afhankelijkheden tussen objecten.
+   - De complexiteit van grafische data vormt aanzienlijke uitdagingen voor de bestaande machine learning-algoritmen.
+
+3. **Recente Studies en Voorstellen**:
+   - Recente studies hebben zich gericht op het uitbreiden van deep learning benaderingen voor grafiekdata.
+   - Dit artikel biedt een uitgebreid overzicht van de huidige stand van zaken betreffende graph neural networks.
+
+4. **Vier Categorieën van GNNs**:
+   - Het artikel stelt een nieuwe taxonomie voor, die de state-of
