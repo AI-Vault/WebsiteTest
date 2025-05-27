@@ -1,24 +1,22 @@
-# Uitleg van de Slide over Graph Reinforcement Learning
+# Graf Reinforcement Learning
 
-## Overzicht
+## Inleiding
+Graf reinforcement learning (GRL) is een benadering die technieken uit beide grafrepresentatie en reinforcement learning combineert om diverse taken aan te pakken. De slide verdeelt de concepten in verschillende secties.
 
-Deze slide behandelt het concept van **Graph Reinforcement Learning**, dat in feite twee hoofdtakken heeft. Elke tak heeft specifieke toepassingen en uitdagingen.
+## Netwerkrepresentatie Learning
+### Doel
+Het leren van een functie \( \phi: G \rightarrow \mathbb{R}^n \), waarbij \( G \) een graf is, en de output een representatie in een continue ruimte is.
 
-## Deelgebieden
+### Adversarial Attacks
+- **Benadering:** Het verbeteren van de robuustheid van netwerken tegen verstoringen in de inputdata.
+- **Toepassing:** Dit is relevant in scenario's waar aanvallers proberen netwerken te manipuleren door kleine, opzettelijke veranderingen aan te brengen in de inputdata.
 
-1. **Netwerkrepresentatieleren**
-   - **Beschrijving:** Dit onderdeel richt zich op het leren van de representatie van grafen.
-   - **Doelstelling:** Ontwikkel een functie (φ) die een graaf (G) omzet in een n-dimensionale ruimte (\( \mathbb{R}^n \)).
-   
-2. **Adversarial Attacks**
-   - **Beschrijving:** Dit gebied betreft het beveiligen van netwerken tegen verstoringen.
-   - **Doelstelling:** Maak netwerken robuuster tegen verstoringen in ingevoerde data, zodat de prestaties niet significant dalen als er storingen voorkomen.
+### Relationeel Redeneren
+- **Doel:** Het vinden van minimale Directed Acyclic Graphs (DAG) subgrafen die causaliteit definiëren.
+- **Toepassing:** Dit helpt bij het begrijpen van de onderlinge relaties en de causaliteit tussen verschillende variabelen binnen een netwerk.
 
-3. **Relational Reasoning**
-   - **Beschrijving:** Dit richt zich op het analyseren van relaties binnen geordende graafstructuren.
-   - **Doelstelling:** Identificeer minimale subgrafen van gerichte acyclische grafen (DAG's) die causaliteit definiëren.
+## Toepassing op Reinforcement Learning taken
+- Dit onderdeel richt zich op sequentiële taken waarbij agenten leren door ervaringen, vaak door interactie met een omgeving en het optimaliseren van een beleid op basis van beloningen. 
 
-## Toepasbaarheid
-
-- **Op versterkingsleertaken (sequentieel)**
-  - **Beschrijving:** Grafen kunnen worden gebruikt in zowel sequentiële leertaken, waarbij de aanpak en methodologie van versterkings
+## Conclusie
+Graf reinforcement learning biedt een krachtige manier om complexe taken aan te pakken door gebruik te maken van de onderliggende structuur van grafen en de leerprocessen van reinforcement learning. Dit stelt onderzoekers en ontwikkelaars in staat om netwerken te creëren die zowel robuust als effectief zijn in het beheren van ingewikkelde relaties en taken in dynamische omgevingen.
