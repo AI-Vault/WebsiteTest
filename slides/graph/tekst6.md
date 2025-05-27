@@ -1,19 +1,21 @@
-# Uitleg van de slide: Vroegste voorbeelden van recurrente GNN's
+# Uitleg van de Slide: Recurrent Graph Neural Networks
 
-## Basisconcept
-De slide behandelt de eerste voorbeelden van recurrente graf-neurale netwerken (GNN's), die zijn gebaseerd op het idee van een recurrent netwerk. 
+## Inleiding
 
-- **UPDATE en AGGREGATE:** Deze twee functies zijn hetzelfde voor elke iteratie van de berichtoverdracht in het netwerk. Dit betekent dat de wijze waarop informatie wordt bijgewerkt en geaggregeerd, consistent blijft gedurende het proces.
+De slide bespreekt vroege voorbeelden van recurrente Graph Neural Networks (GNNs). Deze netwerken zijn gebaseerd op het idee van een recurrent netwerk, waarbij de **UPDATE** en **AGGREGATE** stappen constant blijven voor elke iteratie van message passing.
 
-## Formule
-De kernformulier is gegeven als:
-\[ h_v^{(k+1)} = f (x_{v}^{(k)}, h_{v}^{(k)}, g (\{ h_{u}^{(k)} | u \in N(v) \})) \]
-Hierbij:
-- \( h_v^{(k)} \) is de toestand van de knoop \( v \) op iteratie \( k \).
-- \( x_v^{(k)} \) is de input van de knoop \( v \) op iteratie \( k \).
-- \( N(v) \) zijn de naburige knopen van \( v \).
+## Formule voor Update van Nodes
 
-## Gated GNN's
-- **Referentie:** [Li et al., 2015]
-- De update voor deze GNN's wordt uitgevoerd met een GRU (Gated Recurrent Unit):
-\[ h_v^{(k+1)} = GRU (h_v^{
+1. **Algemene Update Regel**:
+   - De update van de node-representatie \( h_v^{(k+1)} \) wordt bepaald door een functie \( f \).
+   - Invoer voor \( f \) bestaat uit:
+     - \( x_v \): Oorspronkelijke kenmerken van de node \( v \).
+     - \( h_v^{(k)} \): Huidige staat van node \( v \).
+     - \( g \): Aggregatiefunctie die informatie verzamelt van de naburige nodes \( u \in \mathcal{N}(v) \).
+
+## Specifieke Implementaties
+
+1. **Gated GNNs (Li et al., 2015)**:
+   - Gebruikt een Gated Recurrent Unit (GRU) om de update te berekenen:
+   \[
+   h_v^{(k+1)} = \text{GRU} \left( h_v^{(k)}, \sum_{u \in \mathcal{N}(v)} W \, h_u^{
