@@ -1,17 +1,16 @@
-# Uitleg van de slide: Message Passing Layer
+# Uitleg van de Slide: "Message Passing Layer: Idea"
 
-## Introductie
-De voorgestelde slide illustreert het kernconcept van de "Message Passing" laag in neurale netwerken, specifiek gericht op grafen. Dit mechanisme is cruciaal voor node-embedding en grafgebaseerde leerprocessen.
+## Basisconcept
 
-## Links: Grafstructuur
-- **Node 1** (de centrale node, gemarkeerd met een envelop) ontvangt berichten van zijn buren, namelijk **Node 2**, **Node 3**, en **Node 4**.
-- Iedere node heeft een set van kenmerken (bijvoorbeeld \(x_1, x_2, ..., x_6\)) die de informatie vertegenwoordigen die ze doorgeven.
-- **Node 1** verzamelt en verwerkt deze informatie om zijn eigen representatie te verbeteren.
+De slide verbeeldt het concept van een "Message Passing" laag binnen een Graph Neural Network (GNN). Deze laag wordt gebruikt om informatie door een grafiek te verspreiden, waardoor knopen (nodes) gegevens ontvangen en versturen van en naar aangrenzende knopen.
 
-## Berichtenoverdracht
-- De pijlen in de grafiek tonen de richting van de communicatie aan, waar **Node 2** en **Node 3** berichten sturen naar **Node 1**.
-- De berichten die tussen de nodes worden uitgewisseld, worden samengevoegd en vervolgens gebruikt om een nieuwe representatie of context van **Node 1** te creëren.
+## Linkerdeel van de Slide
 
-## Rechts: Resultaat van Berichtenoverdracht
-- De structuur aan de rechterkant toont de nieuwe toestand van de grafen na het berichtenoverdrachtproces voor **Node 1**.
-- Hier zien we dat de context van **
+- **Nodes**: De knopen worden weergegeven als cirkels met verschillende kleuren en nummers erin. Elke node heeft een specifieke set kenmerken.
+- **Kenmerken**: Boven elke node staan individuele kenmerkvectoren (\[x1, x2, x3, x4, x5, x6\]) die de kenmerken van die specifieke node representeren.
+- **Berichtverzending**: Voor node 1 (blauw) wordt een envelop weergegeven, wat impliceert dat node 1 gegevens of berichten zal ontvangen van zijn aangrenzende knopen (2, 3).
+
+## Rechterdeel van de Slide
+
+- **Verzonden en Ontvangen Informatie**: Na "Message Passing" hebben de knopen nog steeds hun individueel aangewezen kenmerken, maar hun representaties zijn bijgewerkt. Dit bijwerken gebeurt door de kenmerken van naburige knopen te integreren.
+- **Illustratie van Node 1**: Node 1 toont nu een veranderde toestand na het doorlopen van het message passing proces
