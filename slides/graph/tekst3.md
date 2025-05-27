@@ -1,20 +1,21 @@
-# Uitleg van de Slide over Graphs
+## Grafen
 
-## Graphs
-Een graaf wordt weergegeven door de tuple \( G = (V, X_V, E, X_E) \), waarbij:
-- \( V \) de knopen zijn met kenmerken \( X_V \in \mathbb{R}^{|V| \times n} \)
-- \( E \) de randen zijn met kenmerken \( X_E \in \mathbb{R}^{|E| \times m} \)
+### Representatie van een graaf:
 
-### Kenmerken
-- **Node features**: Dit zijn de kenmerken van de knopen, bijvoorbeeld de kleur van de knoop.
-- **Edge features**: Dit verwijst naar de kenmerken van de randen, zoals de sterkte van de verbinding.
+- Een graaf wordt weergegeven door de tupel \( G = (V, X_V, E, X_E) \), waarbij:
+  - \( V \) de knopen zijn met kenmerken \( X_V \) met dimensies \( \mathbb{R}^{|V| \times n} \)
+  - \( E \) de randen zijn met kenmerken \( X_E \) met dimensies \( \mathbb{R}^{|E| \times m} \)
 
-## Probleem met grafdata
-1. **Verschillende invoervormen en -groottes**:
-   - Grafen kunnen in grootte en structuur zeer verschillend zijn, wat consistentie in de invoer bemoeilijkt.
+### Probleem met graafdata:
 
-2. **Isomorfisme van Grafen**: 
-   - Netwerken moeten in staat zijn om niet-isomorfe grafen van elkaar te onderscheiden. Dit betekent dat twee verschillende grafen die dezelfde structuur hebben, maar verschillende labels (bijvoorbeeld knoopnamen), uniek behandeld moeten worden.
+- **Verschillende invoervormen en -groottes**: De data van grafen kunnen sterk variëren in structuur en formaat.
+  
+- **Isomorfisme van grafen**: Het netwerk moet in staat zijn om niet-isomorfe grafen te onderscheiden, d.w.z. grafen die niet identiek zijn ondanks een soortgelijke structuur.
 
-3. **Netwerken moeten permutatie-invariant zijn op grafniveau**:
-   - De output van een netwerk moet constant blijven bij permutaties van knopen. Het
+- **Permutatie-invariantie op graafniveau**: Netwerken moeten een output geven die niet verandert als knopen of randen binnen de graaf permuteren.
+
+- **Permutatie-equivalentie op knoopniveau**: Dit betekent dat als we de volgorde van knopen veranderen (permutatie), de output overeenkomstig moet veranderen op een voorspelbare manier, maar in dezelfde relatie tot de permutaties van de invoer.
+
+### Kenmerken van de grafiek:
+
+- **K
