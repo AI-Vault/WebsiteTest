@@ -1,16 +1,21 @@
-# Uitleg van de Slide: "Message Passing Layer: Idea"
+# Uitleg van de Message Passing Layer
 
-## Basisconcept
+## Inleiding
+De slide toont het concept van een Message Passing Layer, een essentieel onderdeel van grafgebaseerde neural nets zoals Graph Neural Networks (GNNs). Dit mechanisme stelt knopen (nodes) in staat om informatie uit hun omgeving te verzamelen en te integreren.
 
-De slide verbeeldt het concept van een "Message Passing" laag binnen een Graph Neural Network (GNN). Deze laag wordt gebruikt om informatie door een grafiek te verspreiden, waardoor knopen (nodes) gegevens ontvangen en versturen van en naar aangrenzende knopen.
+## Structuur
+### Links
+- De afbeelding aan de linkerkant illustreert een graf met knopen en verbindingen. 
+- Elke knoop is gemarkeerd (bijvoorbeeld knoop 1, 2, 3, en 4), en elke verbinding geeft een communicatiepad aan waarlangs berichten kunnen worden gestuurd.
+- Knoop 1, centraal gepositioneerd, verstuurt berichten naar zijn buren (knoop 2 en 3).
 
-## Linkerdeel van de Slide
+### Berichtpassing
+- Knoop 1 ontvangt informatie van zijn buurknopen en stuurt berichten naar hen.
+- Dit proces van "berichten uitwisselen" stelt de knopen in staat om contextuele informatie te verzamelen die hen helpt bij het maken van beslissingen.
 
-- **Nodes**: De knopen worden weergegeven als cirkels met verschillende kleuren en nummers erin. Elke node heeft een specifieke set kenmerken.
-- **Kenmerken**: Boven elke node staan individuele kenmerkvectoren (\[x1, x2, x3, x4, x5, x6\]) die de kenmerken van die specifieke node representeren.
-- **Berichtverzending**: Voor node 1 (blauw) wordt een envelop weergegeven, wat impliceert dat node 1 gegevens of berichten zal ontvangen van zijn aangrenzende knopen (2, 3).
+### Rechts
+- De afbeelding aan de rechterkant toont het resultaat van de berichtpassing voor knoop 1.
+- Na het proces is er een geactualiseerde weergave van de grafstructuur, waarbij de informatie die is verzameld tijdens het berichten versturen wordt weergegeven.
 
-## Rechterdeel van de Slide
-
-- **Verzonden en Ontvangen Informatie**: Na "Message Passing" hebben de knopen nog steeds hun individueel aangewezen kenmerken, maar hun representaties zijn bijgewerkt. Dit bijwerken gebeurt door de kenmerken van naburige knopen te integreren.
-- **Illustratie van Node 1**: Node 1 toont nu een veranderde toestand na het doorlopen van het message passing proces
+## Conclusie
+Het idee van een Message Passing Layer is cruciaal voor het verbeteren van de representatie van grafen in machine learning. Door informatie uit de omgeving van een knoop te integreren, kunnen modellen beter presteren in taken zoals classificatie en voorspelling binnen grafgegevens. Dit mechanisme versterkt de onderlinge samenwerking en interactie tussen de knopen in een netwerk.
