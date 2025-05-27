@@ -1,22 +1,32 @@
 # Uitleg van de Slide: Message Passing Layer
 
-## Message Passing Laag
+## Concept van Message Passing Layers
+- Alle "message passing layers" volgen hetzelfde concept:
+  - **k**: Iteratie van message passing.
+  - **v**: Node (knop) in een grafiek.
 
-- Alle message passing lagen volgen hetzelfde concept (waarbij \( k \) de iteratie van message passing is en \( v \) een knoop).
+## Formule
+- De update van de representatie van een node \( h^{(k+1)}_v \) wordt gegeven door de formule:
+  \[
+  h^{(k+1)}_v = UPDATE(x_v, h^{(k)}_v, AGGREGATE\left(\{ h^{(k)}_u \mid u \in N(v) \}\right))
+  \]
+  - Hierin zijn:
+    - \( x_v \): De kenmerken van de node.
+    - \( h^{(k)}_v \): De huidige representatie van de node.
+    - \( N(v) \): De buren van node \( v \).
+
+## Varianten van GNNs
+- Varianten van Graph Neural Networks (GNNs) zijn afhankelijk van de keuze van de **UPDATE** en **AGGREGATE** functies:
+  - **AGGREGATE** kan zijn:
+    - Gemiddelde (Mean)
+    - Maximaal (Max)
+    - Genormaliseerde som (Normalized Sum)
+    - Neuraal netwerk (Neural Network)
   
-- De update formule voor een knoop \( v \) is als volgt gedefinieerd:
-  
-\[ 
-h_v^{(k+1)} = \text{UPDATE}\left(x_v, h_v^{(k)}, \text{AGGREGATE}\left(\{h_u^{(k)} \,|\, u \in \mathcal{N}(v)\}\right)\right) 
-\]
+  - **UPDATE** kan zijn:
+    - Gemiddelde (Mean)
+    - Maximaal (Max)
+    - Neuraal netwerk (Neural Network)
+    - Terugkerend neuraal netwerk (Recurrent Neural Network)
 
-### Uitleg van de Formule
-
-- **\( h_v^{(k+1)} \):** Dit is de geüpdatete representatie van knoop \( v \) na \( k+1 \) iteraties.
-- **UPDATE:** Een functie die de knoop- en buurtrepresentaties combineert tot een nieuwe representatie.
-- **AGGREGATE:** Een functie die de representaties van de aangrenzende knopen (\( \mathcal{N}(v) \)) samenvoegt.
-  
-### Varianten van Graaf Neurale Netwerken (GNNs)
-
-- De verschillende varianten van GNNs hangen af van de keuze van de functies **UPDATE** en **AGGREGATE**. Bijvoorbeeld:
-  - **AGGREGATE:**
+Deze structuur maakt het mogelijk om informatie te delen en te leren binnen een grafische representatie, wat van cruciaal belang is voor taken zoals node-classificatie, graf-classificatie en link-prediction.
