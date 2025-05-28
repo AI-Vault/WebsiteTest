@@ -113,7 +113,7 @@
   async function fetchAllMarkdown() {
     let i = 1;
     while (true) {
-      const filename = `slides/graph/tekst${i}.md`;
+      const filename = `tekst${i}.md`;
       try {
         const res = await fetch(filename);
         if (!res.ok) break;
@@ -142,7 +142,7 @@
 
     prevBtn.disabled = currentIndex <= 1;
     const imageDiv = document.querySelector('.static-image img');
-    imageDiv.src = `slides/graph/slide${currentIndex}.png`;
+    imageDiv.src = `slide${currentIndex}.png`;
 
     nextBtn.disabled = currentIndex >= allMarkdown.length;
   }
