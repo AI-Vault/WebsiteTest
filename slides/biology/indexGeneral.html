@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Nieuwsweergave</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      background-color: #FAF9F6;
+      font-family: Georgia, serif;
+      margin: 20px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-right: 1rem;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+
+    .controls button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin-bottom: 20px;
+      color: #666;
+      font-style: italic;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .news-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .news-item h1 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem; 
+    }
+      
+    .news-item h2, 
+    .news-item h3, 
+    .news-item h4, 
+    .news-item h5, 
+    .news-item h6 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .news-item p, 
+    .news-item li {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .news-item a {
+      color: #0000EE;
+      text-decoration: underline;
+    }
+  
+    .static-image {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+</style>
+</head>
+<body>
+
+  <div class="controls">
+    <button id="prevBtn">← Previous</button>
+    <button id="nextBtn">Next →</button>
+  </div>
+
+  <div id="status">Laden...</div>
+  <div class="container">
+  <div class="static-image">
+    <img src="slide1.png" alt="Slide 01" style="width: 100%; border-radius: 8px;">
+  </div>
+  <div id="content"></div>
+</div>
+
+  
+<script>
+  const contentDiv = document.getElementById('content');
+  const statusDiv = document.getElementById('status');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let allMarkdown = [];
+  let currentIndex = 1;
+  const step = 1;
+
+  async function fetchAllMarkdown() {
+    let i = 1;
+    while (true) {
+      const filename = `tekst${i}.md`;
+      try {
+        const res = await fetch(filename);
+        if (!res.ok) break;
+        const md = await res.text();
+        const html = marked.parse(md);
+        allMarkdown.push(html);
+        i++;
+      } catch (err) {
+        break;
+      }
+    }
+    if (allMarkdown.length === 0) {
+      statusDiv.textContent = 'Geen tekst-bestanden gevonden.';
+    } else {
+      statusDiv.textContent = `Er zijn ${allMarkdown.length} items geladen.`;
+      renderItems();
+    }
+  }
+
+  function renderItems() {
+    contentDiv.innerHTML = '';
+    const item = document.createElement('div');
+    item.className = 'news-item';
+    item.innerHTML = allMarkdown[currentIndex - 1];
+    contentDiv.appendChild(item);
+
+    prevBtn.disabled = currentIndex <= 1;
+    const imageDiv = document.querySelector('.static-image img');
+    imageDiv.src = `slide${currentIndex}.png`;
+
+    nextBtn.disabled = currentIndex >= allMarkdown.length;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 1) {
+      currentIndex -= step;
+      renderItems();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < allMarkdown.length) {
+      currentIndex += step;
+      renderItems();
+    }
+  });
+
+  fetchAllMarkdown();
+</script>
+
+</body>
+</html>
