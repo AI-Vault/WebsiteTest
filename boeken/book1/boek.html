@@ -109,11 +109,11 @@
     const nextBtn = document.getElementById('nextBtn');
 
     let allMarkdown = [];
-    let currentIndex = 1;
+    let currentIndex = 0;
     const step = 2;
 
     async function fetchAllMarkdown() {
-      let i = 0;
+      let i = 1;
       while (true) {
         const filename = `index${i}.md`;
         try {
