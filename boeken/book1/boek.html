@@ -109,13 +109,13 @@
     const nextBtn = document.getElementById('nextBtn');
 
     let allMarkdown = [];
-    let currentIndex = 0;
+    let currentIndex = 1;
     const step = 2;
 
     async function fetchAllMarkdown() {
       let i = 0;
       while (true) {
-        const filename = `technoloogPodcast/index${i}.md`;
+        const filename = `index${i}.md`;
         try {
           const res = await fetch(filename);
           if (!res.ok) break;
