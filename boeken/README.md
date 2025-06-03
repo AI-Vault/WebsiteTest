@@ -1,1 +1,1 @@
-sdsds
+Geef een gedetailleerde samenvatting van het boek "de democratie crasht" van kees verhoeven. Ga over de hoofdstukken heen en vat per hoofdstuk gedetailleerd samen. Spendeer zo'n 1000 woorden per hoofdstuk. En geef deze hoofdstukken met een kopje aan. Geef de output in markdown formaat. Begin meteen met de samenvatting, en laat zinnen als "hier is een gedetailleerde samenvatting" weg. Geef als output een Markdown bestand dat ik kan downloaden. 
