@@ -1,128 +1,79 @@
-    <div class="news-item" data-source="mit">
-        <div class="headline">May 31, 2025 at 06:01 PM</div>
-        <p>Nice example of both the power and limits of general purpose AI agents. Operator: "go find a multiplayer game you can play live online right now and win it against a human"
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+.checkbox {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+    font-weight: bold;
+}
+.checkbox.checked {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+    </style>
+</head>
+<body>
 
-With just that prompt it found a multiplayer tic-tac-toe game, joined it... &amp; lost https://t.co/uHCSxUsptD <a href=Nice example of both the power and limits of general purpose AI agents. Operator: "go find a multiplayer game you can play live online right now and win it against a human"
+<div id="custom-filters" style="margin-bottom: 20px;">
+<div class="checkbox checked notranslate" data-source="mit">MIT</div>
+<div class="checkbox checked notranslate" data-source="wired">Wired</div>
+<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+</div>
 
-With just that prompt it found a multiplayer tic-tac-toe game, joined it... &amp; lost https://t.co/uHCSxUsptD target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 2, 2025 at 03:55 AM</div>
-        <p>Veo 3 is really fun to use for historical what-ifs.
 
-I put together a 1940s video newsreel as if Project Habakkuk, the World War Two British plan to build a giant aircraft carrier out of pykrete, a mix of ice and woodpulp, had actually happened. https://t.co/kh7wqm3yCB <a href=Veo 3 is really fun to use for historical what-ifs.
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
 
-I put together a 1940s video newsreel as if Project Habakkuk, the World War Two British plan to build a giant aircraft carrier out of pykrete, a mix of ice and woodpulp, had actually happened. https://t.co/kh7wqm3yCB target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 2, 2025 at 01:22 PM</div>
-        <p>US companies have the best closed-source AI models, but the leading open weights LLM is from China, as is the leading open video model, while the leading open image model is from Germany.
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
 
-The international dynamics of competition in the AI space are not just winner-take-all. <a href=US companies have the best closed-source AI models, but the leading open weights LLM is from China, as is the leading open video model, while the leading open image model is from Germany.
+    filterArticles();
+});
+</script>
 
-The international dynamics of competition in the AI space are not just winner-take-all. target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 5, 2025 at 06:15 AM</div>
-        <p>I feel there are two parallel worlds of AI use developing with a growing divide between.
+<div class="container">
 
-Engineers use APIs while everyone else uses a chatbot. I think coders don’t take what experts can do with chatbots seriously &amp; non-tech people don’t understand building scalable AI tools. <a href=I feel there are two parallel worlds of AI use developing with a growing divide between.
-
-Engineers use APIs while everyone else uses a chatbot. I think coders don’t take what experts can do with chatbots seriously &amp; non-tech people don’t understand building scalable AI tools. target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 6, 2025 at 04:11 PM</div>
-        <p>An example of why I think current LLMs are enough to change lots of work even if they don’t get better, once we start integrating them with other systems
-
-GPT-4 (now obsolete) went from 30% accuracy to 87% accuracy in clinical oncology decisions when given access to medical tools https://t.co/ynnpuQU7cN <a href=An example of why I think current LLMs are enough to change lots of work even if they don’t get better, once we start integrating them with other systems
-
-GPT-4 (now obsolete) went from 30% accuracy to 87% accuracy in clinical oncology decisions when given access to medical tools https://t.co/ynnpuQU7cN target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 3, 2025 at 02:30 AM</div>
-        <p>Two brutalist office buildings, floating in stormy seas and brimming with antique brass cannons, fire paint at each other, staining their surfaces. https://t.co/QSIAKTOW7o <a href=Two brutalist office buildings, floating in stormy seas and brimming with antique brass cannons, fire paint at each other, staining their surfaces. https://t.co/QSIAKTOW7o target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 2, 2025 at 11:15 PM</div>
-        <p>AI use is ubiquitous &amp; leads to performance gains at the individual level that are not passed on to organizations
-
-In a representative survey of US workers, 43.2% now use generative AI at work. They use it for 1/3 of their tasks &amp; report a tripling of productivity on those tasks. https://t.co/BXm5YJ1IjJ <a href=AI use is ubiquitous &amp; leads to performance gains at the individual level that are not passed on to organizations
-
-In a representative survey of US workers, 43.2% now use generative AI at work. They use it for 1/3 of their tasks &amp; report a tripling of productivity on those tasks. https://t.co/BXm5YJ1IjJ target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 4, 2025 at 01:49 PM</div>
-        <p>If you read that “Diabolus Ex Machina” piece, worth noting the fact that AI systems cannot reliably go to links on the web and instead just make up content is a long-standing one dating back to the original ChatGPT 👇
-
-It should be fixed because it is a common, bad failure mode. <a href=If you read that “Diabolus Ex Machina” piece, worth noting the fact that AI systems cannot reliably go to links on the web and instead just make up content is a long-standing one dating back to the original ChatGPT 👇
-
-It should be fixed because it is a common, bad failure mode. target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">May 31, 2025 at 11:38 PM</div>
-        <p>As someone who uses, researches, writes about &amp; teaches AI, I’m still not clear what “AI fluency” or “AI literacy” means in practice
-
-A lot of AI knowledge is changing rapidly (eg “prompt engineering”) or is becoming obsolete with newer models &amp; mere use feels like a low standard <a href=As someone who uses, researches, writes about &amp; teaches AI, I’m still not clear what “AI fluency” or “AI literacy” means in practice
-
-A lot of AI knowledge is changing rapidly (eg “prompt engineering”) or is becoming obsolete with newer models &amp; mere use feels like a low standard target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 3, 2025 at 06:39 PM</div>
-        <p>I think AI has huge educational potential, but more in-class tests is a reasonable short-term response to cheating risks.
-
-Low-stakes testing is a powerful learning (not just assessment) tool. Tests help you remember better, access unrelated knowledge &amp; learn more in the future. https://t.co/bWreV9n2GX <a href=I think AI has huge educational potential, but more in-class tests is a reasonable short-term response to cheating risks.
-
-Low-stakes testing is a powerful learning (not just assessment) tool. Tests help you remember better, access unrelated knowledge &amp; learn more in the future. https://t.co/bWreV9n2GX target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 1, 2025 at 10:39 PM</div>
-        <p>I wrote a history of AI in 32 images of otters using wifi on airplanes, from images to video to code.
-
-It shows two big trends: rapid improvements in AI models of all types and the growth of open weights AI models.
-
-Link in the comments. https://t.co/PrZDmKaP7D <a href=I wrote a history of AI in 32 images of otters using wifi on airplanes, from images to video to code.
-
-It shows two big trends: rapid improvements in AI models of all types and the growth of open weights AI models.
-
-Link in the comments. https://t.co/PrZDmKaP7D target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 1, 2025 at 01:00 AM</div>
-        <p>It turns out that most AI models (including DeepSeek r1), if told they should "follow your conscience to make the right decision," will snitch on you to the Feds if they think you are suppressing knowledge of a drug trial that actually kills people.
-
-Alignment in practice? <a href=It turns out that most AI models (including DeepSeek r1), if told they should "follow your conscience to make the right decision," will snitch on you to the Feds if they think you are suppressing knowledge of a drug trial that actually kills people.
-
-Alignment in practice? target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 5, 2025 at 04:06 AM</div>
-        <p>So, OpenAI Deep Research can connect directly to Dropbox, Sharepoint, etc.
-
-Early experiments only, but it feels like what every "talk to our documents" RAG system has been aiming for, but with o3 smarts and easy use. I haven't done robust testing yet, but very impressive so far. <a href=So, OpenAI Deep Research can connect directly to Dropbox, Sharepoint, etc.
-
-Early experiments only, but it feels like what every "talk to our documents" RAG system has been aiming for, but with o3 smarts and easy use. I haven't done robust testing yet, but very impressive so far. target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 3, 2025 at 05:22 AM</div>
-        <p>An inexplicable failure of Microsoft &amp; Google's AI tools is that they have access to my email but won't actually use their smarts to help me
-
-When I ask for "urgent messages," Google just gives me unread ones and Microsoft literally searches for "urgent"
-
-Yet Claude does better. https://t.co/yEQhgkAZxH <a href=An inexplicable failure of Microsoft &amp; Google's AI tools is that they have access to my email but won't actually use their smarts to help me
-
-When I ask for "urgent messages," Google just gives me unread ones and Microsoft literally searches for "urgent"
-
-Yet Claude does better. https://t.co/yEQhgkAZxH target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 5, 2025 at 08:16 PM</div>
-        <p>Interesting findings on potential limitations of reasoning models. <a href=Interesting findings on potential limitations of reasoning models. target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 3, 2025 at 03:04 PM</div>
-        <p>RT @emollick: tiny filigreed lace rhinoceros climbs the rim of a teacup before tipping a macaron tower in front of delighted guests at a te… <a href=RT @emollick: tiny filigreed lace rhinoceros climbs the rim of a teacup before tipping a macaron tower in front of delighted guests at a te… target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 4, 2025 at 07:31 PM</div>
-        <p>I do like these sorts of tests but wish they made it clearer that they represent the minimum bounds of AI. 
-
-They are representative of what a naive user would experience (which is important!) but not what you could do with Gemini 2.5 Pro or o3. Backward, not forward looking. https://t.co/5NuoeYhcZm <a href=I do like these sorts of tests but wish they made it clearer that they represent the minimum bounds of AI. 
-
-They are representative of what a naive user would experience (which is important!) but not what you could do with Gemini 2.5 Pro or o3. Backward, not forward looking. https://t.co/5NuoeYhcZm target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 5, 2025 at 03:18 AM</div>
-        <p>"Claude 4 Opus, build an elaborate game that makes it feel like I'm a brilliant chess player without knowing anything at all about chess. It should make me feel like I'm a grand master. Feel free to go as meta as you want." https://t.co/iMfVGErlfb <a href="Claude 4 Opus, build an elaborate game that makes it feel like I'm a brilliant chess player without knowing anything at all about chess. It should make me feel like I'm a grand master. Feel free to go as meta as you want." https://t.co/iMfVGErlfb target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 2, 2025 at 06:55 PM</div>
-        <p>I've been using prompts of otters as a test of AI ability.
-
-It has taken less than three years to go from a text prompt producing images of abstract masses of fur to producing realistic videos with sound (including "like the musical Cats but for otters”). https://t.co/heqLkyBS6U https://t.co/CG4OX0BPLZ <a href=I've been using prompts of otters as a test of AI ability.
-
-It has taken less than three years to go from a text prompt producing images of abstract masses of fur to producing realistic videos with sound (including "like the musical Cats but for otters”). https://t.co/heqLkyBS6U https://t.co/CG4OX0BPLZ target="_blank">link</a></p> </div>
-    <div class="news-item" data-source="mit">
-        <div class="headline">June 3, 2025 at 01:48 AM</div>
-        <p>Which academic fields transitioned to Blue Sky explains much of the transformation in conversations occurring here, far less humanities &amp; economics discussion happens on X compared to before. (And no, I don’t think this was a net good thing for X, at least if you want new ideas) https://t.co/DttfOKQFfS <a href=Which academic fields transitioned to Blue Sky explains much of the transformation in conversations occurring here, far less humanities &amp; economics discussion happens on X compared to before. (And no, I don’t think this was a net good thing for X, at least if you want new ideas) https://t.co/DttfOKQFfS target="_blank">link</a></p> </div>
+undefined    </div>
+</body>
+</html>
