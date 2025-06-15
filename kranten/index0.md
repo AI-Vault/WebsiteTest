@@ -1,38 +1,24 @@
-# 0.Hoe AI-agents de wereld veroveren en nu al het verschil maken
-Views: 1593 (2025-05-08) [link](https://www.youtube.com/watch?v=1mK1CZ5d_io)
+## Ethische AI vraagt om een eerlijker machtsverdeling [link](https://www.nrc.nl/nieuws/2025/06/06/ethische-ai-vraagt-om-een-eerlijker-machtsverdeling-a4896125)
 
+Techniekfilosoof Joris Krijger betoogt dat de ethiek rond AI niet vooral bij programmeurs moet liggen, maar breder verankerd moet worden via ‘ethische infrastructuur’ binnen organisaties, zodat werknemers én burgers invloed houden op beslissingen over de inzet van algoritmen. ([nrc.nl][1])
 
- ## Introduction to AI Agents
-In the discussion, Jelle Prins, co-founder of Cradle, talks about the rapid development of AI agents and their capabilities in transforming workflows. One key highlight is the ability of AI to automate tasks with minimal input, such as completing workflows, managing emails, and creating comprehensive plans with conversational AI, compared to traditional manual methods that can be time-consuming.
+## Superintelligentie is begonnen, volgens de oprichter van OpenAI. Zuckerberg zal het knarsetandend aanzien [link](https://www.volkskrant.nl/tech/superintelligentie-is-begonnen-volgens-de-oprichter-van-openai-zuckerberg-zal-het-knarsetandend-aanzien~b4825fb4/)
 
-## Current State of AI Workflows
-Experiences shared by Jelle and Ben underline a transitional phase in workplace productivity. Although many AI applications promise streamlined processes, users like Ben often find that these claims do not live up to expectations, citing examples where he struggled with AI tools and took significantly longer to accomplish tasks. Jelle notes that the current capabilities of many AI agents outperform earlier versions, emphasizing that advancements have led to more effective agents capable of performing specific tasks autonomously.
+De Volkskrant analyseert Sam Altmans claim dat we al aan de vooravond van superintelligentie staan — en hoe die positie OpenAI een voorsprong geeft op rivalen als Meta, tot frustratie van Mark Zuckerberg. ([volkskrant.nl][2])
 
-### Use Cases of AI Agents
-- **Automated Email Management**: Jelle discusses using Superhuman, an email client that incorporates AI agents to sort and respond to emails efficiently.
-- **Web Application Development**: Jelle recounts using an AI agent (Devin AI) for web app coding that led to a buggy final product, indicating the challenges and opportunities that AI coding agents present.
-- **Task Management and Scheduling**: Jelle envisions AI agents that could manage to-do lists and scheduling, actively engaging users with suggested tasks based on existing commitments.
+## Evenementensector ziet nieuwe inkomstenstroom ontstaan door AI [link](https://fd.nl/bedrijfsleven/1557267/evenementensector-ziet-nieuwe-inkomstenstroom-ontstaan-door-ai)
 
-## Distinction Between Traditional AI Models and Agents
-AI agents are described as more interactive and capable of engaging in workflows compared to traditional chatbots that simply provide information. The conversation highlights how these agents can analyze tasks, reason through their steps, and execute plans. Jelle points out the role of large language models (LLMs) in powering these agents, allowing them to handle multimodal input and reasoning.
+Start-up Momants gebruikt AI om ticketkopers persoonlijk te begeleiden; festivals als ADE melden hogere conversies en duurdere kaart­verkopen dankzij de datagedreven aanpak. ([fd.nl][3])
 
-### Example of AI-Assisted Workflows
-Jelle shares a personal experience of using AI tools to compile data into a coherent narrative for marketing presentations, demonstrating the potential for agents to enhance productivity in real-world scenarios by organizing and synthesizing information from various sources.
+## AI trainen met rechterlijke uitspraken? Rechters waarschuwen voor de risico’s [link](https://fd.nl/economie/1557712/ai-trainen-met-rechterlijke-uitspraken-rechters-waarschuwen-voor-de-risicos)
 
-## Tools and Innovations in AI
-Several tools and frameworks are mentioned:
-- **Superhuman**: An email client that utilizes AI to streamline email processing and responses.
-- **Limitless**: A tool worn by Jelle that constantly listens and generates relevant reminders or tasks based on conversations.
-- **Various AI Programming Interfaces**: Tools such as Manus, N8N, and many others allow the creation and management of AI agents for different applications.
+Meer vonnissen online zetten zou juristen-AI verbeteren, maar rechters vrezen privacy­lekken en ongewenste invloed op het rechtssysteem; het FD-artikel en podcast schetsen het spanningsveld tussen transparantie en veiligheid. ([fd.nl][4])
 
-## The Future of AI in Workplaces
-There is an acknowledgment of the impending revolution in various sectors due to AI capabilities. Jelle mentions that industries like pharmaceuticals are already experiencing significant improvements due to AI-driven research processes. However, challenges remain, especially regarding the integration of AI as part of daily workflows and overcoming user skepticism.
+## Amsterdam wilde met AI de bijstand eerlijker en efficiënter maken. Het liep anders [link](https://www.trouw.nl/verdieping/amsterdam-wilde-met-ai-de-bijstand-eerlijker-en-efficienter-maken-het-liep-anders~b2890374/)
 
-### Concerns and Recommendations
-The conversation touches on the need for consensus on a path forward for deploying AI technologies, with emphasis on:
-- **Adoption Rates**: Organizations must encourage employees to utilize AI tools more extensively.
-- **Regulatory and Competitive Factors**: There are concerns about dependency on non-European AI technologies and the effects of global competition on local industries.
-- **Collaboration and Investment**: An increased financial commitment from European entities to support domestic AI initiatives and prevent reliance on foreign technologies is crucial.
+Trouw laat zien hoe een algoritme dat fraude moest opsporen juist leidde tot stigmatisering en fouten, waarna de gemeente het project moest terugdraaien — een nieuw voorbeeld van de risico’s van overheid-AI. ([trouw.nl][5])
 
-## Concluding Thoughts
-In conclusion, the discussion emphasizes a crucial crossroads for AI agents: as they become more integrated into daily workflows, both the excitement about their potential and the challenges of user adaptation present opportunities for businesses and employees alike. Individuals must rethink how they engage with AI tools to harness their full capabilities effectively while navigating the complexities of data privacy and security.
+## Trap jij erin? Zo spot je een AI-video [link](https://www.ad.nl/video/productie/trap-jij-erin-zo-spot-je-een-ai-video-1484592)
+
+Het AD geeft in een korte video praktische tips om deepfakes te herkennen, zoals letten op knipperfrequentie en artefacten rond haar- en tandlijnen, nu nepvideo’s steeds overtuigender worden. ([ad.nl][6])
+
