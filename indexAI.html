@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Klikbare Vakjes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-label {
+      font-size: 0.95em;
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .vakje-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .vakje {
+      width: 120px;
+      height: 80px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .vakje.large {
+      width: 250px;
+      height: 160px;
+    }
+
+    .vakje:hover {
+      background-color: #f0f0f0;
+    }
+
+    .vakje .tekst {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .vakje .description {
+      display: none;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .vakje.large .description {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Klikbare Vakjes</h1>
+  <label class="toggle-label">
+    <input type="checkbox" id="toggleView"> Grote weergave
+  </label>
+</div>
+
+<div class="container" id="vakjes-container"></div>
+
+<script>
+  const links = [
+  { tekst: "Volkskrant Laurens Verhagen", url: "https://www.volkskrant.nl/zoeken/resultaten/?query=laurens+verhagen&page=1&type=all_articles&sortBy=relevance&from=full_period", beschrijving: "Laurens verhagen AI redacteur Volkskrant" },
+  { tekst: "Andre Ng The Batch", url: "https://www.deeplearning.ai/the-batch/tag/letters/", beschrijving: "The Batch is een podcast van Andre Ng" },
+    { tekst: "Tekst 3", url: "https://voorbeeld3.nl", beschrijving: "Link drie gaat naar een pagina met extra informatie." },
+    { tekst: "Tekst 4", url: "https://voorbeeld4.nl", beschrijving: "De vierde link toont een overzicht van diensten." },
+    { tekst: "Tekst 5", url: "https://voorbeeld5.nl", beschrijving: "Hier vind je meer over project vijf." },
+    { tekst: "Tekst 6", url: "https://voorbeeld6.nl", beschrijving: "Een link naar bron zes met extra uitleg." },
+    { tekst: "Tekst 7", url: "https://voorbeeld7.nl", beschrijving: "Link zeven brengt je naar een video-overzicht." },
+    { tekst: "Tekst 8", url: "https://voorbeeld8.nl", beschrijving: "Informatie over product acht is hier te vinden." },
+    { tekst: "Tekst 9", url: "https://voorbeeld9.nl", beschrijving: "Klik hier voor een handleiding bij stap negen." },
+    { tekst: "Tekst 10", url: "https://voorbeeld10.nl", beschrijving: "Een overzicht van veelgestelde vragen staat hier." }
+  ];
+
+  const container = document.getElementById("vakjes-container");
+  const toggle = document.getElementById("toggleView");
+
+  function renderBoxes(large = false) {
+    container.innerHTML = "";
+
+    links.forEach(link => {
+      const a = document.createElement("a");
+      a.href = link.url;
+      a.target = "_blank";
+      a.className = "vakje-link";
+
+      const vakje = document.createElement("div");
+      vakje.className = "vakje" + (large ? " large" : "");
+
+      const tekst = document.createElement("div");
+      tekst.className = "tekst";
+      tekst.textContent = link.tekst;
+
+      const desc = document.createElement("div");
+      desc.className = "description";
+      desc.textContent = link.beschrijving;
+
+      vakje.appendChild(tekst);
+      vakje.appendChild(desc);
+      a.appendChild(vakje);
+      container.appendChild(a);
+    });
+  }
+
+  toggle.addEventListener("change", function() {
+    renderBoxes(this.checked);
+  });
+
+  renderBoxes(false);
+</script>
+
+</body>
+</html>
