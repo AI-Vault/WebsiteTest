@@ -1,4 +1,4 @@
-# 86. Google overweldigt met nieuwe AI + wanneer werkt er een robot bij jou thuis? | AI Report
+# 88. Google overweldigt met nieuwe AI + wanneer werkt er een robot bij jou thuis? | AI Report
 Views: 498 (2025-05-22) [link](https://www.youtube.com/watch?v=UWjdPXxCbLU)
 
 
