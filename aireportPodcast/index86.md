@@ -1,4 +1,4 @@
-# 88. SPECIAL: Banen, onderwijs en hoe we dat eigenlijk gaan oplossen | AI Report
+# 86. SPECIAL: Banen, onderwijs en hoe we dat eigenlijk gaan oplossen | AI Report
 Views: 20 (2025-06-02) [link](https://www.youtube.com/watch?v=WMTq-gbEGrQ)
 
 
