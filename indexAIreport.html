@@ -130,6 +130,7 @@
       if (allMarkdown.length === 0) {
         statusDiv.textContent = 'Geen index-bestanden gevonden.';
       } else {
+        allMarkdown.reverse();        // ← nieuw: zet volgorde om
         statusDiv.textContent = `Er zijn ${allMarkdown.length} items geladen.`;
         renderItems();
       }
