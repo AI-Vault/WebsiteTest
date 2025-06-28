@@ -4,5 +4,5 @@ const linksTop = [
   {kleur:2,tekst:"Learn",url:"indexLearn.html",beschrijving:""},
   {kleur:2,tekst:"Home Made",url:"indexHomeMade.html",beschrijving:""},
   {kleur:2,tekst:"Events",url:"indexEvents.html",beschrijving:""},
-  {kleur:2,tekst:"Events",url:"https://ai-vault.github.io/WebsiteTest/indexKrant.html",beschrijving:""},
+  {kleur:2,tekst:"Kranten",url:"https://ai-vault.github.io/WebsiteTest/indexKrant.html",beschrijving:""},
 ];
