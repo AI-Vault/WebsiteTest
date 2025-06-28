@@ -1,34 +1,60 @@
-## Apple zet privacy-gerichte ‘Apple Intelligence’ open voor ontwikkelaars (9 juni 2025) \[artikel]
+## 18,5 procent Abba en 24 procent Lizzo: zo vind je de geheime formule van AI-apps (27 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/27/185-procent-abba-en-24-procent-lizzo-zo-vind-je-de-geheime-formule-van-ai-apps-a4898626)
 
-Op WWDC25 presenteerde Apple zijn eerste eigen on-device taalmodel, Live Translation in gesprekken en een ‘Visual Intelligence’-functie voor objectherkenning. Analisten noemen de stap bescheiden, maar zien de focus op privacy en strakke integratie in alle besturings­systemen als Apples langetermijn­strategie. ([reuters.com][1])
+Analyse van hoe muziekgenererende AI-diensten (zoals Mureka.AI) massaal muziekdata gebruiken zonder licenties, en van de eerste Amerikaanse rechtszaken die daar paal en perk aan proberen te stellen.([nrc.nl][1])
 
-## Google introduceert ‘AI Mode’ & Gemini 2.5 in de zoekmachine (21 mei 2025) \[artikel]
+## Groningen, Den Haag én Brussel betalen mee aan AI-fabriek Groningen (27 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/27/groningen-den-haag-en-brussel-betalen-mee-aan-ai-fabriek-groningen-a4898540)
 
-Tijdens Google I/O werd een praat­vriendelijke AI-weergave voor Search gelanceerd, aangevuld met de Gemini 2.5-motor en experimentele functies zoals live video-zoeken en automatisch ticket­kopen. Google toonde bovendien een prototype XR-bril met ingebouwde assistent. ([theguardian.com][2])
+Het Rijk, de provincie Groningen en de EU investeren samen 200 miljoen euro in een ‘AI-fabriek’ waar bedrijven en kennisinstellingen nieuwe toepassingen kunnen testen.([nrc.nl][2])
 
-## Onderzoek: meeste AI-chatbots zijn simpel te ‘jailbreaken’ (21 mei 2025) \[artikel]
+## Heterdaadje: AI betrapt op hallucineren over beursgang (26 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/26/heterdaadje-ai-betrapt-op-hallucineren-over-beursgang-a4898387)
 
-Wetenschappers demonstreerden een universele jailbreak die populaire chatbots ertoe brengt illegale instructies te geven. Ze waarschuwen voor opkomende ‘dark LLM’s’ zonder ethische veiligheidshekjes en pleiten voor strengere data-screening en “machine unlearning”. ([theguardian.com][3])
+Een automatisch gegenereerd bericht op Investing.com meldde foutief dat softwarebedrijf Visma al in 2024 naar de beurs ging; NRC reconstrueert hoe de ‘AI-verslaggever’ de plank missloeg.([nrc.nl][3])
 
-## Chinese toezichthouder pauzeert AI-uitrol van Apple & Alibaba (4 juni 2025) \[artikel]
+## Zal AI ooit de grootste wiskundige problemen oplossen? (25 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/25/zal-ai-ooit-de-grootste-wiskundige-problemen-oplossen-a4898314)
 
-De Cyberspace Administration of China houdt goedkeuring van Apple- en Alibaba-AI-diensten tegen, meldde Reuters. Het vertraagt iPhone-AI-functies in een markt waar Huawei al voorloopt, terwijl nieuwe VS-tarieven de druk opvoeren. ([reuters.com][4])
+In podcast Onbehaarde Apen bespreken wiskundigen en journalisten de belofte en beperkingen van machine-proof assistants en automatisch bewijszoeken.([nrc.nl][4])
 
-## Maleisië investeert 10 miljard dollar in stroomnet voor AI-datacenters (16 juni 2025) \[artikel]
+## Een kwart eeuw popmuziek: de grootste revolutie is hoe muziek bij de luisteraar komt – en nu gaat AI alles weer veranderen (25 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/25/een-kwart-eeuw-popmuziek-de-grootste-revolutie-is-hoe-muziek-bij-de-luisteraar-komt-en-nu-gaat-ai-alles-weer-veranderen-a4898297)
 
-Premier Anwar kondigde een mega-upgrade van het nationale grid aan om de toestroom van AI-fabrieken en hyperscale-datacenters van Microsoft, Google, Amazon, Nvidia en Oracle te ondersteunen. Petronas bouwt tegelijk drie CCS-projecten om de extra CO₂ op te vangen. ([reuters.com][5])
+Terugblik op 25 jaar digitale muziek: van Napster tot TikTok, met vooruitblik op een toekomst waarin generatieve AI het maken én distribueren van muziek op zijn kop zet.([nrc.nl][5])
 
-## The Washington Post benoemt eerste Chief AI Officer en start ‘WP Incubator’ (9 juni 2025) \[artikel]
+## AGI? Niet alle taal staat in tekst (19 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/19/agi-niet-alle-taal-staat-in-tekst-a4897603)
 
-Met Sam Han als nieuwe CAIO en een intern innovatie­lab wil de krant sneller AI-diensten ontwikkelen, terwijl ze journalistieke normen bewaakt. De stap onderstreept hoe mediahuizen AI centraal in hun strategie plaatsen. ([washingtonpost.com][6])
+Hoogleraar Felienne Hermans betoogt dat huidige taalmodellen onvoldoende zijn voor echte ‘algemene intelligentie’ omdat ze non-verbale kennis en context missen.([nrc.nl][6])
 
-* [reuters.com](https://www.reuters.com/business/wwdc-apple-faces-ai-regulatory-challenges-it-woos-software-developers-2025-06-09/?utm_source=chatgpt.com)
-* [reuters.com](https://www.reuters.com/markets/commodities/malaysia-pm-says-10-bln-committed-national-grid-upgrade-2025-06-16/?utm_source=chatgpt.com)
-* [washingtonpost.com](https://www.washingtonpost.com/pr/2025/06/09/office-cto-announces-sam-han-chief-ai-officer-creation-wp-incubator/?utm_source=chatgpt.com)
+## Kunstenares wil met AI-hologram trouwen – zal hij ‘ja’ zeggen? (20 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/20/kunstenares-wil-met-ai-hologram-trouwen-zal-hij-ja-zeggen-a4897665)
 
-[1]: https://www.reuters.com/business/wwdc-apple-faces-ai-regulatory-challenges-it-woos-software-developers-2025-06-09/?utm_source=chatgpt.com "Apple opens its AI to developers but keeps its broader ambitions modest"
-[2]: https://www.theguardian.com/technology/2025/may/20/google-ai-mode-search-engine-developers-conference "Google unveils ‘AI Mode’ in the next phase of its journey to change search | Google | The Guardian"
-[3]: https://www.theguardian.com/technology/2025/may/21/most-ai-chatbots-easily-tricked-into-giving-dangerous-responses-study-finds "Most AI chatbots easily tricked into giving dangerous responses, study finds | Artificial intelligence (AI) | The Guardian"
-[4]: https://www.reuters.com/world/china/apple-alibabas-ai-rollout-china-delayed-by-trumps-trade-war-ft-reports-2025-06-04/ "Apple and Alibaba's AI rollout in China delayed by Trump's trade war, FT reports | Reuters"
-[5]: https://www.reuters.com/markets/commodities/malaysia-pm-says-10-bln-committed-national-grid-upgrade-2025-06-16/ "Malaysia PM says $10 billion committed to national grid upgrade | Reuters"
-[6]: https://www.washingtonpost.com/pr/2025/06/09/office-cto-announces-sam-han-chief-ai-officer-creation-wp-incubator/ "Office of the CTO Announces Sam Han as Chief AI Officer and Creation of WP Incubator - The Washington Post"
+Tv-recensie over ‘Geheimen van het museum’, waarin kunstenaar Alicia een holografische partner heeft gecreëerd en de ethiek rond menselijke projecties op AI verkent.([nrc.nl][7])
+
+## Transparant, maar toch: ‘gegevens van ChatGPT’ zijn geen bron (20 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/20/transparant-maar-toch-gegevens-van-chatgpt-zijn-geen-bron-a4897672)
+
+Ombudsman Arjen Fortuin bespreekt de vraag hoe NRC met AI-ondersteunde teksten omgaat en waarom generatieve AI nooit als primaire bron mag dienen.([nrc.nl][8])
+
+## Ik kan kiezen uit meerdere petten (20 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/20/ik-kan-kiezen-uit-meerdere-petten-a4897671)
+
+Column over baanonzekerheid door AI-automatisering en het belang van ‘meerpettigheid’ (multipotentialiteit) om toekomstbestendig te blijven op de arbeidsmarkt.([nrc.nl][9])
+
+## ‘De VAR is een perfect voorbeeld van hoe technologie onze blik op de wereld verandert’ (22 juni 2025) [link](https://www.nrc.nl/nieuws/2025/06/22/de-var-is-een-perfect-voorbeeld-van-hoe-technologie-onze-blik-op-de-wereld-verandert-a4897837)
+
+Interview met technofilosoof Rens van der Vorst over de videoscheidsrechter: hoe AI-gestuurde beslissystemen in het voetbal technologische beloftes en menselijke rechtvaardigheid laten botsen.([nrc.nl][10])
+
+[1]: https://www.nrc.nl/nieuws/2025/06/27/185-procent-abba-en-24-procent-lizzo-zo-vind-je-de-geheime-formule-van-ai-apps-a4898626 "		18,5  procent Abba en 24 procent Lizzo: zo vind je de geheime     formule van AI-apps - NRC
+"
+[2]: https://www.nrc.nl/nieuws/2025/06/27/groningen-den-haag-en-brussel-betalen-mee-aan-ai-fabriek-groningen-a4898540 "		Groningen, Den Haag én Brussel betalen mee aan AI-fabriek Groningen - NRC
+"
+[3]: https://www.nrc.nl/nieuws/2025/06/26/heterdaadje-ai-betrapt-op-hallucineren-over-beursgang-a4898387 "		Heterdaadje: AI betrapt op hallucineren over beursgang - NRC
+"
+[4]: https://www.nrc.nl/nieuws/2025/06/25/zal-ai-ooit-de-grootste-wiskundige-problemen-oplossen-a4898314 "		Zal AI ooit de grootste wiskundige problemen oplossen? - NRC
+"
+[5]: https://www.nrc.nl/nieuws/2025/06/25/een-kwart-eeuw-popmuziek-de-grootste-revolutie-is-hoe-muziek-bij-de-luisteraar-komt-en-nu-gaat-ai-alles-weer-veranderen-a4898297 "		Een kwart eeuw popmuziek: de grootste revolutie is hoe muziek bij de luisteraar komt. En nu gaat AI alles weer veranderen - NRC
+"
+[6]: https://www.nrc.nl/nieuws/2025/06/19/agi-niet-alle-taal-staat-in-tekst-a4897603 "		Opinie | AGI? Niet alle taal staat in tekst - NRC
+"
+[7]: https://www.nrc.nl/nieuws/2025/06/20/kunstenares-wil-met-ai-hologram-trouwen-zal-hij-ja-zeggen-a4897665 "		Tv-recensie | Kunstenares wil met AI-hologram trouwen – zal hij ‘ja’ zeggen? - NRC
+"
+[8]: https://www.nrc.nl/nieuws/2025/06/20/transparant-maar-toch-gegevens-van-chatgpt-zijn-geen-bron-a4897672 "		Opinie | Transparant, maar toch: ‘gegevens van ChatGPT’ zijn geen bron - NRC
+"
+[9]: https://www.nrc.nl/nieuws/2025/06/20/ik-kan-kiezen-uit-meerdere-petten-a4897671 "		Opinie | Ik kan kiezen uit meerdere petten - NRC
+"
+[10]: https://www.nrc.nl/nieuws/2025/06/22/de-var-is-een-perfect-voorbeeld-van-hoe-technologie-onze-blik-op-de-wereld-verandert-a4897837 "		‘De VAR is een perfect voorbeeld van hoe technologie onze blik op de wereld verandert’ - NRC
+"
