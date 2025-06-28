@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI news internet – drie rijen</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f9f9f9;color:#333}
+    .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:20px 0}
+    .subheader{margin:30px 0 10px;font-size:1.1em;font-weight:bold}
+    .toggle-label{font-size:.95em;background:#fff;padding:8px 12px;border-radius:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);cursor:pointer}
+    .container{display:flex;flex-wrap:wrap;gap:15px}
+    .vakje-link{text-decoration:none;color:inherit}
+    /* Klein vakje standaard instellingen */
+    .vakje{
+      width:120px;height:90px;
+      border:2px solid #000;border-radius:8px;
+      background:#fff;transition:.3s;
+      padding:10px;box-sizing:border-box;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center; /* Verticaal + horizontaal centreren voor niet-uitgeklapte vakjes */
+      text-align:center
+    }
+    /* Uitgeklapte (grote) vakjes */
+    .vakje.large{
+      width:260px;height:170px;
+      justify-content:flex-start; /* Tekst bovenaan houden in grote vakjes */
+    }
+    .vakje:hover{background:#f0f0f0}
+    .tekst{font-weight:bold;margin-bottom:6px;text-align:center}
+    .description{display:none;font-size:.9em;color:#555;text-align:center}
+    .vakje.large .description{display:block}
+  </style>
+</head>
+<body>
+
+<!-- Bovenste verzameling vakjes (altijd klein) -->
+<div class="container" id="vakjes-container-top"></div>
+
+<div class="header">
+  <h1>Home Made AI</h1>
+  <label class="toggle-label">
+    <input type="checkbox" id="toggleView"> Grote weergave (alleen middelste rij)
+  </label>
+</div>
+
+<!-- Middelste verzameling vakjes (toggle) -->
+<div class="container" id="vakjes-container-middle"></div>
+
+<!-- Subheader voor extra rij -->
+<div class="subheader">Aanvullende bronnen</div>
+
+<!-- Extra rij vakjes (altijd klein) -->
+<div class="container" id="vakjes-container-extra"></div>
+
+<!-- Externe script met linksTop -->
+<script src="linksTop.js"></script>
+
+<script>
+  const colorMap={13:"#76AE93",2:"#add8e6",4:"#E8F1F2",16:"#7a9e7e",5:"#B3EFB2",6:"#8C2E36",7:"#C36A5B",8:"#D5BB91",9:"#EBBA7C",
+    10:"#8BC9A8", 11:"#C5E4F7", 12:"#F3F8F8", 1:"#A6CCAB", 14:"#D0F8CF", 15:"#E8A8B0", 3:"#F2C2A9", 17:"#F3DFB7", 18:"#F9E1C8"
+  };
+
+  // Lijst voor middelste rij
+  const linksMiddle=[
+    {kleur:1,tekst:"AI report",url:"https://ai-vault.github.io/WebsiteTest/indexAIreport.html",beschrijving:""},
+    {kleur:1,tekst:"Grote Tech Show",url:"https://ai-vault.github.io/WebsiteTest/indexGroteTechShow.html",beschrijving:""},
+    {kleur:2,tekst:"Slides met AI",url:"https://ai-vault.github.io/WebsiteTest/slides/indexSlide.html",beschrijving:""},
+    {kleur:2,tekst:"Tech News Overview",url:"https://ai-vault.github.io/WebsiteTest/indexTechNews.html",beschrijving:""},
+    {kleur:3,tekst:"Ethan Mollick tweets",url:"https://ai-vault.github.io/WebsiteTest/twitter/ethanmollick/index1.html",beschrijving:""},
+    {kleur:3,tekst:"",url:"",beschrijving:""},
+    {kleur:4,tekst:"",url:"",beschrijving:""},
+    {kleur:4,tekst:"Vogelgeluiden",url:"https://ai-vault.github.io/WebsiteTest/vogels.html",beschrijving:""},
+    {kleur:1,tekst:"Technoloog",url:"https://ai-vault.github.io/WebsiteTest/indexTechnoloog.html",beschrijving:""},
+    {kleur:1,tekst:"Technoloog Groot",url:"https://ai-vault.github.io/WebsiteTest/indexTechnoloogGroot.html",beschrijving:""},
+    {kleur:2,tekst:"",url:"",beschrijving:""},
+    {kleur:2,tekst:"",url:"",beschrijving:""},
+    {kleur:3,tekst:"",url:"",beschrijving:""},
+    {kleur:3,tekst:"",url:"",beschrijving:""},
+    {kleur:4,tekst:"",url:"",beschrijving:""},
+    {kleur:4,tekst:"",url:"",beschrijving:""},
+    
+  ];
+
+  // Lijst voor extra rij
+  const linksExtra=[
+  {kleur:1,tekst:"",url:"",beschrijving:""},
+    {kleur:2,tekst:"",url:"",beschrijving:""},
+    {kleur:3,tekst:"",url:"",beschrijving:""},
+    {kleur:4,tekst:"",url:"",beschrijving:""},
+    {kleur:5,tekst:"",url:"",beschrijving:""},
+    {kleur:6,tekst:"",url:"",beschrijving:""},
+    {kleur:7,tekst:"",url:"",beschrijving:""},
+    {kleur:8,tekst:"",url:"",beschrijving:""}
+  ];
+
+  const topContainer=document.getElementById("vakjes-container-top");
+  const middleContainer=document.getElementById("vakjes-container-middle");
+  const extraContainer=document.getElementById("vakjes-container-extra");
+  const toggle=document.getElementById("toggleView");
+
+  function fillContainer(containerEl,linksArray,large){
+    containerEl.innerHTML="";
+    linksArray.forEach(link=>{
+      const a=document.createElement("a");
+      a.href=link.url;
+      a.target="_blank";
+      a.className="vakje-link";
+
+      const vakje=document.createElement("div");
+      vakje.className="vakje"+(large?" large":"");
+      vakje.style.backgroundColor=colorMap[link.kleur]||"#ffffff";
+
+      const tekstDiv=document.createElement("div");
+      tekstDiv.className="tekst";
+      tekstDiv.textContent=link.tekst;
+
+      const descDiv=document.createElement("div");
+      descDiv.className="description";
+      descDiv.textContent=link.beschrijving;
+
+      vakje.appendChild(tekstDiv);
+      vakje.appendChild(descDiv);
+
+      a.appendChild(vakje);
+      containerEl.appendChild(a);
+    });
+  }
+
+  // initial render
+  fillContainer(topContainer,typeof linksTop!=="undefined"?linksTop:[],false);
+  fillContainer(middleContainer,linksMiddle,false);
+  fillContainer(extraContainer,linksExtra,false);
+
+  toggle.addEventListener("change",function(){
+    fillContainer(middleContainer,linksMiddle,this.checked); // alleen middelste rij toggelt
+  });
+</script>
+
+</body>
+</html>
