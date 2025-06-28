@@ -107,7 +107,11 @@
     const statusDiv = document.getElementById('status');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
+ 
+    /* 👇 knoplabels omdraaien */
+    prevBtn.textContent = 'Nieuwer ←';
+    nextBtn.textContent = 'Ouder →';
+    
     let allMarkdown = [];
     let currentIndex = 0;
     const step = 2;
@@ -127,6 +131,9 @@
           break;
         }
       }
+      /* ✨ Voeg deze regel toe: nieuwste (hoogste nummer) eerst */
+      allMarkdown.reverse();
+      
       if (allMarkdown.length === 0) {
         statusDiv.textContent = 'Geen index-bestanden gevonden.';
       } else {
