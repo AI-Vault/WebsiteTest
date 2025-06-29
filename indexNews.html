@@ -102,6 +102,10 @@
       const a=document.createElement("a");
       a.href=link.url;
       a.target="_blank";
+          
+      a.target = getWindowName(link.url);      // <—— belangrijk
+      a.rel    = "noopener";   
+      
       a.className="vakje-link";
 
       const vakje=document.createElement("div");
