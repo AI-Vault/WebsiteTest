@@ -98,7 +98,7 @@
 
   function fillContainer(containerEl,linksArray,large){
     containerEl.innerHTML="";
-    linksArray.forEach(link=>{
+    linksArray.forEach((link, idx)=>{
       const a=document.createElement("a");
       a.href=link.url;
       a.target="_blank";
