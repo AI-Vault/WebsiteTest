@@ -95,6 +95,14 @@
   const middleContainer=document.getElementById("vakjes-container-middle");
   const extraContainer=document.getElementById("vakjes-container-extra");
   const toggle=document.getElementById("toggleView");
+  
+  // Maakt van elke URL een veilige, unieke window-naam
+  function getWindowName(url){
+  return url
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")   // alleen letters/cijfers/underscore
+    .replace(/^_+|_+$/g, "");      // voor/achter-liggende underscores weg
+  }
 
   function fillContainer(containerEl,linksArray,large){
     containerEl.innerHTML="";
