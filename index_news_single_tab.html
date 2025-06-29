@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI news internet – drie rijen (één tab per link)</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f9f9f9;color:#333}
+    .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:20px 0}
+    .subheader{margin:30px 0 10px;font-size:1.1em;font-weight:bold}
+    .toggle-label{font-size:.95em;background:#fff;padding:8px 12px;border-radius:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);cursor:pointer}
+    .container{display:flex;flex-wrap:wrap;gap:15px}
+    .vakje-link{text-decoration:none;color:inherit}
+    /* Klein vakje standaard instellingen */
+    .vakje{
+      width:120px;height:90px;
+      border:2px solid #000;border-radius:8px;
+      background:#fff;transition:.3s;
+      padding:10px;box-sizing:border-box;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center; /* Verticaal + horizontaal centreren voor niet‑uitgeklapte vakjes */
+      text-align:center
+    }
+    /* Uitgeklapte (grote) vakjes */
+    .vakje.large{
+      width:260px;height:170px;
+      justify-content:flex-start; /* Tekst bovenaan houden in grote vakjes */
+    }
+    .vakje:hover{background:#f0f0f0}
+    .tekst{font-weight:bold;margin-bottom:6px;text-align:center}
+    .description{display:none;font-size:.9em;color:#555;text-align:center}
+    .vakje.large .description{display:block}
+  </style>
+</head>
+<body>
+
+<!-- Bovenste verzameling vakjes (altijd klein) -->
+<div class="container" id="vakjes-container-top"></div>
+
+<div class="header">
+  <h1>Lijsten nieuwe AI</h1>
+  <label class="toggle-label">
+    <input type="checkbox" id="toggleView"> Grote weergave (alleen middelste rij)
+  </label>
+</div>
+
+<!-- Middelste verzameling vakjes (toggle) -->
+<div class="container" id="vakjes-container-middle"></div>
+
+<!-- Subheader voor extra rij -->
+<div class="subheader">Aanvullende bronnen</div>
+
+<!-- Extra rij vakjes (altijd klein) -->
+<div class="container" id="vakjes-container-extra"></div>
+
+<!-- Externe script met linksTop -->
+<script src="linksTop.js"></script>
+
+<script>
+  /* =====================================
+     1. Kleuren‑map & linklijsten
+  ======================================*/
+  const colorMap={13:"#76AE93",2:"#add8e6",4:"#E8F1F2",16:"#7a9e7e",5:"#B3EFB2",6:"#8C2E36",7:"#C36A5B",8:"#D5BB91",9:"#EBBA7C",
+    10:"#8BC9A8", 11:"#C5E4F7", 12:"#F3F8F8", 1:"#A6CCAB", 14:"#D0F8CF", 15:"#E8A8B0", 3:"#F2C2A9", 17:"#F3DFB7", 18:"#F9E1C8"};
+
+  // Lijst voor middelste rij
+  const linksMiddle=[
+    {kleur:1,tekst:"Volkskrant Laurens Verhagen",url:"https://www.volkskrant.nl/zoeken/resultaten/?query=laurens+verhagen&page=1&type=all_articles&sortBy=relevance&from=full_period",beschrijving:"Laurens verhagen AI redacteur Volkskrant"},
+    {kleur:1,tekst:"Trouw Ilyaz Nasrullah",url:"https://www.trouw.nl/columns/Ilyaz-Nasrullah",beschrijving:"Trouw AI scepticus."},
+    {kleur:2,tekst:"Papers with Code Trending",url:"https://paperswithcode.com/methods",beschrijving:"Populaire papers met code."},
+    {kleur:4,tekst:"MIT Technology Review – AI",url:"https://www.technologyreview.com/topic/artificial-intelligence/",beschrijving:""},
+    {kleur:4,tekst:"AI krant GPT generator",url:"https://chatgpt.com/g/g-684f0b7ccc148191a906d51b017d65d5-ai-news-generator-kranten",beschrijving:""},
+    {kleur:1,tekst:"Andre Ng The Batch",url:"https://www.deeplearning.ai/the-batch/tag/letters/",beschrijving:"The Batch is een podcast van Andre Ng"},
+    {kleur:1,tekst:"Ethan Mollick Twitter",url:"https://x.com/emollick",beschrijving:"Ethan Mollick tweets."},
+    {kleur:2,tekst:"AI report",url:"https://www.aireport.email/",beschrijving:""},
+    {kleur:4,tekst:"Karpathy Blog",url:"https://karpathy.bearblog.dev/blog/",beschrijving:""},
+    {kleur:4,tekst:"Lex Fridman Podcast",url:"https://lexfridman.com/podcast",beschrijving:""}
+  ];
+
+  // Lijst voor extra rij
+  const linksExtra=[
+    {kleur:1,tekst:"OpenAI research blog",url:"https://openai.com/research",beschrijving:"Onderzoeksblog van OpenAI."},
+    {kleur:2,tekst:"DeepMind Publications",url:"https://www.deepmind.com/research/publications",beschrijving:"Recente papers van DeepMind."},
+    {kleur:3,tekst:"Hugging Face Course",url:"https://huggingface.co/learn",beschrijving:"Gratis cursus over transformers & datasets."}
+  ];
+
+  /* =====================================
+     2. DOM‑referenties
+  ======================================*/
+  const topContainer   = document.getElementById("vakjes-container-top");
+  const middleContainer= document.getElementById("vakjes-container-middle");
+  const extraContainer = document.getElementById("vakjes-container-extra");
+  const toggle         = document.getElementById("toggleView");
+
+  /* =====================================
+     3. Eén‑tab‑per‑link‑logica
+  ======================================*/
+  // Map waarin we per URL het geopende venster opslaan
+  const openedTabs = new Map(); // url → Window
+
+  function openOrFocus(url) {
+    let win = openedTabs.get(url);
+
+    // Bestaat er al een venster én is het nog niet gesloten?
+    if (win && !win.closed) {
+      win.focus();
+      return;
+    }
+
+    // Zo niet: maak een nieuw venster/tab en sla het op
+    win = window.open(url, "_blank");
+    openedTabs.set(url, win);
+  }
+
+  /* =====================================
+     4. Helper om containers te vullen
+  ======================================*/
+  function fillContainer(containerEl, linksArray, large){
+    containerEl.innerHTML = "";
+
+    linksArray.forEach(link => {
+      // sla items zonder URL over
+      if (!link.url) return;
+
+      const a = document.createElement("a");
+      a.href = link.url;           // voor ctrl‑klik, contextmenu, copy‑link
+      a.className = "vakje-link";
+      a.addEventListener("click", e => {
+        e.preventDefault();       // we handelen het zelf af
+        openOrFocus(link.url);
+      });
+
+      // Vakje opmaken
+      const vakje = document.createElement("div");
+      vakje.className = "vakje" + (large ? " large" : "");
+      vakje.style.backgroundColor = colorMap[link.kleur] || "#ffffff";
+
+      const tekstDiv = document.createElement("div");
+      tekstDiv.className = "tekst";
+      tekstDiv.textContent = link.tekst;
+
+      const descDiv = document.createElement("div");
+      descDiv.className = "description";
+      descDiv.textContent = link.beschrijving;
+
+      vakje.appendChild(tekstDiv);
+      vakje.appendChild(descDiv);
+      a.appendChild(vakje);
+      containerEl.appendChild(a);
+    });
+  }
+
+  /* =====================================
+     5. Initiale render + toggle‑handler
+  ======================================*/
+  // top links komen uit extern script linksTop.js; zorg voor fallback
+  fillContainer(topContainer, typeof linksTop !== "undefined" ? linksTop : [], false);
+  fillContainer(middleContainer, linksMiddle, false);
+  fillContainer(extraContainer, linksExtra, false);
+
+  toggle.addEventListener("change", function(){
+    fillContainer(middleContainer, linksMiddle, this.checked); // alleen middelste rij toggelt
+  });
+</script>
+
+</body>
+</html>
