@@ -98,11 +98,10 @@
 
   function fillContainer(containerEl,linksArray,large){
     containerEl.innerHTML="";
-    linksArray.forEach((link, idx)=>{
+    linksArray.forEach(link=>{
       const a=document.createElement("a");
       a.href=link.url;
       a.target="_blank";
-      a.target = (containerEl.id === "vakjes-container-top") ? (link.target || "topTab" + idx) : "_blank";
       a.className="vakje-link";
 
       const vakje=document.createElement("div");
