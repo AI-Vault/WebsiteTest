@@ -1,4 +1,4 @@
-# 6. Consciousness, reasoning and the philosophy of AI with Murray Shanahan [link](https://www.youtube.com/watch?v=v1Py_hWcmkU)
+# 6. Consciousness, reasoning and the philosophy of AI with Murray Shanahan ([link](https://www.youtube.com/watch?v=v1Py_hWcmkU))
 # Overzicht van de filosofische en technische discussie over AI
 
 Het gesprek behandelt diepgaande filosofische en technische vragen rondom kunstmatige intelligentie, met bijzondere aandacht voor de aard van intelligentie, bewustzijn en redeneren. De deelnemers bespreken hoe AI ons begrip van de menselijke geest uitdaagt en hoe we met nieuwe technologieën en modellen op een andere manier naar intelligentie en bewustzijn moeten kijken.
