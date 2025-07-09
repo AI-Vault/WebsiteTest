@@ -1,4 +1,4 @@
-# 4. Redefining robotics with Carolina Parada [link](https://www.youtube.com/watch?v=Rgwty6dGsYI)
+# 4. Redefining robotics with Carolina Parada ([link](https://www.youtube.com/watch?v=Rgwty6dGsYI))
 # Robotica en AI-Integratie  
 Het gesprek belicht hoe Google DeepMind robotica heeft getransformeerd door AI-modellen te integreren in fysieke robots. De nadruk ligt op de evolutie van traditionele robotica naar systemen die natuurlijke taal en visuele input gebruiken om complexe taken uit te voeren. Het team combineert langlopende expertise in roboticamanipulatie met de kracht van grote taal- en visuele modellen om robots meer “embodied intelligence” te geven.
 
