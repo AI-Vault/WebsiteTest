@@ -1,4 +1,4 @@
-# Gedetailleerde samenvatting – *DeepMind: the Podcast* (afl. 1)
+# 1. Gedetailleerde samenvatting – *DeepMind: the Podcast* (afl. 1)
 
 > **Context**
 > Presentatrice Hannah Fry bezoekt een jaar lang DeepMind-HQ in Londen om van binnenuit te laten zien hoe onderzoekers kunstmatige intelligentie (AI) proberen te “kraken”. Ze spreekt met CEO Demis Hassabis en toponderzoekers Jess Hamrick, Matt Botvinick, Greg Wayne en anderen.
