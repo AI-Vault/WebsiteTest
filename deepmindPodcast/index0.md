@@ -1,4 +1,4 @@
-# AI en de Toekomst van Technologie
+# 0. AI en de Toekomst van Technologie
 
 ## Inleiding tot AI
 Hannah Fry blikt terug op haar eerste ervaring met coderen op jonge leeftijd en de impact van kunstmatige intelligentie (AI) op de toekomst. Demis Hassabis, CEO van DeepMind, benadrukt de enorme mogelijkheden van AI in het oplossen van complexe problemen zoals kanker en klimaatverandering.
