@@ -1,4 +1,4 @@
-# 5. AI and the future of health with Joelle Barral \n[link](https://www.youtube.com/watch?v=8Q02UAfqwWU)
+# 5. AI and the future of health with Joelle Barral /n[link](https://www.youtube.com/watch?v=8Q02UAfqwWU)
 # AI in de Gezondheidszorg  
 Het gesprek richt zich op hoe AI de gezondheidszorg ingrijpend verandert. Joelle Barral van Google DeepMind bespreekt hoe AI niet alleen de diagnose en behandeling van ziekten kan verbeteren, maar ook kan bijdragen aan het terugbrengen van de vreugde in de medische praktijk. Ze benadrukt dat hoewel de onderliggende systemen drastisch veranderen, de basisstructuur van bezoeken aan huisartsen en specialisten grotendeels behouden blijft, maar wel ondersteund wordt door AI-agenten.
 
