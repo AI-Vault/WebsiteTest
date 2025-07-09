@@ -1,5 +1,4 @@
-# 10. Gemini 2.0 and the evolution of agentic AI with Oriol Vinyals
-[link](https://www.youtube.com/watch?v=78mEYaztGaw)
+10. Gemini 2.0 and the evolution of agentic AI with Oriol Vinyals [link](https://www.youtube.com/watch?v=78mEYaztGaw)
 # Google DeepMind Podcast - Oriol Vinyals Over Agents en Ontwikkelingen in AI
 
 In deze aflevering van de "Google DeepMind - de Podcast" verwelkomt professor Hannah Fry Oriol Vinyals, de Vice President van Drastic Research en co-technisch leider van Gemini. De discussie richt zich op de evolutie van AI-agenten en de vooruitgang die is geboekt sinds Vinyals voor het laatst in de podcast was in 2019.
