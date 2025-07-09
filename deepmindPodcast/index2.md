@@ -1,4 +1,4 @@
-# 2. The nature of AI: solving the planet's data gap with Drew Purves [(link)](https://www.youtube.com/watch?v=vIIIau06wGo)
+# 2. The nature of AI: solving the planet's data gap with Drew Purves ([link](https://www.youtube.com/watch?v=vIIIau06wGo))
 # Kernpunten
 
 Het gesprek tussen Hannah Fry en Drew Purves richt zich op de inzet van AI voor het beschermen en begrijpen van ecosystemen. De discussie draait om hoe AI ontbrekende gegevens over de natuurlijke wereld kan opvullen, van het in kaart brengen van bossen tot het monitoren van biodiversiteit.
