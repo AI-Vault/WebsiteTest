@@ -1,4 +1,4 @@
-# 3. A quest for a cure: AI drug design with Isomorphic Labs[link](https://www.youtube.com/watch?v=XpIMuCeEtSk)
+# 3. A quest for a cure: AI drug design with Isomorphic Labs [link](https://www.youtube.com/watch?v=XpIMuCeEtSk)
 # Hoofdonderwerpen  
 De tekst richt zich op de revolutie in de geneesmiddelontdekking dankzij kunstmatige intelligentie (AI) en de integratie daarvan in zowel het ontwerpen van medicijnen als in het begrijpen van biologische processen. Centrale thema’s zijn:
 • Het gebruik van AI om moleculaire structuren en interacties nauwkeurig te voorspellen.  
