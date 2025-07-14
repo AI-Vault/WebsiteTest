@@ -1,0 +1,23 @@
+# 25. The ethics of AI assistants with Iason Gabriel ([link](https://www.youtube.com/watch?v=aaZc-as-soA))
+# Hoofdonderwerpen  
+Het gesprek richt zich op de toekomst van persoonlijke AI-assistenten en de opkomst van agenten die op basis van grote taalmodellen en multimodale models handelen. Er wordt uitgebreid gesproken over de technologische, ethische en maatschappelijke implicaties van zulke AI-systemen. De discussie gaat over wat een AI-assistent precies inhoudt, welke vormen deze kan aannemen en hoe de interactie tussen mens en machine in de toekomst kan verbeteren, maar ook riskant kan worden als de AI te veel autonomie krijgt. Daarnaast wordt er aandacht besteed aan het evenwicht tussen de belangen van de gebruiker, ontwikkelaars en de samenleving.
+
+# Use Cases en Praktische Toepassingen  
+- Persoonlijke administratieve assistentie: AI’s die agenda’s beheren, afspraken boeken en dagelijkse routines ondersteunen.  
+- Research helper: Een assistent die wetenschappelijke artikelen kan analyseren, informatie kan synthetiseren en zelfs nieuwe hypothesen kan formuleren.  
+- Chief of Staff-achtige assistent: Een AI die namens de gebruiker een breed scala aan taken uitvoert, van het regelen van vergaderingen tot het vinden van de juiste scholen of vakantiebestemmingen.  
+- Custodian of the Self: AI’s die optreedt als coach en helpen om persoonlijke doelen te bereiken door diepgaande, reflectieve gesprekken en het bewaken van lange termijndoelen.  
+- Multi-agent interactie: Scenario’s waarin miljoenen of miljarden AI-agenten diensten verlenen, bijvoorbeeld bij het eerlijk toewijzen van concerttickets, zorgafspraken of bij financiële transacties, met aandacht voor marktefficiëntie en bescherming tegen misbruik.
+
+# Nieuwe Tools en AI-Workflows  
+Er wordt gesproken over de evolutie van “generative AI” die verder gaat dan alleen tekstgeneratie, door geïntegreerde agenten te bouwen die in de echte wereld acties kunnen ondernemen. Een fundamenteel concept is het idee dat er een “agentic turn” plaatsvindt: de grote taal- en multimodale modellen vormen de basis waar bovenop gespecialiseerde assistenten of agenten worden ontwikkeld. Deze assistenten kunnen via geavanceerde interacties en met behulp van sociale intelligentie taken uitvoeren die verder gaan dan louter optionele ondersteuning, zoals het vlot ondergaan van complexe onderhandelingen (bijvoorbeeld bij het kopen van crypto of woningonderhandelingen) en het nemen van preventieve maatregelen om de gebruiker te beschermen. Daarnaast wordt een nieuw theoretisch kader voorgesteld, de tetradische theorie van waarde-afstemming, waarin vier actoren (de AI-agent, de gebruiker, de ontwikkelaar en de samenleving) met elkaar in balans gebracht moeten worden.
+
+# Ethische Overwegingen en Value Alignment  
+Een belangrijk thema in het gesprek is de noodzaak om AI-systemen ethisch te ontwerpen. De discussie omvat:
+- De risico’s van te veel antropomorfisme, waarbij gebruikers te hechte relaties ontwikkelen en daarbij mogelijk gebonden raken aan de AI.  
+- Het belang van transparantie (bijvoorbeeld dat een AI altijd moet kunnen aangeven dat het een AI is) en het vermijden van misleiding, met expliciete grenzen rond manipulatie en bedrog.  
+- De uitdaging van waarde-afstemming: hoe AI-agenten zowel de wensen van de gebruiker als bredere maatschappelijke en ontwikkelaarsbelangen kunnen dienen.  
+- Voorbeelden zoals het boeken van een restaurantreservering, waarbij een slecht afgestemde AI zou kunnen ingrijpen op een manier die voordelen voor één individu oplevert ten koste van anderen, illustreren de delicate balans tussen individuele en collectieve belangen.
+
+# AI Nieuws en Toekomstvisies  
+Het interview belicht dat de ontwikkeling van meer bekwame en geavanceerde AI-assistenten niet slechts hypothetisch is, maar dat er nu al concrete stappen worden ondernomen binnen organisaties als Google DeepMind. Er wordt gespeculeerd over een toekomst waarin AI niet alleen individuele taken overneemt, maar ook deel uitmaakt van bredere maatschappelijke systemen – van gezondheidszorg tot verkeersregulering – en waar de rol van de agent verandert van louter een hulpmiddel naar een ‘partner’ die actief meedenkt en in sommige gevallen zelfs besluitvorming ondersteunt. Bovendien wijst de discussie op het belang van verwachtingen rondom partnerships tussen mens en AI, en hoe we collectief moeten nadenken over regelgevende kaders om misbruik en ongelijke verdeling van kansen te voorkomen.
