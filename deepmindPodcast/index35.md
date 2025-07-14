@@ -1,0 +1,30 @@
+# 35. A quest for a cure: AI drug design with Isomorphic Labs ([link](https://www.youtube.com/watch?v=XpIMuCeEtSk))
+# Belangrijke Onderwerpen en Thema's  
+De tekst gaat over de integratie van kunstmatige intelligentie (AI) in de geneesmiddelontdekking. Twee experts van Isomorphic Labs – Rebecca Paul (hoofd medicinale geneesmiddelontwerp) en Max Yardberg (chief AI officer) – bespreken hoe AI niet alleen de manier waarop medicijnen worden ontworpen verandert, maar ook hoe dit het hele onderzoeksproces in de medische wetenschap kan transformeren. Ze benadrukken dat er met AI een overgang plaatsvindt van een langzaam en experimenteel proces naar een veel efficiëntere, geïntegreerde workflow waarbij zowel menselijke expertise als geavanceerde algoritmen essentieel zijn.
+
+# Toepassingsscenario’s in Geneesmiddelontwerp  
+- AI wordt ingezet voor het voorspellen van de driedimensionale (3D) structuur van eiwitten en hun interacties met kleine moleculen. Traditionele methodes zoals röntgenkristallografie, die maanden of zelfs jaren in beslag nemen, worden nu vervangen door geavanceerde modellen zoals AlphaFold 2 en AlphaFold 3.  
+- Het proces werkt als een 3D-puzzel of als het bouwen met LEGO-steentjes: eiwitten hebben “gaten” of pockets waarin een speciaal ontworpen kleine molecuul – het “wrench” – moet passen om specifieke cellulaire functies te moduleren.  
+- Medicijnontwerp omvat niet alleen de vormpassing (structuur) van moleculen, maar ook het voorspellen van hun bindingsaffiniteit. Modellen berekenen bijvoorbeeld een “binding probability” om te bepalen of een molecuul effectief en specifiek een eiwit target, zonder ongewenste neveneffecten.
+- Door AI-gestuurde generatieve modellen kunnen enorme combinatorische moleculaire ruimtes (tot ongeveer 10^60 mogelijke moleculen) verkennen worden. Dit maakt het mogelijk om zowel de ideeën van ervaren chemici te verfijnen als geheel nieuwe hypotheses te genereren door virtuele screening van beschikbare chemische ruimtes.
+- Het platform laat de chemici toe in real time wijzigingen aan te brengen in moleculaire structuren via inzichtelijke 3D-visualisaties, wat een iteratief en interactief ontwerpproces stimuleert.
+
+# Nieuwe Tools en AI Workflows  
+- AlphaFold 3: Dit nieuwe model geeft niet alleen nauwkeurige voorspellingen van de 3D-structuur van eiwitten, maar kan ook de interactie met kleine moleculen simuleren. Hierdoor ontstaat een krachtig hulpmiddel voor het ontwerpen van nieuwe geneesmiddelen.
+- Diffusie Modellen: Geïnspireerd door beeld- en videogeneratie, worden deze modellen ingezet om de exacte 3D-positie van atomen in het molecuul te voorspellen. Dit laat toe om moleculaire interacties op nauwkeurige wijze te simuleren.
+- Transformer-gebaseerde Architecturen en de “Pair Former”: In plaats van de traditionele 1D sequenties (zoals bij taalmodellen) worden in dit domein atomen (of aminozuren voor grotere eiwitten) als tokens gebruikt en gecombineerd tot een tweedimensioneel interactieraster, waarin elke mogelijke interactie tussen voorbeelden wordt geëvalueerd.  
+- Generatieve AI en Search Agents: Deze tools overbruggen het probleem dat het volledige moleculaire ontwerpveld astronomisch groot is. Ze maken het mogelijk om “intelligent” door de ontwerpruimte te navigeren, waardoor de kans groter wordt om lovende kandidaten te vinden, in plaats van een volledige, maar onpraktische, uitputtende zoektocht.
+- Binding Probability Model: Een scoringmodel dat door AI wordt gebruikt om snel slechte kandidaten te filteren. Moleculen met een score onder een bepaalde drempel worden niet verder onderzocht, wat de efficiëntie in het lab verhoogt.
+
+# Integratie in de Wetenschappelijke en Klinische Pipeline  
+- Het AI-gedreven platform beslaat verschillende fasen van geneesmiddelontwikkeling. Van structurele voorspelling en moleculaire ontwerpfase tot voorspellingen van toxiciteit, oplosbaarheid, celpermeabiliteit en het vermijden van bijwerkingen.  
+- Hoewel de meeste AI-toepassingen op dit moment zich richten op de vroege fase – het ontwerpen van de optimale moleculaire “wrench” voor een specifiek eiwit – is er ook toekomstig potentieel voor AI in het herontwerpen van klinische proefontwerpen en het beter modelleren van menselijke fysiologie.
+- De workflow ondersteunt zowel expertgestuurde hypotheses als volledige generatieve benaderingen. Dit bevordert een samenwerking tussen mens en machine, waarbij AI hypotheses aandraagt die door ervaren chemici verder worden geëvalueerd en geverifieerd in het lab.
+
+# AI Nieuws en Waarden voor de Toekomst  
+- Een belangrijk nieuwsfeit is dat Demis Hassabis en John Jumper in 2024 de Nobelprijs ontvingen voor hun baanbrekende werk met AI voor eiwitvouwing. Deze erkenning benadrukt de impact van AI op biowetenschappen.
+- Volgens de discussiedeelnemers zal AI binnen vijf jaar een cruciale en onmisbare rol spelen in geneesmiddelontwerp. Het dagelijks gebruik van AI bij het ontwerpen van geneesmiddelen wordt vergeleken met het uitvoeren van wetenschap zonder wiskunde: immers, als je geen AI gebruikt, behaal je niet de potentie om de meest complexe problemen op te lossen.
+- Tevens is er optimisme over de impact op gepersonaliseerde geneeskunde. Door moleculaire ontwerpen af te stemmen op individuele mutaties – zoals in kankerpatiënten – ontstaan nieuwe mogelijkheden voor therapieën met minder bijwerkingen en meer effectiviteit.
+
+# Eindconclusie  
+De tekst beschrijft een baanbrekende verschuiving in de farmaceutische industrie. Door geavanceerde AI-tools en modellen zoals AlphaFold 3, diffusie modellen en transformer-architecturen worden zowel de creatie, optimalisatie als het testen van geneesmiddelen radicaal versneld en gevalideerd. Dit leidt tot een toekomst waarin geneesmiddelontwerp veel efficiënter, nauwkeuriger en meer gepersonaliseerd kan plaatsvinden, met als uiteindelijk doel om sneller effectieve therapieën bij patiënten te brengen.
