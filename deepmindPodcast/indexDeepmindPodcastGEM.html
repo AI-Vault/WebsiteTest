@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Nieuwsweergave</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      background-color: #FAF9F6;
+      font-family: Georgia, serif;
+      margin: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+
+    .controls button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    #status {
+      color: #666;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .news-item {
+      background: white;
+      padding: 8px 15px 15px 15px; /* minder top-padding */
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .news-item h1 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* 👉 Specifiek: geen marge bovenaan de eerste kop */
+    .news-item h1:first-child {
+      margin-top: 0;
+    }
+
+    .news-item h2,
+    .news-item h3,
+    .news-item h4,
+    .news-item h5,
+    .news-item h6 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .news-item p,
+    .news-item li {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .news-item a {
+      color: #0000EE;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <div class="button-group">
+      <button id="prevBtn">← Previous</button>
+      <button id="nextBtn">Next →</button>
+    </div>
+    <div id="status">Laden...</div>
+  </div>
+
+  <div class="container" id="content"></div>
+
+  <script>
+    const contentDiv = document.getElementById('content');
+    const statusDiv = document.getElementById('status');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let allMarkdown = [];
+    let currentIndex = 0;
+    const step = 2;
+
+    /**
+     * Zoekt, sorteert en laadt alle relevante markdown-bestanden.
+     * De functie zoekt naar bestanden met de naam 'index[nummer].md' en 'index[nummer][letter].md'.
+     * Vervolgens sorteert het de gevonden bestanden op nummer (dalend) en dan op letter (dalend).
+     */
+    async function fetchAllMarkdown() {
+        statusDiv.textContent = 'Bestanden zoeken...';
+        let discoveredFiles = [];
+        let i = 0;
+        let consecutiveMisses = 0;
+        // Stop met zoeken als er voor 5 opeenvolgende nummers geen bestanden worden gevonden.
+        const maxConsecutiveMisses = 5;
+
+        // --- Fase 1: Bestanden ontdekken ---
+        while (consecutiveMisses < maxConsecutiveMisses) {
+            let foundFileForCurrentNumber = false;
+            
+            // Controleer op basisbestand (bv. index36.md)
+            const baseFilename = `index${i}.md`;
+            try {
+                // Gebruik een HEAD-request om efficiënt te controleren of het bestand bestaat.
+                const res = await fetch(baseFilename, { method: 'HEAD' });
+                if (res.ok) {
+                    discoveredFiles.push(baseFilename);
+                    foundFileForCurrentNumber = true;
+                }
+            } catch (err) { /* Negeer netwerkfouten */ }
+
+            // Controleer op bestanden met letters (bv. index36a.md, index36b.md)
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+            for (const char of alphabet) {
+                const filename = `index${i}${char}.md`;
+                try {
+                    const res = await fetch(filename, { method: 'HEAD' });
+                    if (res.ok) {
+                        discoveredFiles.push(filename);
+                        foundFileForCurrentNumber = true;
+                    }
+                } catch (err) { /* Negeer netwerkfouten */ }
+            }
+
+            if (foundFileForCurrentNumber) {
+                consecutiveMisses = 0; // Reset de teller bij een vondst.
+            } else {
+                consecutiveMisses++; // Verhoog de teller als er geen bestand is voor dit nummer.
+            }
+            i++; // Ga naar het volgende nummer.
+        }
+
+        // --- Fase 2: Sorteren ---
+        // Sorteer de gevonden bestandsnamen volgens de regel:
+        // 1. Nummer dalend (36 voor 35).
+        // 2. Letter dalend ('b' voor 'a').
+        // 3. Letterversie voor versie zonder letter ('a' voor '').
+        const fileRegex = /index(\d+)([a-z]*)?\.md/;
+        discoveredFiles.sort((fileA, fileB) => {
+            const matchA = fileA.match(fileRegex);
+            const matchB = fileB.match(fileRegex);
+
+            if (!matchA || !matchB) return 0;
+
+            const numA = parseInt(matchA[1], 10);
+            const charA = matchA[2] || ''; // Lege string als er geen letter is.
+            const numB = parseInt(matchB[1], 10);
+            const charB = matchB[2] || '';
+
+            // Sorteer nummers dalend.
+            if (numA !== numB) {
+                return numB - numA;
+            }
+            
+            // Als nummers gelijk zijn, sorteer letters dalend.
+            return charB.localeCompare(charA);
+        });
+        
+        if (discoveredFiles.length === 0) {
+            statusDiv.textContent = 'Geen index-bestanden gevonden.';
+            return;
+        }
+
+        // --- Fase 3: Inhoud ophalen ---
+        statusDiv.textContent = `Bezig met laden van ${discoveredFiles.length} items...`;
+        try {
+            const promises = discoveredFiles.map(filename =>
+                fetch(filename)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Bestand ${filename} kon niet worden geladen.`);
+                    return res.text();
+                })
+                .then(md => marked.parse(md))
+            );
+
+            allMarkdown = await Promise.all(promises);
+            statusDiv.textContent = `Er zijn ${allMarkdown.length} items geladen.`;
+            renderItems();
+        } catch (error) {
+            statusDiv.textContent = `Fout: ${error.message}`;
+            console.error('Fout bij het ophalen van bestanden:', error);
+        }
+    }
+
+    function renderItems() {
+      contentDiv.innerHTML = '';
+      const start = Math.max(0, currentIndex);
+      const end = Math.min(allMarkdown.length, currentIndex + step);
+      for (let i = start; i < end; i++) {
+        const item = document.createElement('div');
+        item.className = 'news-item';
+        item.innerHTML = allMarkdown[i];
+        contentDiv.appendChild(item);
+      }
+
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex + step >= allMarkdown.length;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex -= step;
+        renderItems();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex + step < allMarkdown.length) {
+        currentIndex += step;
+        renderItems();
+      }
+    });
+
+    fetchAllMarkdown();
+  </script>
+
+</body>
+</html>
