@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+.checkbox {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+    font-weight: bold;
+}
+.checkbox.checked {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+<div id="custom-filters" style="margin-bottom: 20px;">
+<div class="checkbox checked notranslate" data-source="mit">MIT</div>
+<div class="checkbox checked notranslate" data-source="wired">Wired</div>
+<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    filterArticles();
+});
+</script>
+
+<div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:11-8-2025)</div>
+        <p>Palantir, co-founded by Peter Thiel, is frequently mischaracterized as a data broker or miner. Its actual role involves providing software that allows organizations, particularly government agencies and corporations, to analyze and integrate vast amounts of data through platforms like Foundry (for businesses) and Gotham (for government use). Despite former employees' efforts to clarify Palantir's identity, confusion remains about what sets it apart from other tech firms. The company markets its offerings as groundbreaking solutions, often using military language to enhance its appeal. Palantir's unique selling proposition is its ability to provide complex data solutions without altering existing systems. However, the software's capabilities raise ethical concerns, especially when wielded by authoritarian regimes, as it may amplify biases inherent in the data it processes. The internal culture emphasizes meritocracy but can suppress dissent regarding its controversial partnerships and purposes. <a href=https://www.wired.com/story/palantir-what-the-company-does/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
