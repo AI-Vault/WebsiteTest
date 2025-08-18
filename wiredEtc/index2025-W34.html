@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+.checkbox {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+    font-weight: bold;
+}
+.checkbox.checked {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+<div id="custom-filters" style="margin-bottom: 20px;">
+<div class="checkbox checked notranslate" data-source="mit">MIT</div>
+<div class="checkbox checked notranslate" data-source="wired">Wired</div>
+<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    filterArticles();
+});
+</script>
+
+<div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:18-8-2025)</div>
+        <p>Teachers are exploring how to integrate AI tools like ChatGPT into classroom settings to enhance learning while managing potential pitfalls. Since the arrival of AI, educators have grappled with its duality: as a helpful resource or a means for cheating. Some teachers, like Cody Chamberlain, are using AI to fuel discussion and critical thinking through engaging, ethical dilemmas, while others leverage AI to streamline lesson planning and reduce burnout. AI's applications range from creating personalized curricula to assisting students with diverse learning needs. However, there are concerns about students' reliance on AI, lacking critical analysis of AI-generated content. As AI becomes more ubiquitous, educators emphasize the need for AI literacy in curricula, underscoring the importance of preparing students to interact thoughtfully with technology to navigate future challenges. This evolving landscape presents a critical juncture in how AI influences education and the role of teachers in shaping its use. <a href=https://www.wired.com/story/teachers-using-ai-schools/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:18-8-2025)</div>
+        <p>The article explores the rise of microschools in Silicon Valley, emphasizing their appeal to tech moguls looking for alternative education methods for their children. Pioneered by figures like Elon Musk with his Ad Astra school, microschools are characterized by small class sizes and unorthodox curricula, often driven by a belief that traditional educational systems are inadequate. The movement is supported by significant investment from tech elites like Larry Ellison, Marc Andreessen, and Peter Thiel, who advocate for educational choices that reflect personal and political values. Critics argue that these trends perpetuate inequality, allowing wealthy families to access public funds for private education. The article also highlights the integration of AI in microschooling and the broader push for privatized education solutions, revealing how these trends may reshape the landscape of American education. <a href=https://www.wired.com/story/silicon-valley-tech-moguls-microschools/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:18-8-2025)</div>
+        <p>The article explores the historical anxiety surrounding technological advancements in education, highlighting how innovations like calculators, computers, interactive whiteboards, and generative AI, such as ChatGPT, have sparked debates about their potential negative impact on learning. It illustrates that fears of new technology undermining fundamental skills are recurrent, dating back to concerns about books and calculators. Experts argue that educational systems are resilient to change and that instead of revolutionizing education, new tools simply adapt to existing practices. The piece suggests that educators should leverage technologies creatively, focusing on developing skills like critical thinking and creativity. It concludes by reflecting on society’s tendency to overestimate the disruptive potential of technology in education while underestimating students' ability to learn and adapt. <a href=https://www.wired.com/story/photo-essay-school-tech-hysteria/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:18-8-2025)</div>
+        <p>The article explores the perspectives of six young individuals regarding artificial intelligence (AI) and its impact on education and daily life. It highlights the contrasting views on AI's role in schools—while some students utilize it for study aids and problem-solving, many express concern about cheating and over-reliance on technology. Participants acknowledge that AI can enhance learning efficiency but warn it may diminish personal skills like writing and critical thinking. 
+
+Themes include the ethical use of AI, its potential environmental effects, and its influence on creativity, with some fearing that AI may replace traditional artistic processes. The discussion urges for instructional approaches that guide youth on how to effectively and responsibly integrate AI into their lives. Ultimately, the article reflects on the necessity of adapting educational frameworks to prepare students for a future intertwined with technology. <a href=https://www.wired.com/story/what-kids-think-about-ai-schools/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">undefined (undefined.wired:18-8-2025)</div>
+        <p>The article examines the declining prevalence of handwriting in the era dominated by digital technology, particularly smartphones and AI. It highlights the nostalgic attachment to handwriting while acknowledging its cognitive and educational benefits, such as aiding literacy acquisition and motor skill development. Experts express mixed opinions on the importance of teaching cursive writing, yet they unanimously agree on the cognitive advantages of handwriting. Concerns arise, especially regarding "character amnesia," where overreliance on typing leads to diminished handwriting skills. Interestingly, the rise of AI may prompt a resurgence in handwriting as educators seek ways to confirm student comprehension beyond digital means. Ultimately, while handwriting may not be essential in many professions, its learning process remains valuable for cognitive development and literacy. <a href=https://www.wired.com/story/the-end-of-handwriting/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
