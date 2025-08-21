@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+.checkbox {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+    font-weight: bold;
+}
+.checkbox.checked {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+<div id="custom-filters" style="margin-bottom: 20px;">
+<div class="checkbox checked notranslate" data-source="mit">MIT</div>
+<div class="checkbox checked notranslate" data-source="wired">Wired</div>
+<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    filterArticles();
+});
+</script>
+
+<div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Chinese ‘Virtual Human’ Salespeople Are Outperforming Their Real Human Counterparts (.wired:20-8-2025)</div>
+        <p>Chinese ecommerce platforms are increasingly using AI-generated "virtual humans" as salespeople, outperforming human counterparts in sales. These AI avatars, developed by companies like PLTFRM using technology from Baidu and DeepSeek, operate around the clock to promote and sell products on platforms like Taobao and Pinduoduo. They can engage with audiences in real-time, answering questions and providing product details, which has led to significant sales increases—up to 30% in some cases.
+
+Despite concerns about job displacement for human salespeople, the technology currently complements rather than replaces them. The advent of more realistic avatars with improved language capabilities has transformed livestream ecommerce, where a significant portion of sales now occurs. As AI models advance, there's potential for these avatars to further integrate into global markets, potentially influencing ecommerce practices beyond China’s borders. <a href=https://www.wired.com/story/artificial-intelligence-tiktok-shop-ecommerce-china/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">I Saw the Future of AI Film and It Was Empty (.wired:20-8-2025)</div>
+        <p>The article reviews the AI Film Festival backed by Runway, an AI company, questioning the artistic value and originality of films generated using AI. The festival showcased ten short films, but many lacked depth and personality, resembling commercialized, glossy visuals more than true artistry. The author reflects on the implications of AI in filmmaking, echoing concerns about whether generative AI can truly create art or merely mimic human creativity. Critics argue that while some versions of AI could enhance the creative process, they may also threaten traditional jobs in the industry. The festival was met with skepticism from cinephiles, highlighting the divide between proponents and detractors of AI in art. Overall, the piece raises existential questions about creativity and the evolving role of technology in storytelling, suggesting that AI represents not just another tool, but a fundamental shift in the nature of artistic creation. <a href=https://www.wired.com/story/cream-of-the-slop-an-ai-film-festival-screening-left-me-with-more-questions-than-answers/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Do Large Language Models Dream of AI Agents? (.wired:20-8-2025)</div>
+        <p>The article explores the concept of "sleeptime compute," a method allowing AI agents to manage memory akin to human sleep processes. It focuses on Bilt's collaboration with Letta, which enables AI agents to learn from interactions and decide what information to retain or discard for optimal function. This advancement addresses limitations in large language models (LLMs) regarding memory retention and accuracy in contexts where they might get confused. The article highlights differing approaches from companies like LangChain and emphasizes the emerging necessity for AI to have not only memory but also the capability to forget, akin to human cognitive processes. The overarching theme is the evolution of AI memory systems and their implications for enhancing AI reliability and performance, drawing parallels to human memory in its complexity and functionality. <a href=https://www.wired.com/story/sleeptime-compute-chatbots-memory/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">The Fitbit App Is Turning Into an AI-Powered Personal Health Coach (.wired:20-8-2025)</div>
+        <p>The Fitbit app is set to be revamped with an AI-powered Personal Health Coach, utilizing Google's Gemini technology. This new feature, launching in October and available to Fitbit Premium subscribers, aims to enhance user interaction through personalized health and fitness guidance based on continuous data collected from Fitbit devices. The redesign includes improved navigation, data visualization, and customization options. Users can engage with the Coach to adjust workout plans, monitor sleep quality, and suggest lifestyle activities tailored to individual preferences.
+
+The experience will be data-driven, considering users' health histories and employing advanced algorithms for better accuracy while maintaining separate data policies to protect user privacy. The integration of insights from industry experts and the potential for multimodal interactions promises a more interactive health coaching experience, though concerns regarding trust and data accuracy remain. <a href=https://www.wired.com/story/fitbit-app-ai-personal-health-coach/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Google Pixel 10 Series, Pixel Watch 4, Pixel Buds 2a: Specs, Features, Release Date (.wired:20-8-2025)</div>
+        <p>Google announced its Pixel 10 series at a recent hardware event, introducing flagship Android smartphones featuring magnetic Qi2 wireless charging, alongside the Pixel Watch 4 and Pixel Buds 2a. The new devices include the Pixel 10, Pixel 10 Pro, Pixel 10 Pro XL, and Pixel 10 Pro Fold, each with notable hardware and software improvements. The Pixel 10 series maintains a similar design to its predecessor but now includes a 5X telephoto camera for enhanced photography and AI-driven features. The Tensor G5 chip powers the phones, enabling significant performance boosts and new features like Magic Cue for message responses and real-time translation.
+
+The Pixel Watch 4 focuses on repairability, while the Pixel Buds 2a offer lightweight design and active noise cancellation. All products emphasize AI capabilities and improved user experiences, with availability set for preorder, shipping later in the year. <a href=https://www.wired.com/story/google-pixel-10-series-pixel-watch-4-pixel-buds-2a/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">10 Crazy Features Powering Google's Pixel 10 Phones (and Watch) (.wired:20-8-2025)</div>
+        <p>Google's Pixel 10 series introduces innovative AI features aimed at enhancing user convenience across communication and photography. Key highlights include:
+
+1. **Real-Time Translations**: Users can have translated phone conversations in a voice that closely resembles their own.
+2. **Camera Coach**: An AI-assisted feature that guides users in capturing better photos by providing tailored suggestions based on scanned scenes.
+3. **Magic Cue**: This feature suggests canned responses in Google Messages, sourcing information directly from personal apps like Gmail and Calendar.
+4. **Voicemail Alternatives**: Instead of traditional voicemail, the "Take a Message" function transcribes missed call messages and proposes actionable steps.
+5. **Pro Res Zoom and Text-Based Editing**: Users can zoom up to 100x while maintaining photo quality and edit images through natural language requests.
+
+These features exemplify Google's focus on integrating AI to simplify everyday tasks, enhancing user experience while ensuring data privacy. <a href=https://www.wired.com/story/all-the-new-ai-features-in-google-pixel-10-phones/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Meet Wukong, the AI Chatbot China Has Installed on Its Space Station (.wired:21-8-2025)</div>
+        <p>China has introduced Wukong, an AI chatbot, aboard its Tiangong space station to enhance safety and coordination during missions. Named after the “Monkey King” from Chinese mythology, Wukong AI was designed from a domestic open-source AI model and specializes in navigation and tactical planning. Since its activation in mid-July, it has assisted taikonauts during spacewalks and routine inspections, offering comprehensive support through a dual-module system that connects the station's operations with ground analysis.
+
+While not the first AI in space, Wukong uniquely merges intelligent assistance with aerospace navigation. This development aligns with China's ambitions to solidify its space power status and expand the Tiangong station into a logistics hub for future lunar missions. Wukong symbolizes adaptability and the pursuit of knowledge, reflecting its purpose in aiding complex space operations effectively. <a href=https://www.wired.com/story/meet-wukong-chinas-first-ai-chatbot-on-a-space-station/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Why Did a $10 Billion Startup Let Me Vibe-Code for Them—and Why Did I Love It? (.wired:21-8-2025)</div>
+        <p>The article explores the author's experience of "vibe coding" at the tech startup Notion, a company valued at $10 billion. The term "vibe coding" refers to the integration of AI-assisted coding, where a significant portion of software is now generated by artificial intelligence. The author, lacking formal coding skills, embeds with Notion for two days to participate in coding tasks alongside experienced engineers. The narrative highlights the dual nature of AI's impact on coding: it can rapidly increase productivity while raising concerns about the competency of coders who rely too heavily on AI tools. Through practical assignments, the author contributes to feature development, revealing the complex dynamics between human intuition and AI capabilities. Ultimately, the piece reflects on the future of coding roles amidst a transformative landscape shaped by generative AI, sparking both excitement and apprehension among professionals navigating this new technological era. <a href=https://www.wired.com/story/why-did-a-10-billion-dollar-startup-let-me-vibe-code-for-them-and-why-did-i-love-it/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
