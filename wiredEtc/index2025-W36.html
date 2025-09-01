@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+.checkbox {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+    font-weight: bold;
+}
+.checkbox.checked {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+<div id="custom-filters" style="margin-bottom: 20px;">
+<div class="checkbox checked notranslate" data-source="mit">MIT</div>
+<div class="checkbox checked notranslate" data-source="wired">Wired</div>
+<div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+<div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    filterArticles();
+});
+</script>
+
+<div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Latam-GPT: The Free, Open Source, and Collaborative AI of Latin America (.wired:1-9-2025)</div>
+        <p>Latam-GPT is een open‑source groot taalmodel ontwikkeld door het Chileense National Center for Artificial Intelligence (CENIA) om technologische soevereiniteit in Latijns‑Amerika te bevorderen. Het model telt ~50 miljard parameters en is getraind op een regionaal corpus van >8 TB en 2,645,500 documenten uit 20 Latijns‑Amerikaanse landen + Spanje, met sterke vertegenwoordiging van Brazilië, Mexico, Spanje, Colombia en Argentinië. Projectentruuk: 33 partners, bottom‑up samenwerking en gebruik van supercomputerinfrastructuur aan de Universiteit van Tarapacá (12 nodes × 8 NVIDIA H200 GPU’s). Doel: betere prestaties op regionaal culturele en taalkundige vragen, toekomstige uitbreiding naar beelden, inbegrip van inheemse talen, en toepassingen in onderwijs, gezondheid, landbouw en onderzoek. Belangrijke thema’s: open source, gegevensdiversiteit, infrastructuur, regionale samenwerking en onderwijs. <a href=https://www.wired.com/story/latam-gpt-the-free-open-source-and-collaborative-ai-of-latin-america/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">WIRED Roundup: Meta’s AI Brain Drain (.wired:1-9-2025)</div>
+        <p>Podcast Uncanny Valley behandelt vijf hoofdverhalen: een Stanford‑studie toont dat AI al instroombanen verdringt (16% daling bij 22–25‑jarigen in klantenservice en software); Elon Musks xAI daagt Apple en OpenAI voor de rechter over vermeende App Store‑voorkeuren; een donororgaan (Chorus/Sixteen Thirty Fund) betaalt heimelijk hoogbetaalde democratische influencers onder strikte geheimhouding; reportage over 'body farms' beschrijft hoe gedoneerde lijken ontbindingsprocessen voor forensisch onderzoek onthullen; en centraal: Meta’s Superintelligence Labs kampt met vroege vertrekgolven—minstens drie recent geworven onderzoekers vertrokken (twee keer terug naar OpenAI)—wat duidt op spanningen tussen grote salarissen, leiderschap en missie. <a href=https://www.wired.com/story/uncanny-valley-podcast-wired-roundup-metas-ai-brain-drain/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Sky Glass Air review: a surprisingly good budget smart TV (.theguardian:1-9-2025)</div>
+        <p>Hoofdonderwerp: beoordeling van de Sky Glass Air, een betaalbare all‑in‑one smart‑tv van Sky. Belangrijkste thema’s: slank, licht ontwerp beschikbaar in 43/55/65 inch; 4K 60Hz LCD‑paneel met HDR maar zonder lokale dimming (minder contrast); verrassend goede 15W stereo­luidsprekers maar weinig bas en geen surround; integratie van Sky‑service en Sky OS met uitstekende playlist, zoekfunctie, voice‑control en brede streaming‑app‑ondersteuning; eenvoudige aansluiting via alleen stroom en internet (wifi/ethernet), plus 3 HDMI/USB/optisch; prijs vanaf £309 of maandelijkse betaling, vereist Sky Essential‑abonnement vanaf £15/mnd; duurzaamheid: deels repareerbaar, gerecycled materiaal en plastic‑vrije verpakking. Conclusie: sterke budgetkeuze door software/service, met beeld- en gaming‑limieten. <a href=https://www.theguardian.com/technology/2025/sep/01/sky-glass-air-review-a-surprisingly-good-budget-smart-tv target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
