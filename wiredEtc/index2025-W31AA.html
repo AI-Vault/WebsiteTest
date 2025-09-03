@@ -85,7 +85,7 @@
     
     <div class="week-counter">
         <button class="week-button" id="week-button-minus">-</button>
-        <a href="https://www.ikke2025-w31.html" class="week-display" id="week-display">2025-W31</a>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W31.html" class="week-display" id="week-display">2025-W31</a>
         <button class="week-button" id="week-button-plus">+</button>
     </div>
 </div>
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const weekDisplay = document.getElementById('week-display');
         const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
         weekDisplay.textContent = weekText;
-        weekDisplay.href = `https://www.ikke${weekText.toLowerCase()}.html`;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText.toLowerCase()}.html`;
     }
 
     function decrementWeek() {
