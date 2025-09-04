@@ -85,7 +85,83 @@
     
     <div class="week-counter">
         <button class="week-button" id="week-button-minus">-</button>
-        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W36.html" class="week-display" id="week-display">    <div class="news-item" data-source="wired">
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W36.html" class="week-display" id="week-display">2025-W36</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 31;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
         <div class="headline">WIRED Roundup: Meta’s AI Brain Drain (.wired:1-9-2025)</div>
         <p>Podcast Uncanny Valley behandelt vijf hoofdverhalen: een Stanford‑studie toont dat AI al instroombanen verdringt (16% daling bij 22–25‑jarigen in klantenservice en software); Elon Musks xAI daagt Apple en OpenAI voor de rechter over vermeende App Store‑voorkeuren; een donororgaan (Chorus/Sixteen Thirty Fund) betaalt heimelijk hoogbetaalde democratische influencers onder strikte geheimhouding; reportage over 'body farms' beschrijft hoe gedoneerde lijken ontbindingsprocessen voor forensisch onderzoek onthullen; en centraal: Meta’s Superintelligence Labs kampt met vroege vertrekgolven—minstens drie recent geworven onderzoekers vertrokken (twee keer terug naar OpenAI)—wat duidt op spanningen tussen grote salarissen, leiderschap en missie. <a href=https://www.wired.com/story/uncanny-valley-podcast-wired-roundup-metas-ai-brain-drain/ target="_blank">link</a></p> 
     </div>
