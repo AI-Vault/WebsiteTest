@@ -61,6 +61,26 @@
     10:"#8BC9A8", 11:"#C5E4F7", 12:"#F3F8F8", 1:"#A6CCAB", 14:"#D0F8CF", 15:"#E8A8B0", 3:"#F2C2A9", 17:"#F3DFB7", 18:"#F9E1C8"
   };
 
+    // Functie om huidige jaar en weeknummer te berekenen
+  function getCurrentWeekInfo() {
+    const now = new Date();
+    const year = now.getFullYear();
+    
+    // Bereken weeknummer volgens ISO 8601
+    const startOfYear = new Date(year, 0, 1);
+    const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));
+    const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
+    
+    return { year, week: weekNumber };
+  }
+
+  // Genereer dynamische URL
+  function generateWeeklyURL() {
+    const { year, week } = getCurrentWeekInfo();
+    const paddedWeek = week.toString().padStart(2, '0');
+    return `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${year}-W${paddedWeek}.html`;
+  }
+
   // Lijst voor middelste rij
   const linksMiddle=[
     {kleur:1,tekst:"AI report",url:"https://ai-vault.github.io/WebsiteTest/aireportPodcast/indexAIreport.html",beschrijving:""},
@@ -75,7 +95,7 @@
     {kleur:1,tekst:"Technoloog Groot",url:"https://ai-vault.github.io/WebsiteTest/technoloogPodcast/indexTechnoloogGroot.html",beschrijving:""},
     {kleur:2,tekst:"Deepmind Podcast",url:"https://ai-vault.github.io/WebsiteTest/deepmindPodcast/indexDeepmindPodcast.html",beschrijving:""},
     {kleur:2,tekst:"Deepmind Podcast Extra",url:"https://ai-vault.github.io/WebsiteTest/deepmindPodcast/indexDeepmindPodcastExtra.html",beschrijving:""},
-    {kleur:3,tekst:"",url:"",beschrijving:""},
+    {kleur:3,tekst:"Eigen AI set",url:generateWeeklyURL(),beschrijving:"AI Vault weekly tech updates"}
     {kleur:3,tekst:"",url:"",beschrijving:""},
     {kleur:4,tekst:"",url:"",beschrijving:""},
     {kleur:4,tekst:"",url:"",beschrijving:""},
