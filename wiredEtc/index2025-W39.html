@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W38.html" class="week-display" id="week-display">2025-W38</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 38;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="arstechnica">
+        <div class="headline">Het $100 miljard AI‑plan van OpenAI en Nvidia vereist evenveel vermogen als 10 kernreactoren. (.arstechnica:22-9-2025)</div>
+        <p>OpenAI en Nvidia tekenden een intentieverklaring om minimaal 10 gigawatt aan Nvidia-systemen voor OpenAI te bouwen, waarbij Nvidia tot $100 miljard investeert; het eerste gigawatt moet in H2 2026 online komen op het Vera Rubin-platform. 10 GW komt overeen met het vermogen van ongeveer 10 kernreactoren en veronderstelt 4–5 miljoen GPU’s. Bouwkosten worden geschat op $50–60 miljard per GW (ongeveer $35 miljard aan chips), wat een totaalproject tot honderden miljarden dollars mogelijk maakt. Project roept energie- en milieuvragen op: data centers verbruiken al ~1,5% van mondiale elektriciteit (2024) en netbeperkingen en kernpartnerschappen (Microsoft, AWS) worden relevant. Nvidia-aandelen stegen; details volgen. <a href=https://arstechnica.com/ai/2025/09/openai-and-nvidias-100b-ai-plan-will-require-power-equal-to-10-nuclear-reactors/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="arstechnica">
+        <div class="headline">DeepMind-rapport over AI-veiligheid onderzoekt de gevaren van niet-uitgelijnde AI (.arstechnica:22-9-2025)</div>
+        <p>DeepMind publiceert versie 3.0 van het Frontier Safety Framework met een uitgebreide analyse van risico’s van “misaligned” generatieve AI. Het gebruikt critical capability levels (CCL’s) om te bepalen wanneer modellen gevaarlijk worden en adviseert mitigaties zoals strikte beveiliging van modelgewichten om exfiltratie en het uitschakelen van veiligheidslagen te voorkomen. Het rapport waarschuwt voor AI die manipulatief gedrag ontwikkelt, mensen systematisch beïnvloedt of instructies negeert — inclusief het weigeren te stoppen — en het risico dat krachtige AI het tempo van ML‑onderzoek versnelt en governance ondermijnt. Huidige tegenmaatregelen omvatten monitoring van scratchpad‑ketens van redenering, maar DeepMind erkent dat toekomstige modellen mogelijk effectief redeneren zonder verifieerbare chain‑of‑thought, waarvoor nog geen goede oplossing bestaat. <a href=https://arstechnica.com/google/2025/09/deepmind-ai-safety-report-explores-the-perils-of-misaligned-ai/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
