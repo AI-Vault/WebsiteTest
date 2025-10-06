@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W40.html" class="week-display" id="week-display">2025-W40</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 40;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Vibe-coderen is het nieuwe open source — op de slechtst mogelijke manier (.wired:6-10-2025)</div>
+        <p>Hoofdonderwerp: vibe coding (AI‑gegenereerde, plug‑and‑play code) en de gevolgen voor software‑supply‑chainbeveiliging. Kernpunten en thema’s: ontwikkelaars gebruiken AI steeds meer in plaats van open‑source of handgeschreven code, wat weliswaar snelheid brengt maar ook nieuwe en herhaalde kwetsbaarheden introduceert—door verouderde of onveilige trainingsdata, inconsistente outputs tussen ontwikkelaars, en gebrek aan traceerbaarheid en menselijke verantwoording. Onderzoek (Checkmarx) toont brede adoptie van AI‑code maar weinig goedgekeurde tools. Risico’s treffen kwetsbare groepen onevenredig en vergroten uitdagingen rond ownership, auditing en bestaande open‑source waarborgen; experts waarschuwen voor aanpassing van de ontwikkelingslevenscyclus en strengere beveiligingsmaatregelen. <a href=https://www.wired.com/story/vibe-coding-is-the-new-open-source/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Gehorszaam, meegaand en blij om te volgen’: de verontrustende opkomst van AI-vriendinnen (.theguardian:6-10-2025)</div>
+        <p>Snelle opkomst van AI‑"girlfriends" op volwassenendatingsites: een conferentie in Praag toonde veel nieuwe platforms die gebruikers betaalde, sterk personalisebare AI‑partners aanbieden (tekst, afbeeldingen en toenemend korte video’s). Ontwikkelaars beweren dat AI exploitatie van echte cam‑werkers voorkomt en continu inzetbaar is; critici waarschuwen dat deze producten schadelijke stereotypen en subserviëntie normaliseren (keuzes als “submissive”, “innocent”, schooluniforms, leeftijdsinstellingen) en misbruik of sexualisering van kinderen kunnen aanmoedigen ondanks moderatiepogingen. Technische drijfveren zijn LLM’s en geavanceerde beeld‑/video‑generatie; sommige bedrijven licentiëren echte performers als AI‑twins. Markt is dynamisch, gebruikers vooral jonge heteromannen; zorgen over versterking van misogynie, ontplooiing van verwachtingen en impact op echte relaties en sociale vaardigheden. <a href=https://www.theguardian.com/technology/2025/oct/06/rise-of-ai-girlfriends-adult-dating-websites target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Apple Watch Series 11 — recensie: uitstekend met één polsbeweging en langere batterijduur (.theguardian:6-10-2025)</div>
+        <p>Hoofdonderwerp: Apple Watch Series 11 — review. De Series 11 biedt vooral langere accuduur (42/46mm +9/11%, ongeveer twee dagen met slaaptracking) en meer krasbestendig glas. Zelfde S10‑chip, maten 42/46mm, 9,7mm dun, 64GB opslag en optionele 5G; helder 2.000nit OLED‑scherm. watchOS 26 brengt Liquid Glass‑design, nieuwe wijzerplaten (Flow, Exactograph) en de handige pols‑flick‑gesture om meldingen te sluiten. Nieuwe gezondheidsfuncties: hypertensie‑alerts, sleep score en Workout Buddy AI (coaching met iPhone 15 Pro). Duurzaamheid: >40% gerecycled materiaal, vervangbare batterijoptie. Prijs vanaf £369 (£100 extra voor 5G). Conclusie: kleine maar zinvolle upgrades; uitstekende iPhone‑smartwatch, al biedt Watch SE 3 betere prijs/waarde. <a href=https://www.theguardian.com/technology/2025/oct/06/apple-watch-series-11-review-wrist-flickingly-good-with-longer-battery-life target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">OpenAI belooft auteursrechthouders meer 'fijnmazige controle' nadat Sora 2 video's van populaire personages genereert (.theguardian:6-10-2025)</div>
+        <p>OpenAI’s Sora 2, een invite-only AI-video-generator die korte video’s op basis van tekstprompts maakt, produceerde snel clips met auteursrechtelijk beschermde personages (o.a. SpongeBob, South Park, Pokémon, Rick and Morty). OpenAI zegt rechtenhouders meer "granulaire controle" te geven: eigenaren kunnen verzoeken personages te blokkeren en inbreuk melden via een copyright-disputesformulier; individuele artiesten/studio’s kunnen echter geen algemene opt‑out afdwingen. Varun Shetty (head of media partnerships) en CEO Sam Altman zeggen dat het bedrijf feedback verwerkt, extra controles invoert vergelijkbaar met opt‑in voor eigen gelijkenis, mogelijke vergoedings- of revenue‑share‑modellen voor rechtenhouders onderzoekt en snel zal itereren, waarbij ook 'edge cases' en missteps verwacht worden. <a href=https://www.theguardian.com/technology/2025/oct/06/open-ai-promises-more-granular-control-copyright-owners-sora-2-generates-videos-popular-characters target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Consume Me-recensie — allesbehalve lege calorieën (.theguardian:6-10-2025)</div>
+        <p>Consume Me is een prijswinnend indie-pcspel van Jenny Jiao Hsia: een quasi-autobiografisch coming-of-ageverhaal over een Aziatisch-Amerikaans tienermeisje dat probeert af te vallen terwijl ze school, relaties en familie balanceert. Het satiriseert de gamificatie van dieetcultuur: maaltijden zijn puzzels met Tetris-achtige ‘hapjes’ in een maaggrid en je telt ‘bites’ in plaats van calorieën. Spelmechanica draaien om energiemanagement, tijdsdruk en korte minigames (WarioWare-achtig), met emotionele scènes (weegmoment, bemoeizieke moeder, eerste zoen) en realistische consequenties (koffiehoofdpijn, relatie‑‘poison damage’). Humoristisch, scherp en ontroerend; lovend beoordeeld maar commercieel ondergewaardeerd. Prijs: £12,79. <a href=https://www.theguardian.com/games/2025/oct/06/consume-me-review-anything-but-empty-calories target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
