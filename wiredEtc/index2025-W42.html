@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W41.html" class="week-display" id="week-display">2025-W41</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 41;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Britse parlementsleden opgeroepen om TikToks plannen om 439 contentmoderatorbanen te schrappen te onderzoeken (.theguardian:13-10-2025)</div>
+        <p>UK-parlementariërs worden gevraagd TikToks voorgenomen ontslag van 439 contentmoderators in Londen te onderzoeken. Vakbonden (TUC, CWU) en onlineveiligheidsexperts waarschuwen dat de bezuiniging, acht dagen vóór een vakbondsstem aangekondigd, veiligheidsrisico’s voor gebruikers kan opleveren — TikTok heeft meer dan 30 miljoen Britse gebruikers en volgens de gegevenswaakhond kunnen tot 1,4 miljoen daarvan onder de 13 zijn. Kritiek richt zich op vervanging door AI en uitbesteding naar landen als Kenia en de Filipijnen, en op mogelijke union‑busting. Ondertekenaars (o.a. Ian Russell, Arturo Bejar, Sonia Livingstone) vragen onderzoek naar gevolgen voor onlineveiligheid, arbeidsrechten en wetgeving. TikTok verwerpt de aantijgingen en noemt het een herstructurering om Trust & Safety te versterken. <a href=https://www.theguardian.com/technology/2025/oct/13/uk-mps-tiktok-plans-cut-content-moderator-jobs target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Trio wint Nobelprijs voor de economie voor werk aan technologiegedreven groei (.theguardian:13-10-2025)</div>
+        <p>Winnaars 2025 Nobelprijs voor economie: Joel Mokyr (helft van 11m Zweedse kronen), Philippe Aghion en Peter Howitt (rest). Jury beloonde hun pionierswerk over innovatiegedreven economische groei: Mokyr identificeerde voorwaarden voor aanhoudende groei door technologische vooruitgang; Aghion en Howitt analyseerden de cruciale rol van "creative destruction". Context: snelle AI-ontwikkeling en zorgen over zwakke productiviteitsgroei sinds 2008. Aghion waarschuwt voor "donkere wolken" door protectionisme (Trump-tarieven), pleit voor streng concurrentiebeleid tegen tech-monopolies en voor stimulering van groene innovatie. John Hassler benadrukt behoud van mechanieken van creative destruction. <a href=https://www.theguardian.com/business/2025/oct/13/nobel-economics-prize-technology-joel-mokyr-philippe-aghion-peter-howitt target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Van lab naar fabriek': komen de beloften van een grafeenrevolutie eindelijk uit? (.theguardian:13-10-2025)</div>
+        <p>Na de ontdekking van grafeen in 2004 werd het materiaal als wondermiddel geprezen, maar de overgang van lab naar industrie blijkt lastig. Sommige Britse spin‑outs boeken succes: 2D Photonics (CamGraPhIC) ontwikkelt grafeen‑fotonicachips die veel energie besparen, hogere datasnelheden mogelijk maken en minder koeling vereisen; Paragraf maakt grafeen‑electronica en sensoren; Graphene Innovations produceert grafeenverrijkte koolstofvezel in Saoedi‑Arabië; GEIC/Cemex leverde grafeen‑beton. Andere bedrijven worstelen: Applied Graphene Materials werd afgeboekt en Versarien kampt met financiële problemen. Belangrijke knelpunten zijn opschaling, kostprijs, marktdisruptie, investeringen en geopolitieke concurrentie (China).
+
+Hoofdonderwerp: commercialisering van grafeen (lab‑to‑fab)
+Belangrijke thema's: opschaling/manufacturing, applicaties (datacentra, chips, bouw, sensoren), financiering en marktacceptatie. <a href=https://www.theguardian.com/business/2025/oct/13/lab-to-fab-are-promises-of-a-graphene-revolution-finally-coming-true target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Battlefield 6-recensie – operatisch, oorverdovend, allesomvattende oorlogsvoering (.theguardian:13-10-2025)</div>
+        <p>Battlefield 6 keert krachtig terug naar grootschalige, tactische oorlogvoering: vooral multiplayer-modi als Conquest en Breakthrough geven een overweldigend gevoel van een militaire offensief met vliegtuigen, tanks en instortende gebouwen. Het spel put inspiratie uit Battlefield 4 en combineert klassensysteem (Assault, Support, Engineer, Recon) met uitgebreide wapenpersonalisatie. Geluids- en beeldontwerp zijn indrukwekkend en geven een rauwe, documentaire-achtige oorlogssfeer. Kleinere modes voelen bijzaak; de singleplayer-campagne is zwak en clichématig, met een gemakzuchtige PMC-schurk en vlakke personages. Aanrader voor wie grote, tactische onlinegevechten zoekt; uit nu. <a href=https://www.theguardian.com/games/2025/oct/13/battlefield-6-review-operatic-ear-shattering-all-encompassing-warfare target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
