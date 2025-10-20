@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W42.html" class="week-display" id="week-display">2025-W42</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 42;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">De FTC verwijdert blogposts over AI die tijdens de ambtstermijn van Lina Khan zijn gepubliceerd. (.wired:20-10-2025)</div>
+        <p>De Amerikaanse Federal Trade Commission heeft meerdere blogposts over AI uit Lina Khans periode recent van haar site verwijderd of omgeleid. Voorbeelden zijn het juli 2024‑stuk “On Open‑Weights Foundation Models” en een oktober 2023‑stuk dat naar de Office of Technology‑pagina leiden, plus een januari 2025‑post “AI and the Risk of Consumer Harm” die verdwenen is. De oorzaak is onduidelijk; verwijderingen volgen op beleidsveranderingen onder de teruggekeerde Trump‑administratie, die open modellen aanmoedigt. Critici wijzen op mogelijke schendingen van de Federal Records Act en zien dit als een beleidsverschuiving, terwijl ruim 200 stukken van Khan nog steeds online staan. <a href=https://www.wired.com/story/ftc-removes-blog-posts-about-ai-authored-by-by-lina-khan/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI verandert wat middelbare scholieren in STEM-vakken leren. (.wired:20-10-2025)</div>
+        <p>AI verandert welke vakken STEM‑gerichte middelbare scholieren kiezen: coderen verliest glans terwijl statistiek, data‑geletterdheid, interpretatie en interdisciplinair denken belangrijker worden. Scholen behouden basiscomputervaardigheden maar voegen toegepaste wiskunde, ethnomathematica, forensische vakken en data‑ethiek toe. AP‑Statistiek groeit, inschrijvingen voor cs‑graden dalen. Leraren worstelen met AI als zowel hulpmiddel als valstrik; onderzoekers bouwen multi‑agent klasassistents om wetenschappelijk redeneren en "denken met AI" te onderwijzen. De kernvaardigheid wordt AI begrijpen, kritisch gebruiken en sturen, niet alleen coderen. <a href=https://www.wired.com/story/stem-high-school-students-artficial-intelligence/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Anthropic heeft een plan om te voorkomen dat zijn AI een kernwapen bouwt. Zal het werken? (.wired:20-10-2025)</div>
+        <p>Anthropic werkte met het Amerikaanse DOE/NNSA in een AWS Top Secret-omgeving om Claude te testen en samen een “nuclear classifier” te ontwikkelen: een geavanceerde filter gebaseerd op door NNSA samengestelde risicindicatoren die gesprekken moet signaleren die naar wapenbouw afdwalen. NNSA red-teamed modellen, Anthropic zegt de classifier te hebben afgesteld zodat hij schadelijke prompts blokkeert zonder legitieme discussies te hinderen, en biedt hem als vrijwillige industrienorm aan. Experts zijn verdeeld: sommigen prijzen proactieve samenwerking en risicobeoordeling, anderen (zoals Heidy Khlaaf) noemen het deels theater omdat modellen mogelijk nooit met geheime nucleaire data getraind waren en classificatiegeheimen transparantie en effectiviteit kunnen ondergraven. Ook waarschuwen critici voor LLM-fouten bij precieze berekeningen en voor risico’s van privaat gebruik van gevoelige overheidsdata. <a href=https://www.wired.com/story/anthropic-has-a-plan-to-keep-its-ai-from-building-a-nuclear-weapon-will-it-work/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Amazon Web Services-storing die platforms wereldwijd treft, vertoont 'tekens van herstel' (.theguardian:20-10-2025)</div>
+        <p>Een grootschalige internetstoring door problemen bij Amazon Web Services (AWS) in de US‑EAST‑1‑regio trof tientallen websites en apps wereldwijd, waaronder Snapchat, Roblox, Signal, Duolingo, Amazon (retail), Ring, Lloyds/Halifax/Bank of Scotland, HMRC, Wordle, Coinbase, Slack, Pokémon Go, PlayStation Network en Peloton. AWS meldde vanaf circa 08:00 BST verhoogde foutpercentages en latenties, gerelateerd aan DynamoDB; rond 10:30–11:00 rapporteerde het herstel. Downdetector en ThousandEyes registreerden uitval, vooral in Virginia. Sophos noemt het waarschijnlijk een IT/databaseprobleem, geen cyberaanval. ARTICLE 19 waarschuwt dat te veel afhankelijkheid van enkele cloudleveranciers risico’s voor democratische communicatie en onafhankelijke journalistiek creëert; de Britse regering staat in contact met Amazon. <a href=https://www.theguardian.com/technology/2025/oct/20/amazon-web-services-aws-outage-hits-dozens-websites-apps target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Hulporganisaties gebruiken door AI gegenereerde 'armoedeporno'-nepbeelden (.theguardian:20-10-2025)</div>
+        <p>AI-gegenereerde foto’s van extreme armoede, kinderen en overlevenden van seksueel geweld verschijnen veel op stocksites en worden steeds vaker door hulporganisaties gebruikt, stellen onderzoekers en communicatiespecialisten. Ze reproduceren en versterken stereotiepe, racialiserende beelden (“poverty porn 2.0”), gedreven door kosten- en toestemmingszorgen en bezuinigingen op NGO-budgetten. Voorbeelden: Plan International gebruikte in 2023 AI-beelden om “privacy” te beschermen; de VN verwijderde later een video met AI‑reconstructies. Critici waarschuwen dat zulke beelden onethisch zijn, bevooroordelingen versterken en toekomstige AI-modellen kunnen vervuilen; platforms zoals Freepik wijzen gebruikersverantwoordelijkheid aan. Plan heeft inmiddels advies uitgebracht tegen AI-afbeeldingen van individuele kinderen. <a href=https://www.theguardian.com/global-development/2025/oct/20/ai-generated-poverty-porn-fake-images-being-used-by-aid-agencies target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Geen woorden — het meest ongewone liefdesverhaal in games, gemaakt van klei en lijm (.theguardian:20-10-2025)</div>
+        <p>Out of Words is een stopmotion-avonturenspel van een 40-koppige studio in Aarhus dat personages en sets met klei, stof en lijm handmatig vormgeeft. Regisseur Johan Oettinger (geïnspireerd door The Neverhood) combineert ambacht met een pipeline van custom scanners en fotogrammetrie om assets in Unreal Engine te brengen, plus cutscenes met poppenanimatie (12–24 fps). Spelers besturen coöperatief Kurt en Karla, wiens verhaal over het splitsseconde-moment van eerste liefde, vertrouwen en het zoeken naar woorden centraal staat. Puzzels zijn emotioneel vormgegeven; doel is een intieme, memorabele ervaring. Uitgave gepland voor 2026 op pc, PlayStation 5 en Xbox. <a href=https://www.theguardian.com/games/2025/oct/20/out-of-words-gaming-love-story-clay-stop-motion-preview-epic-games target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
