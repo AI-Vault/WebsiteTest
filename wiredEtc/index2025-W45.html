@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W44.html" class="week-display" id="week-display">2025-W44</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 44;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="mit">
+        <div class="headline">Een snellere probleemoplossende tool die de haalbaarheid garandeert (.mit:3-11-2025)</div>
+        <p>MIT-onderzoekers ontwikkelden FSNet, een “feasibility-seeking neural network” dat machine learning combineert met een ingebouwde optimalisatiesolver om gegarandeerd haalbare oplossingen voor geconstrueerde optimalisatieproblemen te vinden — met name het optimal power flow‑probleem in elektriciteitsnetten. Een neuraal netwerk voorspelt snel een startoplossing; een iteratieve, wiskundig gefundeerde feasibility‑stap verfijnt die voorspelling zodat zowel gelijkheids- als ongelijkheidsconstraints altijd worden gerespecteerd. FSNet is orders of grootte sneller dan traditionele solvers, verslaat zuiver ML‑aanpakken in haalbaarheid en levert soms zelfs betere oplossingen. Toepassingen: netbeheer bij variabele hernieuwbare opwekking, productontwerp, portfoliobeheer en productieplanning. Paper (arXiv 2506.00362) wordt gepresenteerd op NeurIPS; auteurs incl. Priya Donti en Hoang Nguyen. <a href=https://news.mit.edu/2025/faster-problem-solving-tool-guarantees-feasibility-1103 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">In Grok vertrouwen we niet: academici beoordelen Elon Musks door AI aangedreven encyclopedie (.theguardian:3-11-2025)</div>
+        <p>Hoofdonderwerp: Grokipedia — door Elon Musk gelanceerde AI-encyclopedie.
+
+Belangrijkste thema's: onnauwkeurigheden en plagiaat (gedeelten van Wikipedia overgenomen), politieke bias richting rechts, academische kritiek op bronnen en methoden, gebrek aan transparantie en controlemechanismen, risico’s van AI-aggregatie voor betrouwbaarheid.
+
+Grokipedia bevatte veel foutieve of verouderde beweringen (voorbeeld: Richard Evans’ en Eric Hobsbawm‑vermeldingen, Albert Speer), tilde chatroom‑bijdragen gelijk aan academisch onderzoek en reproduceerde rechtenideologische narratieven (bijv. Rusland/oorlog in Oekraïne, Groot‑Verenigd‑Koninkrijk‑extremisten, Jan.6 als “rellen”). Veel artikelen waren bijna woordelijk van Wikipedia overgenomen; andere kenden duidelijke politieke kadering (Trump, Britain First, Great Replacement). Academici en factcheckers waarschuwen dat AI‑gegenereerde encyclopedieën zonder transparante bronnen en menselijke toezicht manipulatie en verlies van vertrouwen kunnen versterken. <a href=https://www.theguardian.com/technology/2025/nov/03/grokipedia-academics-assess-elon-musk-ai-powered-encyclopedia target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
