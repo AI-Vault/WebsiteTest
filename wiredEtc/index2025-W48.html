@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W47.html" class="week-display" id="week-display">2025-W47</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 47;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Amazon zet gespecialiseerde AI-agenten in voor grondige foutopsporing (.wired:24-11-2025)</div>
+        <p>Amazon gebruikt Autonomous Threat Analysis (ATA), een intern systeem dat ontstond tijdens een hackathon (augustus 2024) en gespecialiseerde AI-agenten inzet om kwetsbaarheden te vinden, varianten te analyseren en remediaties voor te stellen. In plaats van één agent werken meerdere gespecialiseerde agenten in concurrerende red- en blue-teams. ATA draait in hoogwaardige, realistische testomgevingen die echte telemetry en tijdgestempelde logs genereren, zodat aanvallen en detecties verifieerbaar zijn—wat valse positieven en “hallucinaties” vermindert. Menselijke goedkeuring blijft vereist (human-in-the-loop). Voorbeeld: binnen uren nieuwe Python reverse-shell-tactieken en 100% effectieve detecties. Doel: opschalen van routinetaken, mensen vrijmaken voor complexere analyses en uiteindelijk realtime incidentrespons. Belangrijke thema’s: AI in cybersecurity, agent‑architecturen, verifieerbaarheid, schaalbaarheid en mens‑in‑de‑lus. <a href=https://www.wired.com/story/amazon-autonomous-threat-analysis/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Onderzoeksleider achter ChatGPT’s werk aan geestelijke gezondheid verlaat OpenAI (.wired:24-11-2025)</div>
+        <p>Andrea Vallone, hoofd van OpenAI's safety research-team 'model policy', verlaat het bedrijf eind dit jaar. Haar team leidde onderzoek naar hoe ChatGPT moet reageren op gebruikers in mentale crisissen; in afwachting rapporteert het team aan Johannes Heidecke. Het vertrek komt temidden van toenemende kritiek en rechtszaken over ChatGPT's omgang met gebruikers in nood. OpenAI publiceerde een oktoberrapport over consultaties met meer dan 170 geestelijke‑gezondheidsexperts en schat dat wekelijks honderden duizenden gebruikers tekenen van manie of psychose kunnen vertonen en dat meer dan een miljoen gesprekken expliciete suïcidaliteitsindicatoren bevatten. Een GPT‑5‑update verminderde ongewenste reacties in die gesprekken met 65–80%. Eerdere reorganisaties troffen ook het 'model behavior'-team; leidinggevenden Joanne Jang en Max Schwarzer veranderden rollen. <a href=https://www.wired.com/story/openai-research-lead-mental-health-quietly-departs/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Een chipproject van 100 miljard dollar dwong een 91‑jarige vrouw uit haar huis. (.wired:24-11-2025)</div>
+        <p>Azalia King (91) moest haar huis opgeven om plaats te maken voor Micron’s geplande $100 miljard “megafab” in Onondaga County (NY). Lokale autoriteiten dreigden met onteigening; na een rechtszaak en weken van onderhandelen stemde Kings familie in met een akkoord waarvan de voorwaarden nog door de county IDA moeten worden goedgekeurd. Achtergrond: King had een levenslange verblijfsvergunning op het perceel sinds een eerdere verkoop in 2005. Thema’s: eminent domain, grote staats- en federale subsidies (~$25 mrd), binnenlandse chipproductie als nationale veiligheidsprioriteit, gemeenschapsprotesten, milieu- en infrastructurele zorgen (aquifers, vleermuizen, verkeer) en juridische strijd over eigendomsrechten. <a href=https://www.wired.com/story/micron-superfab-evicts-91-year-old-new-york/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Europa buigt voor de VS in technologisch beleid (.wired:24-11-2025)</div>
+        <p>Europa buigt voor VS‑druk op techbeleid; belangrijke EU‑initiatieven zoals de AI Act, Digital Services Act, Digital Markets Act, Digital Networks Act en de EU Space Act staan onder druk en kunnen worden vertraagd of afgezwakt. Mogelijke uitstel van handhaving van de AI Act tot 2027 en een “digital omnibus” herziening, vertraagde DSA/DMA‑uitvoering door lobby en juridische bezwaren, telecompakket stokt door onenigheid over koperdraad‑uitfasering en BEREC‑macht, en de VS keert zich tegen de EU Space Act en lobbyt over spectrum (bovenste 6 GHz). Thema’s: trans‑Atlantische invloed, Big Tech‑lobby, verzwakking van regelgeving en conflict over markt- en spectrumregels. <a href=https://www.wired.com/story/europe-bends-us-digital-policies-eu-ai-act/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Eén op de vier maakt zich geen zorgen over seksuele deepfakes die zonder toestemming zijn gemaakt, blijkt uit onderzoek (.theguardian:24-11-2025)</div>
+        <p>Een politie-gefinancierde enquête onder 1.700 mensen vond dat 13% niets verkeerds vindt aan het maken/delen van seksuele deepfakes zonder toestemming en 12% er neutraal tegenover staat, oftewel circa een kwart ongeconcerneerd. 7% bleek zelf in een seksuele deepfake afgebeeld; slechts 51% meldde dit bij de politie (schroom en twijfel aan serieusheid als redenen). 1 op 20 gaf toe deepfakes te hebben gemaakt, meer dan 10% zou dat in de toekomst doen; twee derde had er (mogelijk) gezien. Onder-45-jarige mannen leken vaker acceptatie, pornogebruik en misogynistische houdingen te hebben. Expertwaarschuwingen: AI normaliseert misbruik, techbedrijven zijn medeplichtig; niet-consensuele seksuele deepfakes zijn strafbaar onder de nieuwe Data Act. Er wordt opgeroepen tot melden, meer onderzoek, opvoeding en technische/bedrijfsmatige maatregelen. <a href=https://www.theguardian.com/technology/2025/nov/24/one-in-four-unconcerned-by-sexual-deepfakes-created-without-consent-survey-finds target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Enshittification’: hoe we het internet kregen waar niemand om vroeg – podcast (.theguardian:24-11-2025)</div>
+        <p>Podcastaflevering van Today in Focus (24 nov 2025) waarin techcriticus Cory Doctorow aan presentator Nosheen Iqbal zijn kernbegrip "enshittification" uitlegt. Doctorow presenteert een driedelige theorie waarom diensten als Amazon, Google en Instagram voor veel gebruikers slechter lijken te worden en bespreekt thema’s als platformverslechtering, macht van grote techbedrijven, monetarisering en mogelijke remedies om die neergang te stoppen. Credits: producers Tom Glasser, Hattie Moir, Eli Block; executive producer Homa Khaleeli. <a href=https://www.theguardian.com/news/audio/2025/nov/24/enshittification-how-we-got-the-internet-no-one-asked-for-podcast target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Burgerrechtenorganisaties roepen op tot onderzoek naar Britse privacytoezichthouder (.theguardian:24-11-2025)</div>
+        <p>Zeventigdrie academici, juristen, data‑experts en organisaties (onder meer Statewatch, Good Law Project, Open Rights Group) verzoeken de voorzitter van de Commons science, innovation and technology committee, Chi Onwurah, om een onderzoek naar de Information Commissioner’s Office en diens commissaris John Edwards. Ze spreken van een “instorting van handhavingsactiviteiten” na de ernstige Afghaanse datalek waarbij namen van Afghaanse medewerkers van Britse troepen gelekt werden en levens in gevaar bracht. De brief hekelt het besluit van de ICO om het ministerie van defensie niet formeel te onderzoeken, het geven van niet‑dwingende berispingen of gereduceerde boetes, en een bredere verschuiving weg van handhaving in zowel publieke als private sectoren. De ondertekenaars waarschuwen voor structurele tekortkomingen en dringen aan op parlementair toezicht. De ICO zegt dat zij diverse instrumenten heeft, openstaat voor maatschappelijke kritiek en verantwoording aflegt aan het DSIT‑select committee. <a href=https://www.theguardian.com/technology/2025/nov/24/civil-liberties-groups-call-for-inquiry-into-uk-data-protection-watchdog target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Technologie kan geen grap maken: AI begrijpt woordspelingen niet, blijkt uit onderzoek
+
+Alternatieven:
+- AI snapt woordgrappen niet, blijkt uit onderzoek
+- Je kunt een grap niet 'tech'en: AI begrijpt woordspelingen niet, blijkt uit onderzoek (.theguardian:24-11-2025)</div>
+        <p>Onderzoekers van Cardiff en Ca’ Foscari onderzochten of grote taalmodellen (LLM's) woordgrappen begrijpen. Ze blijken de structuur van puns te herkennen maar niet de dubbele betekenis: vervangen van sleutelwoorden (bijv. “joke”→“chaotic”, “dragon”→“prolong” of een willekeurig woord) leidt er toch toe dat modellen een grap detecteren. Bij onbekende woordspelingen daalt de nauwkeurigheid tot ~20%. Conclusie: LLM's memoriseren trainingspatronen en creëren een illusie van humorbegrip; voorzichtigheid geboden bij toepassingen die humor, empathie of culturele nuance vereisen. Gepresenteerd op EMNLP 2025; paper: “Pun unintended: LLMs and the illusion of humor understanding.” <a href=https://www.theguardian.com/technology/2025/nov/24/ai-doesnt-get-puns-study-finds target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
