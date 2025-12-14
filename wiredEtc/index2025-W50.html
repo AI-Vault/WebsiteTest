@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W49.html" class="week-display" id="week-display">2025-W49</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 49;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI analyseert taal voor het eerst even goed als een menselijke deskundige (.wired:14-12-2025)</div>
+        <p>Onderzoekers Gašper Beguš, Maksymilian Dąbkowski en Ryan Rhodes stelden LLM’s op de proef met metalinguïstische taken: syntactische boomdiagrammen (inclusief recursie en center‑embedding), ambiguïteitsresolutie en fonologie op 30 geconstrueerde mini‑talen. Eén model (OpenAI’s o1) presteerde verrassend goed: het maakte correcte boomstructuren, herkende meerdere interpretaties en inferreerde fonologische regels van volledig nieuwe woorden — iets wat niet door memorisatie verklaard kan worden. De resultaten tarten het idee dat AI geen taalanalyse kan uitvoeren en werpen vragen op over unieke menselijke eigenschappen, het generalisatievermogen van LLM’s en hun toekomstige ontwikkeling. <a href=https://www.wired.com/story/in-a-first-ai-models-analyze-language-as-well-as-a-human-expert/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">AMD-CEO Lisa Su is niet bang voor de concurrentie (.wired:12-12-2025)</div>
+        <p>Hoofdonderwerp: Opnames van WIRED’s Big Interview/Uncanny Valley‑podcast met AMD‑CEO Lisa Su en nabesprekingen.
+
+Kernpunten: Lisa Su stelt dat AI geen zeepbel is maar in vroege innings verkeert; enorme en groeiende vraag naar rekenkracht (training én vooral gebruik/inference) rechtvaardigt grote investeringen; competitie is niet enkel AMD vs. Nvidia maar omvat hyperscalers (Google TPU, Amazon, enz.) en verschillende chiparchitecturen; AMD wil snelheid en veelzijdigheid in innovatie; over exportcontroles: AMD heeft licenties om bepaalde chips naar China te sturen en betaalt bij verzending de afgesproken 15% heffing; Su pleit voor Amerikaanse leiderschap in AI en nauwere overheid‑industrie samenwerking.
+
+Andere thema’s: Eric Topol over AI in gezondheidszorg en gepersonaliseerde screening; SF‑burgemeester Daniel Lurie over woningen en bestuursstijl; Michele Jawando/Omidyar over governance en de slogan “AI is not destiny, it is design.” Afsluitend lichte segmenten (producttips, Pebble’s Index‑ring, Spotify Wrapped). <a href=https://www.wired.com/story/uncanny-valley-podcast-amd-ceo-lisa-su-isnt-afraid-of-the-competition/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Je denkt over AI en water helemaal verkeerd (.wired:12-12-2025)</div>
+        <p>Molly Taft onderzoekt de opgeblazen en vaak onnauwkeurige discussie over waterverbruik door AI-datacenters: een fout van Karen Hao illustreert hoe cijfers misleidend kunnen zijn. Belangrijke thema’s zijn technische details van koeling (onsite verdamping vs. elektrisch koelen), verschillen per locatie en technologie, en of je indirect watergebruik via energieproductie moet meewegen. Vergelijkingen met waterintensieve industrieën (golfbanen, vlees, katoen) bieden context, maar experts waarschuwen dat lokale waterschaarste situaties kritisch maakt. Thema’s: meetmethoden, transparantie van bedrijven, beleidskeuzes en de maatschappelijke afweging of AI het water waard is. <a href=https://www.wired.com/story/karen-hao-empire-of-ai-water-use-statistics/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Trump ondertekent uitvoerend bevel dat staten dreigt te straffen als zij AI-wetten aannemen (.wired:12-12-2025)</div>
+        <p>President Trump tekende een uitvoerend bevel dat een nationale kader voor kunstmatige intelligentie wil instellen en tegelijk staten probeert te ontmoedigen die eigen AI-wetgeving aannemen. Het bevel richt een DOJ-taskforce op om staatwetten juridisch aan te vechten en vraagt handel en infrastructuur binnen het ministerie van Commerce te gebruiken om staten mogelijk uit te sluiten van toekomstige breedbandfinanciering als ze “onerieuze” AI-regels aannemen. Belanghebbenden uit de tech‑sector, investeerders en conservatieve beleidsgroepen steunen preëmptie om een lappendeken aan regels te voorkomen. Het bevel bevat uitzonderingen voor kinderveiligheid, datacenters en overheidsinkoop. Staten zoals Colorado (SB24‑205), Californië en mogelijk New York hebben al AI‑regels; staatsofficials en burgerrechtenorganisaties noemen het bevel ongrondwettelijk en bereiden juridische tegenstand voor. <a href=https://www.wired.com/story/trump-signs-executive-order-ai-state-laws/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">OpenAI lanceert GPT-5.2 terwijl het door 'Code Red' navigeert. (.wired:11-12-2025)</div>
+        <p>OpenAI heeft GPT‑5.2 gelanceerd — een reeks modellen (Instant, Thinking, Pro) met verbeterde prestaties in schrijven, coderen en redeneren. De release volgt op een interne “code red” om ChatGPT te versterken tegenover concurrentie, vooral Google’s Gemini 3 (ongeveer 650 miljoen maandelijkse gebruikers). GPT‑5.2 Thinking behaalde topresultaten op het GDPval‑benchmark, versloeg professionals in >70% van taken en was ~11× sneller; hallucinaties daalden ~38% ten opzichte van GPT‑5.1. Het model is beschikbaar voor ChatGPT en via de API. OpenAI werkt aan betere reacties op zelfbeschadiging/mentale nood, introduceert leeftijdsschatting en plant een “adult mode” in Q1 2026. Er blijft spanning tussen gebruiksvriendelijkheid (warmte) en nauwkeurigheid; interne doelen omvatten een DAU‑groei van 5%. <a href=https://www.wired.com/story/openai-gpt-launch-gemini-code-red/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">De Disney–OpenAI-deal herdefinieert de AI-auteursrechtenstrijd
+
+Alternatief: De overeenkomst tussen Disney en OpenAI herdefinieert het auteursrechtenconflict rond AI (.wired:11-12-2025)</div>
+        <p>Disney en OpenAI sloten een akkoord waardoor OpenAI Disney‑figuren (Mickey, Ariel, Yoda) in Sora mag gebruiken; Disney neemt een belang van $1 miljard en krijgt toegang tot OpenAI‑tools. De overeenkomst verlegt de AI‑auteursrechtenstrijd van trainingsdata (waar fair use vaak geldt) naar modeloutputs, waarin IP‑houders sterker staan. Licenties bieden Disney controle over gebruik, nieuwe fan‑videoformats op Disney+ en een strategisch/financieel hedge tegen ongebreidelde AI‑generatie. Kernpunten: IP‑litigatie, licentiemodellen, mediatransformatie en regulering van generatieve AI. <a href=https://www.wired.com/story/disney-and-openais-deal-is-a-major-turning-point/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Cursor lanceert AI-codeertool voor ontwerpers (.wired:11-12-2025)</div>
+        <p>Cursor, een ~300‑koppige AI‑startup met >$1 mrd ARR en een $2,3 mrd investeringsronde (waardering bijna $30 mrd), introduceert Visual Editor: een AI‑gestuurde ontwerptool die ontwerp en code samenbrengt. Ontwerpers krijgen professionele, fijnmazige controls (hoeken, letterspacing, menu‑gedrag) die rechtstreeks op echte CSS werken, plus een chatinterface voor bewerkingen in natuurlijke taal. De tool draait in Cursors eigen browser en kan live sites inspecteren (demomoment met WIRED), waardoor merksystemen behouden blijven. Cursor bouwt eigen modellen nu ook, terwijl concurrentie van OpenAI, Anthropic en Google toeneemt. Klanten: Nvidia, Salesforce, PwC; intern gebruik onder meer bij Shopify‑ontwerpers. Positionering: geen oppervlakkige vibe‑code maar productierijpe integratie die potentiële concurrentie vormt voor Figma/Adobe. <a href=https://www.wired.com/story/cursor-launches-pro-design-tools-figma/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Intel zet grote stap in plan om chip-startup SambaNova over te nemen (.wired:9-12-2025)</div>
+        <p>Intel heeft een niet-bindend term sheet getekend om AI-chipstartup SambaNova Systems over te nemen, zeggen twee bronnen. Details ontbreken; de transactie vereist regulatoire goedkeuring en uitgebreid due diligence en kan weken tot maanden duren. SambaNova (opgericht 2017 door Kunle Olukotun, Rodrigo Liang en Christopher Ré) ontwikkelt AI-inferencechips en haalde tot begin 2025 circa $1,14 mrd op; de waardering piekte op $5 mrd in 2021 maar is sindsdien gedaald (BlackRock verlaagde recent de waardering). Intel-CEO Lip‑Bu Tan is uitvoerend voorzitter van SambaNova; Intel Capital en SoftBank zijn investeerders. De mogelijke overname past in Intel’s strategie om te herstructureren, schulden te verminderen, niet‑kernactiviteiten af te stoten en te focussen op AI na een $8,9 mrd overheidssubsidie. <a href=https://www.wired.com/story/intel-signs-term-sheet-sambanova-ai/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
