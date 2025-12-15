@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W50.html" class="week-display" id="week-display">2025-W50</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 50;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Nvidia wordt toonaangevende maker van modellen met Nemotron 3 (.wired:15-12-2025)</div>
+        <p>Nvidia breidt zich uit van chipleverancier naar modelmaker met Nemotron 3: open modellen (Nano 30B, Super 100B, Ultra 500B) plus de gebruikte trainingsdata en tools voor fine‑tuning. De release bevat een hybride latent mixture‑of‑experts‑architectuur en bibliotheken voor reinforcement learning, bedoeld voor agentachtige AI. Het is zowel een technisch product als een strategische hedge nu concurrenten eigen chips ontwikkelen en Chinese bedrijven populair zijn met frequente open modelreleases. Geopolitieke en handelsdruk rond chips bedreigen Nvidia’s positie. <a href=https://www.wired.com/story/nvidia-becomes-major-model-maker-nemotron-3/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Deze startup wil razendsnel software voor zelfrijdende auto's ontwikkelen (.wired:15-12-2025)</div>
+        <p>HyprLabs, een 17-koppige startup geleid door Zoox‑medoprichter Tim Kentley‑Klay, test sinds anderhalf jaar twee aangepaste Tesla Model 3’s in San Francisco. Met vijf extra camera’s en een palm­groot supercomputer ontwikkelt het bedrijf Hyprdrive: een ‘run‑time learning’ methode waarbij een transformer‑model realtime leert onder toezicht van menselijke supervisors en alleen nieuwe of gewijzigde data terugstuurt voor fine‑tuning. Hypr claimt hoge efficiëntie — ~4.000 rijuren (1.600 gebruikt voor training) tegenover Waymo’s enorme dataset — en combineert elementen van end‑to‑end en gelabelde multi‑sensor aanpakken. Belangrijke thema’s: AI‑gedreven training, sensorfilosofie (camera vs multi‑sensor), snelle, kostenefficiënte ontwikkeling en onzekerheden rond veiligheid en productierijpheid; toekomstplannen omvatten eigen autonome robots. <a href=https://www.wired.com/story/hyprlabs-wants-to-build-a-self-driving-robot-super-fast/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">Deep-learningmodel voorspelt hoe fruitvliegen zich cel voor cel ontwikkelen (.mit:15-12-2025)</div>
+        <p>Hoofdonderwerp: een deep-learningmodel (MultiCell) dat cel-voor-cel voorspelt hoe Drosophila‑embryo’s zich vormen tijdens gastrulatie. Het model gebruikt een dual-graphrepresentatie die zowel puntwolken (kernposities) als “foam”-achtige celgrenzen combineert om geometrische eigenschappen te leren en te voorspellen (vouwen, deling, randdeling/contact, timing). Getraind op hoogwaardige light‑sheet‑video’s van ~5.000 cellen, bereikt het ~90% nauwkeurigheid minuut‑voor‑minuut. Belangrijke thema’s: machine learning voor ontwikkelingsbiologie, geavanceerde beeldvorming, grafgebaseerde representaties, en toepassingen naar complexere soorten en ziekte‑detectie (bv. astma, kanker). Beperking: nood aan hoogwaardige data. Paper in Nature Methods; werk ondersteund door NIH. <a href=https://news.mit.edu/2025/deep-learning-model-predicts-how-fruit-flies-form-1215 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Waarom het universele basisinkomen nog steeds geen antwoord biedt op de uitdagingen van een AI-economie (.theguardian:15-12-2025)</div>
+        <p>Andrew Yang brengt het idee van een universeel basisinkomen (UBI) terug als antwoord op AI‑automatisering — zijn “Freedom Dividend” van $1.000 per volwassene — maar dat lost de echte problemen niet op. Een leefbaar UBI (bv. mediane inkomsten ~$53.000 p.j.) zou astronomisch duur zijn (~$14tn, ~45% van de VS‑bbp). Belastinginkomsten uit arbeid zouden verdampen als AI werk vervangt, dus zou belasting op consumptie, vervuiling, grond of vooral op eigenaren van robots nodig zijn — wat macht bij tech‑oligarchen zou concentreren. UBI verwijdert werkverplichtingen maar pakt niet de kapitaalongelijkheid aan. Voor huidige problemen (laagbetaalde dienstensector) zijn gerichte maatregelen zoals loonsubsidies of verbetering van de earned income tax credit efficiënter; veel westerse landen werken minder zonder UBI dankzij sterke sociale netten. <a href=https://www.theguardian.com/business/2025/dec/15/universal-basic-income-ai-andrew-yang target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Britse schatkist werkt aan nieuwe regels om cryptomarkten te reguleren (.theguardian:15-12-2025)</div>
+        <p>Het Britse ministerie van Financiën werkt aan regels die cryptocurrencies vanaf 2027 binnen de ‘regulatory perimeter’ brengen en onder toezicht van de Financial Conduct Authority plaatsen. Crypto‑bedrijven moeten zich registreren en voldoen aan transparantie-, consumentenbeschermings- en antiwitwasnormen, waardoor handhaving, opsporing van verdachte transacties en sanctietoepassing moeten verbeteren. Rachel Reeves en Lucy Rigby zeggen dat dit zekerheid voor bedrijven en bescherming voor consumenten biedt. Er worden ook plannen gemaakt om politieke donaties in crypto te verbieden. De maatregel volgt op toegenomen investeringsfraude, stijgende verliezen door scams en een grote bitcoininbeslagname/veroordeelde zaak (Zhimin Qian); ook kreeg Reform UK eerder grote crypto‑donaties. <a href=https://www.theguardian.com/technology/2025/dec/15/uk-treasury-drawing-up-new-rules-to-police-cryptocurrency-markets target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
