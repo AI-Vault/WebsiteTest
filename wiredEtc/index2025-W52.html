@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2025-W51.html" class="week-display" id="week-display">2025-W51</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 51;
+    let currentYear = 2025;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Mensen gebruiken Sora 2 om verontrustende video's met AI‑gegenereerde kinderen te maken. (.wired:22-12-2025)</div>
+        <p>OpenAI’s videogenerator Sora 2 wordt misbruikt om verontrustende, seksueel getinte clips met AI‑gegenereerde kinderen te maken — van nepcommercials voor een “Vibro Rose”-speelgoed tot parodieën rond Epstein, Diddy en Weinstein. Het Internet Watch Foundation noteert een verdubbeling van meldingen van AI‑CSAM (199 → 426, jan‑okt 2024→2025), veel beelden tonen meisjes; Sora zelf lijkt geen Category‑A‑materiaal te produceren. Platforms en wetgevers reageren: VK‑amendementen en Amerikaanse staatswetten richten zich op AI‑CSAM. OpenAI en TikTok verwijderen en verbannen accounts, maar moderatie faalt bij contextuele, subtiele fetisjcontent. Experts pleiten voor “safe‑by‑design”, betere detectie, woordfilters en getrainde, diverse moderatieteams. <a href=https://www.wired.com/story/people-are-using-sora-2-to-make-child-fetish-content/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Technologie verstoorde vriendschappen. Tijd om ze terug te brengen. (.wired:22-12-2025)</div>
+        <p>Techbedrijven verkopen AI‑“vrienden” als antwoord op een eenzaamheidsepidemie die sociale media mede hebben veroorzaakt. WIRED beschrijft de Friend‑reclames en publieke afkeer, en citeert onderzoekers die waarschuwen dat chatbots emotionele arbeid overnemen, parasociale banden creëren en vaak sychofantisch bevestigen. Jongeren gebruiken AI veel; onderzoeken (Common Sense, Stanford, Pew) tonen risico’s: aanstootgevende of gevaarlijke dialogen, verontrustende overtuigingen en zelfs verbanden met zelfdoding; shutdowns van diensten lieten gebruikers rouwen. Experts stellen dat AI relationele vaardigheden niet leert en echte IRL‑vriendschappen noodzakelijk blijven als duurzame oplossing. <a href=https://www.wired.com/story/expired-tired-wired-ai-friends/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Britse parlementsleden stellen vragen over Palantir‑contracten na onderzoek dat veiligheidszorgen blootlegt (.theguardian:22-12-2025)</div>
+        <p>Britse parlementariërs uiten zorgen over overheidsovereenkomsten met het Amerikaanse databeheerbedrijf Palantir nadat een onderzoek van het Zwitserse WAV en Republik onthulde dat Zwitserse instanties Palantir na zeven jaar en minstens negen afwijzingen niet vertrouwden. Een intern rapport van het Zwitserse leger concludeerde dat, omdat Palantir een Amerikaans bedrijf is, er een mogelijkheid bestaat dat gevoelige gegevens door Amerikaanse inlichtingendiensten toegankelijk worden, ondanks Palantirs tegentracties. Zwitserse gezondheidsautoriteiten en het leger wezen aanbiedingen af vanwege communicatieve, veiligheids- en kostenrisico’s en de noodzaak van Palantir-specialisten on-site. Britse MPs (o.a. Clive Lewis, Rachael Maskell) vragen om transparante due diligence over Palantirs inzet in NHS en defensie, terwijl Palantir ontkent dat zijn systemen risico’s voor datatoegang vormen. Europese debatten en Duitse terughoudendheid rond gebruik door politiediensten illustreren bredere thema’s: nationale veiligheid, datatoegang door buitenlandse mogendheden, ethiek van techleveranciers en transparantie van overheidscontracten. <a href=https://www.theguardian.com/technology/2025/dec/22/mps-question-uk-palantir-contracts-security-concerns-investigation target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Stand van zaken: wie heeft de macht in de videogame-industrie in 2025? (.theguardian:22-12-2025)</div>
+        <p>Keza MacDonald beschrijft de machtsverschuivingen in de gamesindustrie in 2025: commerciële concentratie, politieke beïnvloeding en sociale onrust. Kleine studio-successen zoals Clair Obscur: Expedition 33 en Hollow Knight: Silksong tonen dat creativiteit niet per se grote budgetten vereist; de Switch 2 bracht vernieuwing. Tegelijk stapelde rijkdom zich op — onder meer Microsofts Activision-deal eerder en de Saudische PIF’s $55bn-bod op EA en aankoop van Niantic — terwijl meer dan 5.000 banen verloren gingen en studios werden gesloten. Generatieve AI zorgde voor disruptie en controverse (artwork, voiceovers), en werknemers organiseerden zich via United Videogame Workers en het Britse IWGB, zichtbaar na ontslagen bij Rockstar. Games worden politiek ingezet (Trump/ICE-memes) en cultuurstrijd laait op; MacDonald pleit dat spelers en ontwikkelaars idealiter de macht moeten houden. <a href=https://www.theguardian.com/games/2025/dec/22/state-of-play-who-holds-the-power-in-the-video-games-industry-in-2025 target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
