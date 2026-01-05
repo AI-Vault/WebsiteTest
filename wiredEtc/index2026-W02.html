@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W01.html" class="week-display" id="week-display">2026-W01</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 1;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI-deepfakes doen zich voor als predikanten om hun gemeenten op te lichten (.wired:5-1-2026)</div>
+        <p>AI-deepfakes imiteren predikanten om kerkgangers te misleiden: nepvideo’s en -berichten van onder anderen Father Mike Schmitz vragen om donaties of promoten schimmige aanbiedingen. Predikanten in de VS, de Filipijnen en elders melden hacks, valse certificaten en gesynthetiseerde stemmen die om geld of overdrachten vragen. TikTok-accounts gebruiken generatieve AI voor schokeffecten en verdienen mogelijk via views; platforms verwijderen soms impersonators. Sommige kerken gebruiken AI zelf voor preekvoorbereiding of creatieve content. Experts (Rachel Tobac, Lucas Hansen) waarschuwen voor invloed, manipulatie en psychische risico’s, terwijl slachtoffers als Schmitz terughoudend staan tegenover de technologie. <a href=https://www.wired.com/story/ai-deepfakes-are-impersonating-pastors-to-try-and-scam-their-congregations/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Op CES 2026 is alles AI. Wat ertoe doet, is hoe je het gebruikt. (.wired:5-1-2026)</div>
+        <p>CES 2026 draait om de alomtegenwoordigheid van AI: fabrikanten stoppen chatbots, computer vision en slimme sensoren in bijna elk consumentenproduct, waardoor “AI” als claim verflauwt. Verschillen tussen producten zullen afhankelijk zijn van softwarerijpheid en gebruikerservaring — niet van het simpele feit dat ze AI bevatten. Meta’s smartglasses illustreren hoe verfijnde uitvoering concurrentie verslaat. AI breidt zich uit van brillen en wearables naar oordopjes, slimme kleding, gezondheids­sensoren (ringen, toiletten, badmatten, beha’s), huishoudapparaten en auto’s met LLM’s; OpenAI zou later eigen hardware uitbrengen. CES begint met persdagen 5–6 januari.
+
+Belangrijkste onderwerpen en thema's: kunstmatige intelligentie, consumentenhardware, wearables, smart home, gezondheids­sensors, gebruikerservaring, softwarerijpheid.
+Hoofdonderwerp: de noodzaak van sterke UX/software om te onderscheiden in een door AI verzadigde markt. <a href=https://www.wired.com/story/ces-2026-what-to-expect/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Generatie AI: vrees voor 'sociale kloof' tenzij alle kinderen computervaardigheden leren (.theguardian:5-1-2026)</div>
+        <p>Kinderen groeien op als “AI-natives”: in een Cambridge-codingclub leren 7–10-jarigen zelf AI-modellen trainen en begrijpen. Leiders van de Raspberry Pi Foundation en computerwetenschapper Simon Peyton Jones waarschuwen dat zonder brede AI- en programmeeronderwijs een sociale kloof ontstaat tussen wie AIs kan controleren en wie ongemachtigd raakt door geautomatiseerde beslissingen in wonen, gezondheid, financiën en recht. Aantallen GCSE-computinginschrijvingen dalen terwijl AI-gebruik steep stijgt; bedrijven beweren codeerwerk te automatiseren (“vibe coding”), en politici suggereren lessen overbodig. Experts pleiten voor digitale geletterdheid op gelijke hoogte met lezen en schrijven om burgers agency en kritische blik te geven. <a href=https://www.theguardian.com/education/2026/jan/05/generation-ai-fears-of-social-divide-unless-all-children-learn-computing-skills target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
