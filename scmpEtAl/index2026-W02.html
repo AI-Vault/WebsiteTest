@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="Scmp">Scmp</div>
+        <div class="checkbox checked notranslate" data-source="Straits">Straits</div>
+        <div class="checkbox checked notranslate" data-source="Taipei">Taipei</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/scmpEtAl/index2026-W01.html" class="week-display" id="week-display">2026-W01</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 1;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/scmpEtAl/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Chinese AI‑aandelen stuwen marktwinst in 2026, maar tempo zal afkoelen (.Scmp:09-01-2026)</div>
+        <p>Investeringsbanken verwachten dat AI-gerelateerde aandelen in China en Hongkong de markten blijven aansturen in 2026, hoewel de groeisnelheid naar verwachting zal vertragen na de sterke stijging in 2025. Julius Baer en Citibank publiceerden koersdoelen voor de CSI 300 en Hang Seng en wijzen op aanhoudende interesse van buitenlandse fondsen in Chinese techbedrijven, vooral in sectoren die profiteren van AI‑toepassingen. Analisten noemen dat het herstel van 2025 de basis legt, maar dat winstneming en een genuanceerdere waardering het tempo kunnen dempen. citeturn0search2 <a href=https://www.scmp.com/business/banking-finance/article/3339265/chinese-ai-stocks-drive-market-gains-2026-though-pace-set-cool-banks-say target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Dreame toont AI-gedreven huishoudapparaten op CES (.Scmp:09-01-2026)</div>
+        <p>Dreame Technology presenteerde op CES 2026 meer dan 20 nieuwe apparaten met ingebedde AI-functies, van robotstofzuigers die trappen kunnen beklimmen tot slimme koelkasten en nachtzichtcamera’s, als onderdeel van een ambitie om een ‘AI-powered whole-home smart ecosystem’ te bouwen. Het artikel belicht hoe AI-integratie huishoudwerk automatiseert en welke producten Dreame als showcase gebruikte op de beurs. citeturn3search5 <a href=https://www.scmp.com/tech/tech-trends/article/3339228/chinese-robot-vacuum-maker-dreame-bets-ai-driven-appliances-run-household-chores target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Hoe je je baan AI-proof maakt (How to AI proof your job) (.Straits:09-01-2026)</div>
+        <p>Opinie over welke vaardigheden en strategieën werknemers moeten ontwikkelen om hun baan te beschermen tegen automatisering door AI. Onderstreept het belang van soft skills en de combinatie van kwantitatieve en interpersoonlijke competenties, en stelt dat AI-coderingstools in 2026 steeds toegankelijker en effectiever worden. Bevat adviezen voor omscholing en welke rollen naar verwachting het beste bestand zijn tegen automatisering. citeturn0search7 <a href=https://www.straitstimes.com/opinion/how-to-ai-proof-your-job target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Lenovo onthult nieuwe persoonlijke AI‑agent en Nvidia‑samenwerking op CES (.Scmp:08-01-2026)</div>
+        <p>Lenovo introduceerde op CES het AI‑agent Qira, bedoeld als persoonlijke ‘super‑agent’ die over meerdere apparaten heen werkt en taken zoals samenvatten, transcriberen en coördineren van services kan uitvoeren. Qira combineert cloud‑capaciteiten met lokale AI‑functies en gebruikt onder andere OpenAI‑modellen en Microsoft’s Phi‑4 mini voor offline functies. Lenovo positioneert het product als onderdeel van een ‘hybride AI’ strategie voor consumenten en bedrijven, met gefaseerde uitrol in het eerste kwartaal. citeturn3search1 <a href=https://www.scmp.com/tech/tech-trends/article/3339119/lenovo-unveils-new-ai-agent-nvidia-tie-glitzy-show-ces-2026 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Maker van virale AI‑afbeelding van Maduro treedt naar voren (.Straits:08-01-2026)</div>
+        <p>De gebruiker die een AI‑gegenereerde afbeelding produceerde waarin Venezolaanse president Nicolás Maduro zogenaamd naast Amerikaanse troepen stond, heeft verklaard dat hij de afbeelding met Google’s Gemini maakte en was verrast door de virale verspreiding. Het geval toont hoe snel AI‑gegenereerde beelden desinformatie kunnen verspreiden, ondanks snelle ontkrachting door nieuwsagentschappen. Het artikel belicht bezorgdheid over de snelheid en schaal van misleiding via toegankelijke generatieve AI‑tools. <a href=https://www.straitstimes.com/world/united-states/never-expected-this-creator-of-viral-ai-maduro-image-comes-forward target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Binnen Singapore’s AI‑bootcamp: 35.000 bankiers worden omgeschoold (.Straits:08-01-2026)</div>
+        <p>DBS, OCBC en UOB leiden een grootschalig omscholingsprogramma om 35.000 bankmedewerkers vaardig te maken in het gebruik van AI‑tools, waarbij agentachtige modellen taken automatiseren die vroeger uren kostten. Banken werken nauw samen met toezichthouders zoals de Monetary Authority of Singapore om waarborgen, regels en reacties op 'hallucinaties' en risico's te testen voordat tools ruim worden uitgerold. Het programma illustreert hoe financiële instellingen AI inzetten voor productiviteitswinst, tegelijk met aandacht voor governance en risicobeheersing. <a href=https://www.straitstimes.com/business/banking/inside-singapores-ai-bootcamp-to-retrain-35000-bankers// target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">China streeft naar ‘veilige en betrouwbare’ AI‑toelevering tegen 2027 (.Scmp:08-01-2026)</div>
+        <p>Een speciaal actieplan, opgesteld door acht overheidsinstanties onder leiding van het ministerie van Industrie en Informatietechnologie, zet het doel van China uiteen om tegen 2027 een veilige en betrouwbare aanvoer van kern‑AI‑technologieën te garanderen. Het plan focust onder meer op het toepassen van drie tot vijf algemene grote AI‑modellen in de maakindustrie, het opbouwen van industriële datasets en het stimuleren van honderden toepassingsscenario’s. De maatregel wordt geplaatst in de context van een verscherpte wereldwijde tech‑race en zorgen over talent‑ en kapitaalstromen. citeturn3search2 <a href=https://www.scmp.com/economy/china-economy/article/3339123/china-seeks-safe-and-reliable-ai-supply-global-tech-race-heats-up target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">AI-bootcamp voor bankiers (Inside Singapore’s AI bootcamp to retrain 35,000 bankers) (.Straits:08-01-2026)</div>
+        <p>Artikel beschrijft hoe DBS, OCBC en UOB een groot AI-bootcamp opzetten om 35.000 bankmedewerkers in Singapore te hertrainen voor AI-toepassingen. Het geeft voorbeelden van agentische AI-modellen die taken van private bankers drastisch versnellen, en legt uit hoe banken toezichthouders betrekken en safeguards invoeren om risico's zoals 'hallucinaties' te beheersen. Bevat cijfers over de tijdslijn en citaten van betrokken datawetenschappers en toezichthouders. citeturn0search0 <a href=https://www.straitstimes.com/business/banking/inside-singapores-ai-bootcamp-to-retrain-35000-bankers target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Silicon Valley verslindt AI-concurrenten in 2026 (Silicon Valley will eat its AI competitors in 2026) (.Straits:08-01-2026)</div>
+        <p>Opinieartikel dat betoogt dat grote technologiebedrijven uit Silicon Valley in 2026 veel AI-startups en concurrenten zullen overnemen, waardoor een consolidatie optreedt na jaren van hevige investeringen. Bespreekt recente deals en investeringscijfers en voorspelt dat een klein aantal winnaars de markt domineert terwijl veel zwakkere spelers verdwijnen. Analyse en opinie over marktlogica en gevolgen voor innovatie en concurrentie. citeturn0search1 <a href=https://www.straitstimes.com/opinion/silicon-valley-will-eat-its-ai-competitors-in-2026 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">AI‑robot voert complexe chirurgie op varken uit zonder menselijke tussenkomst (.Scmp:07-01-2026)</div>
+        <p>Een chirurgische robot van Shanghai MicroPort MedBot voerde autonoom een complexe galwegsoperatie uit op een 30 kg varken, waarbij het systeem circa 88% van de stappen zelf voltooide en realtime aanpassingen maakte om de ingreep af te ronden. De robot wordt aangedreven door het multimodale Neuron‑model, getraind op duizenden chirurgische video’s, en vertegenwoordigt volgens de ontwikkelaars een belangrijke stap van tele‑operatie naar autonome chirurgie onder klinische supervisie. Het experiment wekt zowel enthousiasme over precisie en efficiëntie als vragen over veiligheid en regulering. citeturn3search4 <a href=https://www.scmp.com/news/china-future-tech/ai/article/3339042/ai-surgery-chinese-robot-conducts-complex-operation-pig-without-human-intervention target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Banenangst door toenemende AI-adoptie in de VS (As AI adoption rises, job fears grow across the US) (.Straits:07-01-2026)</div>
+        <p>Verslag vanuit de Verenigde Staten over hoe snelle adoptie van AI bij bedrijven leidt tot groeiende zorgen over banen en werkzekerheid. Geeft voorbeelden van startups die boekhouding en financiële analyses automatiseren met generatieve AI gecombineerd met menselijke controle, en bevat reacties van investeerders en werknemers over zowel kansen als risico's. Biedt een beeld van hoe AI bestaande diensten verandert en welke beroepen het meest beïnvloed worden. citeturn0search3 <a href=https://www.straitstimes.com/world/as-ai-adoption-rises-job-fears-grow-across-the-united-states/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Nvidia-CEO prijst DeepSeek voor versnelling van open-source AI-beweging (.Scmp:06-01-2026)</div>
+        <p>Tijdens CES zei Nvidia-topman Jensen Huang dat DeepSeek een versnelde verschuiving richting open-source AI heeft veroorzaakt en introduceerde hij nieuwe hardware voor het trainen van krachtigere modellen. Het artikel plaatst Huang’s opmerkingen in de context van recente model- en hardwareontwikkelingen en de rol van open-source spelers. citeturn2search3 <a href=https://www.scmp.com/tech/big-tech/article/3338887/nvidia-ceo-jensen-huang-credits-deepseek-accelerating-open-source-ai-shift target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Nvidia-CEO: nieuwe Rubin‑chips liggen op schema en versnellen AI (.Straits:06-01-2026)</div>
+        <p>Nvidia meldt dat de nieuwe Rubin-data‑centrechips klaar zijn met productiecontroles en op schema liggen voor uitrol in 2026, aldus CEO Jensen Huang tijdens CES 2026. De Rubin‑serie moet klanten helpen AI‑ontwikkeling en -inferencing te versnellen en Nvidia’s leidende positie in AI‑acceleratoren te verstevigen. Huang gebruikte CES-keynote om te benadrukken dat de concurrentie voor de volgende AI‑sprong intens is. <a href=https://www.straitstimes.com/business/companies-markets/nvidia-ceo-says-new-rubin-chips-on-track-helping-speed-ai// target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Samsung verdubbelt aantal AI‑mobiele apparaten naar 800 miljoen dit jaar (.Straits:05-01-2026)</div>
+        <p>Samsung Electronics zegt in 2026 het aantal mobiele toestellen met "Galaxy AI"-functies, grotendeels aangedreven door Google’s Gemini, te willen opvoeren van ongeveer 400 miljoen naar 800 miljoen apparaten. De co-CEO T.M. Roh benadrukte dat AI zo snel mogelijk op alle producten, functies en diensten moet worden toegepast. Deze stap illustreert hoe fabrikanten AI-functies massaal willen uitrollen om concurrerend te blijven in de wereldwijde AI‑race. <a href=https://www.straitstimes.com/asia/east-asia/samsung-to-double-ai-mobile-devices-to-800-million-units-this-year target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
