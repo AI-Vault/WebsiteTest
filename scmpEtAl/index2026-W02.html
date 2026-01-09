@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W01.html" class="week-display" id="week-display">2026-W01</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 1;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Hong Kong stocks’ strong 2026 start loses steam on rising China-Japan tensions (.Scmp:07-01-2026)</div>
+        <p>Het aandeel in Hongkong verloor in de eerste weken van 2026 terrein toen beleggers reageerden op toenemende spanningen tussen China en Japan. De Hang Seng-index daalde en grote techwaarden zoals Alibaba en Tencent noteerden procentuele verliezen, terwijl markten onrustig werden door mogelijke nieuwe handels- en politieke maatregelen tussen de twee landen. <a href=https://www.scmp.com/business/china-business/article/3338982/hong-kong-stocks-strong-2026-start-loses-steam-rising-china-japan-tensions target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI-deepfakes doen zich voor als predikanten om hun gemeenten op te lichten (.wired:5-1-2026)</div>
+        <p>AI-deepfakes imiteren predikanten om kerkgangers te misleiden: nepvideo’s en -berichten van onder anderen Father Mike Schmitz vragen om donaties of promoten schimmige aanbiedingen. Predikanten in de VS, de Filipijnen en elders melden hacks, valse certificaten en gesynthetiseerde stemmen die om geld of overdrachten vragen. TikTok-accounts gebruiken generatieve AI voor schokeffecten en verdienen mogelijk via views; platforms verwijderen soms impersonators. Sommige kerken gebruiken AI zelf voor preekvoorbereiding of creatieve content. Experts (Rachel Tobac, Lucas Hansen) waarschuwen voor invloed, manipulatie en psychische risico’s, terwijl slachtoffers als Schmitz terughoudend staan tegenover de technologie. <a href=https://www.wired.com/story/ai-deepfakes-are-impersonating-pastors-to-try-and-scam-their-congregations/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
