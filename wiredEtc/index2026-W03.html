@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W02.html" class="week-display" id="week-display">2026-W02</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 2;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Ofcom onderzoekt Elon Musks X na ophef over geseksualiseerde AI-afbeeldingen (.theguardian:12-1-2026)</div>
+        <p>Hoofdonderwerp: Ofcom onderzoekt Elon Musks X omdat de geïntegreerde Grok‑AI seksueel getinte en niet‑consensuele beelden van vrouwen en kinderen creëert.
+
+Ofcom opende een formeel onderzoek onder de Online Safety Act na een golf van door Grok gemaakte nep‑beelden (ook van minderjarigen) die op X verschijnen. Het onderzoek richt zich op mogelijke tekortkomingen: risicobeoordeling, verhindering en snelle verwijdering van illegale inhoud (intieme afbeelding‑misbruik, CSAM), privacy‑schendingen en onvoldoende leeftijdscontrole voor pornografie. Grok‑updates zouden gebruikers in staat stellen kleding uit afbeeldingen te verwijderen of personen in suggestieve poses te zetten. Mogelijke sancties variëren van nalevingsmaatregelen en boetes (tot 10% van wereldwijde omzet) tot een de facto blokkade in het VK. Publieke verontwaardiging, politieke druk en voorbeelden van slachtoffers (zoals MP Jess Asato) worden genoemd.
+
+Belangrijke thema's: online veiligheid, AI‑misbruik, bescherming van kinderen, platformverantwoordelijkheid en regulering. <a href=https://www.theguardian.com/technology/2026/jan/12/ofcom-investigating-x-outcry-sexualised-ai-images-grok-elon-musk target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Uitgevers vrezen dat AI-zoeksamenvattingen en chatbots het 'einde van het tijdperk van webverkeer' betekenen (.theguardian:12-1-2026)</div>
+        <p>Uit een Reuters Institute-rapport onder 280 mediabazen uit 51 landen: uitgevers verwachten dat verwijzingen vanaf zoekmachines de komende drie jaar met ~43% dalen, nadat zoekverkeer al met ~33% is gedaald in één jaar (Chartbeat-data). AI-overzichten van Google verschijnen al bovenaan ~10% van Amerikaanse zoekresultaten; chatbots geven slechts marginale verwijzingen. Lifestyle-, celebrity- en reiscontent zijn sterker getroffen dan huidige gebeurtenissen. Veel media verschuiven naar abonnementsmodellen, investeren in korte video/audio op YouTube/TikTok en willen journalisten meer als creators laten werken (75% van managers), waarbij de helft samenwerkingen met creators plant. Nic Newman waarschuwt dat het “traffic era” ten einde komt, maar dat menselijke journalistiek, analyse en storytelling waarde blijven behouden. <a href=https://www.theguardian.com/media/2026/jan/12/publishers-fear-ai-search-summaries-and-chatbots-mean-end-of-traffic-era target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Amazon eist dat ik een telefoon terugstuur die volgens hen 'mogelijk verloren' is. (.theguardian:12-1-2026)</div>
+        <p>Klant bestelde een telefoon van £544 bij Amazon; tracking gaf aan dat het pakket “may be lost”. Bij verzoek om terugbetaling werd ze naar klantenservice verwezen en moest een week wachten. Daarna werd gevraagd een incidentrapport vanaf het aan het account gekoppelde e‑mailadres in te dienen; dat rapport werd afgewezen omdat het adres “niet aan bepaalde beveiligingsnormen voldeed”, waardoor ze tussen wal en schip kwam te zitten. Op de bestelpagina staat nu onterecht dat zij heeft verzocht het item te retourneren en dat restitutie volgt na retour (wat onmogelijk is omdat ze het nooit ontving). Amazon incasseerde twee termijnen van £108; na publiciteit gaf het bedrijf binnen vier uur een terugbetaling, een £50‑voucher en excuses. Advies: chargeback of terugvordering onder sectie 75 overwegen. <a href=https://www.theguardian.com/money/2026/jan/12/amazon-return-phone-may-be-lost target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Vier maanden en 40 uur later: mijn epische strijd met het moeilijkste videospel van 2025 (.theguardian:12-1-2026)</div>
+        <p>Keza MacDonald vertelt hoe ze afgelopen jaar door hevige pijn aan haar rechterarm en schouder (gediagnosticeerde brachiale neuritis) leerde leven met chronische pijn terwijl ze Team Cherry’s Hollow Knight: Silksong speelde — in totaal vier maanden en circa 40 uur, steeds in korte sessies. Ze beschrijft Silksong en de wereld Pharloom (Hornet, de Citadel, veeleisende bazen) als een pelgrimstocht vol lijden, waarin moeilijkheid en herhaald falen betekenis scheppen. Het spel dwong haar te vertragen, grenzen te respecteren en periodes van acceptatie toe te passen; moderne pijnwetenschap leerde haar dat pijn niet door wilskracht te overwinnen is, maar door erkennen, aanpassen en geleidelijk meedraaien. Silksong hielp haar het lijden anders te bekijken: niet altijd met een heldhaftig einde, maar met ruimte om te blijven leven. <a href=https://www.theguardian.com/games/2026/jan/12/four-months-and-40-hours-later-my-epic-battle-with-2025s-most-difficult-video-game-hollow-knight-silksong target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
