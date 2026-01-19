@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W03.html" class="week-display" id="week-display">2026-W03</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 3;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">De race om de DeepSeek van Europa te bouwen is begonnen (.wired:19-1-2026)</div>
+        <p>Europa versnelt inspanningen om onafhankelijkere AI-capaciteiten op te bouwen nu de trans-Atlantische relatie onder druk staat. Terwijl Amerikaanse bedrijven (Nvidia, Google, OpenAI, Meta, Anthropic) de meeste rekenkracht, investeringen en marktaandeel bezitten, zoeken Europese labs naar alternatieve wegen — geïnspireerd door China’s DeepSeek — door te focussen op slimme modelontwerpen, open source-publicaties en Europese projecten als SOOFI, Apertus en GPT‑NL. Experts (Rosaria Taddeo, Wolfgang Nejdl) noemen afhankelijkheid een geopolitieke kwetsbaarheid en pleiten voor digitale soevereiniteit, maar er is onenigheid over beleid: beschermingsmaatregelen en verplicht lokaal inkopen versus open markten en keuzemogelijkheid. Sommige teams willen binnen een jaar concurrerende generieke taalmodellen (~100 miljard parameters) lanceren. <a href=https://www.wired.com/story/europe-race-us-deepseek-sovereign-ai/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Ed Zitron over big tech, tegenreactie, boom en neergang: 'AI heeft ons geleerd dat mensen enthousiast zijn om andere mensen te vervangen' (.theguardian:19-1-2026)</div>
+        <p>Ed Zitron, populaire podcaster en criticus van big tech, betoogt dat generatieve AI en LLM's geen echte intelligentie bezitten: ze hallucineren, geven inconsistente antwoorden, leren niet duurzaam en hebben geen duidelijk pad naar autonome taken. Hij voert ook een financiële kritiek: enorme investeringen in GPUs en datacenters door hyperscalers, hoge operationele kosten, weinig schaalvoordelen en onderling geknoopte deals (bv. Nvidia–OpenAI) creëren een onhoudbare economie die tot een AI-bubbel of crisis kan leiden. Zitron, voormalig tech-PR’er en auteur met een grote nieuwsbrief en podcast, staat symbool voor de groeiende backlash tegen AI, thema’s omvatten arbeidsvervanging, milieuproblemen rond datacenters, auteursrechten, technologische kritiek en de rol van neoliberaal kapitalisme. <a href=https://www.theguardian.com/technology/2026/jan/19/ed-zitron-on-big-tech-backlash-boom-and-bust-ai-has-taught-us-that-people-are-excited-to-replace-human-beings target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
