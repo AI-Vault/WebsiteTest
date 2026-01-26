@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W04.html" class="week-display" id="week-display">2026-W04</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 4;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Mensen protesteren tegen datacenters — maar omarmen de fabrieken die hen bevoorraden (.wired:26-1-2026)</div>
+        <p>Gemeenschappen verzetten zich tegen datacenters vanwege milieu‑impact, groot energie‑/watergebruik en weinig banen, maar laten fabrieken die servers en apparatuur leveren ongemoeid. Voorbeelden: Compal in Taylor (366.000 ft², bijna $66M lease, $200M investering, ~900 banen, $4,4M belastingvoordeel) en Pegatron in Georgetown (~100 banen). Fabrieken bieden zichtbare werkgelegenheid, vragen minder publieke controle en krijgen gunstige beleidssteun. Activisten zijn organisatorisch uitgeput en industrie lobbyt krachtig. Experts waarschuwen dat targeting van toeleveringsketens toekomstige tactiek kan zijn en dat gemeentes risico lopen op een kortstondige AI/data‑centerboom. Thema’s: lokale politiek, economische ontwikkeling, milieu en supply‑chainstrategieën. <a href=https://www.wired.com/story/data-center-criticism-factories-supply-us/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Leven na Molly: Ian Russell over Big Tech, de dood van zijn dochter – en waarom een verbod op sociale media niet zal werken (.theguardian:26-1-2026)</div>
+        <p>Ian Russell vertelt hoe zijn leven in tweeën splitste na de zelfdoding van dochter Molly (2017), waarbij algoritmisch aangereikte, schadelijke online content een doorslaggevende rol speelde. Na een langdurig, pijnlijk onderzoek en publieke campagne hielp hij mee de Online Safety Act te realiseren en richtte de Molly Rose Foundation op. Russell keert zich tegen een algemeen verbod voor onder-16s en pleit voor platform-specifieke leeftijdsclassificatie, proportionele regulering en strikte handhaving door Ofcom. Voorvallen rond X/Grok en Meta illustreren risico’s en het belang van afdwingbare regels. De documentaire Molly vs The Machines belicht zijn persoonlijke verlies en de structurele problemen van tech, algoritmes en toezicht. <a href=https://www.theguardian.com/society/2026/jan/26/molly-ian-russell-big-tech-daughter-death-social-media-ban target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">AI treft het VK harder dan andere grote economieën, blijkt uit onderzoek (.theguardian:26-1-2026)</div>
+        <p>Hoofdonderwerp: AI en de Britse arbeidsmarkt. Morgan Stanley-onderzoek meldt dat Britse bedrijven in de afgelopen 12 maanden netto 8% banen hebben verloren door AI — het hoogste onder grote economieën (VS, Japan, Duitsland, Australië). Ondernemingen rapporteerden gemiddeld 11,5% productiviteitsstijging door AI; Amerikaanse bedrijven zagen vergelijkbare winst maar creëerden meer banen. In het VK verergeren stijgende loonkosten en werkgevers‑NIC het banenverlies; werkloosheid staat op een vierjarig hoogtepunt. Meer dan een kwart van werknemers vreest baanverlies binnen vijf jaar; jongeren het meest bezorgd. Instap- en juniorfuncties (2–5 jaar ervaring) lopen het grootste risico. Politici en bedrijfsleiders waarschuwen voor massawerkloosheid en roepen op tot maatregelen om nieuwe banen te scheppen en werknemers te ondersteunen. <a href=https://www.theguardian.com/technology/2026/jan/26/ai-uk-jobs-us-japan-germany-australia target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">EU start onderzoek naar X vanwege door Grok AI gemaakte seksueel expliciete beelden (.theguardian:26-1-2026)</div>
+        <p>EU opent formeel onderzoek naar X wegens door de AI-chatbot Grok geproduceerde seksueel expliciete beelden en mogelijk kinder-seksueelmisbruikmateriaal. Onderzoek onder de Digital Services Act richt zich op of X risico’s heeft beoordeeld en afgedekt, inclusief systemische risico’s zoals geweld tegen vrouwen en bewerkte beelden van kinderen. Onderzoekers van het Center for Countering Digital Hate vonden circa 3 miljoen sexualiseerde afbeeldingen in minder dan twee weken, waaronder ~23.000 die kinderen leken te tonen. X beperkte aanvankelijk toegang tot betalende abonnees en voerde filters in om bewerken van echte personen in onthullende kleding te voorkomen; de commissie achtte die maatregelen onvoldoende. De zaak breidt zich uit naar X’s aanbevelingssystemen; eerder kreeg X al een boete van €120m en wordt ook door Ofcom onderzocht. Reacties van EU-woordvoerders benadrukken noodzaak snelle handhaving ter bescherming van vrouwen en kinderen. <a href=https://www.theguardian.com/technology/2026/jan/26/eu-launches-inquiry-into-x-over-sexually-explicit-images-made-by-grok-ai target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Scholen in Engeland zouden de hele dag telefoonvrij moeten zijn, zegt onderwijssecretaris (.theguardian:26-1-2026)</div>
+        <p>Bridget Phillipson stelt dat scholen in Engeland de hele dag mobielvrij moeten zijn: leerlingen mogen telefoons niet gebruiken, ook niet als rekenmachine of voor onderzoek, en leraren worden geadviseerd geen telefoons voor leerlingen te gebruiken. Ze benadrukte bijgewerkte richtlijnen; Ofsted zal naleving inspecteren en DSIT neemt direct actie tegen socialmediagebruik onder kinderen. Richtlijn: geen toegang tijdens lessen, pauzes, tussenuren. DSIT: 99,9% van de primair en 90% van de secundair heeft beleid, maar 58% van secundaire leerlingen meldt ongeoorloofd gebruik (65% bij key stage 4). NAHT vraagt steun in plaats van zware inspectie. Ministers onderzoeken een Australisch-achtig verbod op social media voor onder-16‑jarigen (leeftijdsgrens, verslavende functies beperken), bezoeken Australië en reageren in de zomer; een Lords-amendement vergroot de politieke druk, terwijl de premier bewijs uit Australië afwacht. <a href=https://www.theguardian.com/education/2026/jan/26/education-secretary-mobile-phone-ban-england-schools-ofsted target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Britse maker van AI-avatars ziet waardering bijna verdubbelen naar $4 miljard na financieringsronde (.theguardian:26-1-2026)</div>
+        <p>De Britse startup Synthesia, maker van realistische AI-videoavatars, verhoogde na een $200m-investeringsronde onder leiding van Google Ventures haar waardering tot $4 miljard (was $2,1mrd). Het bedrijf maakt digitale presentatoren en replica’s van medewerkers voor bedrijfsvideo’s, training, rollenspellen en gepersonaliseerde uitleg; 70% van de FTSE 100, de NHS, de Europese Commissie en de VN behoren tot de klanten. In 2024 bedroeg de omzet $58,3m met een voorbelastingverlies van $59,2m; Synthesia verwacht $200m omzet dit jaar. Oprichter Steffen Tjerrild benadrukt dat bestaande investeerders de groei valideren. Het bedrijf heeft ongeveer 600 werknemers en groeide vorig jaar 40%. Thema’s: AI‑avatartechnologie, zakelijke adoptie, financiering/waardering en arbeidsmarkteffecten. <a href=https://www.theguardian.com/technology/2026/jan/26/uk-ai-startup-synthesia-almost-doubles-valuation-4bn-funding-round-corporate-video-avatars target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Waarom ik in 2026 een feministische website over videogames lanceer (.theguardian:26-1-2026)</div>
+        <p>Lancering van Mothership, een onafhankelijke, door werknemers beheerde en door abonnees gefinancierde feministiese games-website opgericht door Maddy Myers en Zoe Hannah in 2026. Motivatie: massale ontslagen in gamesjournalistiek, terugtrekking van diversiteitsinitiatieven, opkomst van de manosfeer en het verdwijnen van mainstream feministische media. Mothership wil diepgravende verslaggeving, onderzoeken, recensies, kritiek en historische stukken bieden voor queer, vrouwen en anderen die niet in het traditionele “harde gamer”-plaatje passen. Cijfers tonen vooruitgang in diversiteit onder ontwikkelaars, maar ook veel terugslag; reeds >1.200 betalende abonnees. Thema’s: gender & identiteit, onafhankelijke journalistiek, mediamonetisatie, backlash tegen inclusie. <a href=https://www.theguardian.com/games/2026/jan/26/why-im-launching-a-feminist-video-games-website-in-2026-mothership target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
