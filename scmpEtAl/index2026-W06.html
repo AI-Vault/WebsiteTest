@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="Scmp">Scmp</div>
+        <div class="checkbox checked notranslate" data-source="Straits">Straits</div>
+        <div class="checkbox checked notranslate" data-source="Taipei">Taipei</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/scmpEtAl/index2026-W05.html" class="week-display" id="week-display">2026-W05</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 5;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/scmpEtAl/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Singapore: fabrieksactiviteit versnelt door vraag naar AI‑producten en chips (.Straits:02-02-2026)</div>
+        <p>De inkoopmanagersindex (PMI) van Singapore steeg in januari naar 50,5, aangedreven door sterke vraag naar elektronica en geavanceerde halfgeleiders voor AI‑toepassingen. De elektronicasector noteerde een PMI van 51,1 en liet daarmee de achtste opeenvolgende maand van uitbreiding zien, terwijl de index voor leveringen door leveranciers daalde — een signaal van aanhoudende logistieke knelpunten. De stijgende vraag naar AI‑gerelateerde producten ondersteunt de productie, maar logistieke en toeleveringsrisico’s blijven aanwezig. citeturn0search0 <a href=https://www.straitstimes.com/business/singapore-factory-activity-accelerates-on-demand-for-ai-products-and-chips target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
