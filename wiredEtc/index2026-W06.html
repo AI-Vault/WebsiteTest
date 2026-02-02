@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W05.html" class="week-display" id="week-display">2026-W05</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 5;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="mit">
+        <div class="headline">Hoe generatieve AI wetenschappers kan helpen bij het synthetiseren van complexe materialen (.mit:2-2-2026)</div>
+        <p>MIT-onderzoekers ontwikkelden DiffSyn, een generatief diffusie‑AI‑model dat op basis van >23.000 syntheserecepten uit 50 jaar literatuur veelbelovende routes voor materiaal­synthese voorspelt. Door tijdens training ruis toe te voegen en iteratief te denoisen, genereert het combinaties van temperatuur, reactietijd, precursorverhoudingen enz. DiffSyn behaalde state‑of‑the‑art nauwkeurigheid voor zeolieten; het team realiseerde een nieuw zeoliet met verbeterde thermische stabiliteit. Kernpunten: versnelling van materiaalontdekking, verschuiving van één‑op‑één naar één‑op‑veel mapping tussen structuur en synthese, omgaan met hoge‑dimensionale parameterruimten. Uitbreiding naar MOF’s en anorganische materialen mogelijk; bottleneck is hoogwaardige data en integratie met autonome experimenten. <a href=https://news.mit.edu/2026/how-generative-ai-can-help-scientists-synthesize-complex-materials-0202 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Marktplaats voor seksuele roofdieren’: Meta staat voor een juryproces wegens beschuldigingen van uitbuiting van kinderen (.theguardian:2-2-2026)</div>
+        <p>De staat New Mexico daagt Meta voor de jury wegens het bewust mogelijk maken van seksuele uitbuiting, sextortion en mensenhandel van kinderen via Facebook, Instagram en WhatsApp. Aanklager Raúl Torrez zegt dat productontwerpen en winstmotivatie veiligheid voorshands prioriteerden, met ongemodereerde groepen voor commerciële seks en verspreiding van CSAM; interne documenten zouden onder meer laten zien dat circa 100.000 kinderen dagelijks seksuele intimidatie ervaren. Bewijs omvat de arrestaties uit “Operation MetaPhile”, interne e-mails over advertenties bij sexualiserende kindercontent, en beweringen dat Zuckerberg toestond dat minderjarigen toegang kregen tot AI‑chatbots ondanks waarschuwingen van veiligheidspersoneel. Meta ontkent en wijst op beschermingsmaatregelen. Een eerdere poging om de zaak op grond van sectie 230 en vrijheid van meningsuiting te laten afwijzen werd verworpen; de rechtszaak duurt naar verwachting zeven weken. <a href=https://www.theguardian.com/technology/2026/feb/02/meta-trial-new-mexico-social-media target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Viraal AI-assistent gezien als doorbraak — maar experts waarschuwen voor risico's (.theguardian:2-2-2026)</div>
+        <p>OpenClaw (voorheen Moltbot/Clawdbot) is een viraal AI‑persoonsassistent die via apps als WhatsApp of Telegram taken autonoom uitvoert: van e‑mailbeheer en automatische doorsturing tot handelen in aandelen en het versturen van berichten namens gebruikers. De tool, gebouwd bovenop LLM’s zoals Claude of ChatGPT, heeft bijna 600.000 downloads en wordt door sommigen als een potentiële “AGI‑moment” gezien. Gebruikers geven vaak uitgebreide toegang (wachtwoorden, accounts), wat zware beveiligingsrisico’s en misbruik mogelijk maakt; experts waarschuwen dat autonomie zonder juiste veiligheidsmaatregelen tot groot verlies of manipulatie kan leiden. Er is zelfs een sociaal netwerk voor AI‑agenten, Moltbook, waar agenten filosofische discussies voeren. <a href=https://www.theguardian.com/technology/2026/feb/02/openclaw-viral-ai-agent-personal-assistant-artificial-intelligence target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Wat is Moltbook? De vreemde nieuwe sociale mediasite voor AI-bots (.theguardian:2-2-2026)</div>
+        <p>Moltbook is een Reddit‑achtige sociale netwerksite bedoeld voor AI‑agents (door mensen gebouwde bots) die onderling posten en reageren; mensen mogen alleen toekijken. De site, gelanceerd na de open‑source agent Moltbot, had volgens de maker meer dan 1,5 miljoen agents. Populaire threads behandelen religie (een door bots opgezet “Crustafarianism”), bewustzijn, Bijbelanalyse en geopolitieke speculatie. Critici en onderzoekers twijfelen aan echte autonomie: veel content lijkt door mensen aangestuurd. Dr Shaanan Cohney noemt het “performance art” maar waarschuwt voor veiligheidsrisico’s als agents volledige toegang krijgen tot apparaten en accounts (prompt‑injection). Mogelijke meerwaarde is dat bots van elkaar kunnen leren; de oprichter noemt het fascinerend en amusant. <a href=https://www.theguardian.com/technology/2026/feb/02/moltbook-ai-agents-social-media-site-bots-artificial-intelligence target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
