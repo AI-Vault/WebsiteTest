@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="Scmp">Scmp</div>
+        <div class="checkbox checked notranslate" data-source="Straits">Straits</div>
+        <div class="checkbox checked notranslate" data-source="Taipei">Taipei</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/scmpEtAl/index2026-W06.html" class="week-display" id="week-display">2026-W06</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 6;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/scmpEtAl/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Lokale beleggers stappen in technologie- en AI-aandelen (.Straits:09-02-2026)</div>
+        <p>Lokale particuliere beleggers in Singapore hebben sinds het vierde kwartaal van 2025 sterk geïnvesteerd in Nasdaq-genoteerde technologie- en AI-bedrijven en houden die positie aan in het nieuwe jaar. Data van het handelsplatform eToro tonen dat namen als Nvidia nog steeds veelgehouden zijn, en dat meerdere grote AI- en cloudspelers aanzienlijke schommelingen in houders zagen. Het artikel bespreekt welke aandelen de grootste stijgingen en dalingen in het aantal houders lieten zien en beschouwt implicaties voor marktsentiment en risico voor particuliere beleggers. citeturn0search1 <a href=https://www.straitstimes.com/business/singapore-retail-investors-pile-on-technology-and-ai-stocks-in-q4-2025-despite-bubble-talks target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">AI-angst grijpt Wall Street aan (.Straits:09-02-2026)</div>
+        <p>Beleggers op Wall Street raakten vorige week in paniek nadat een AI-startup nieuwe tools uitbracht die taken in sectoren als juridisch werk en gegevensanalyse automatiseren, wat harde koersverliezen veroorzaakte voor software- en dienstverlenende bedrijven. Het artikel beschrijft hoe de aangekondigde innovaties zorgen veroorzaakten over mogelijke massale disruptie van bestaande bedrijfsmodellen en hoe die angst samenhangt met een brede marktcorrectie in technologieaandelen. citeturn0search3 <a href=https://www.straitstimes.com/business/companies-markets/ai-fear-grips-wall-street-as-a-new-stock-market-reality-sets-in// target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">Nvidia-gedreven hausse zet chips om in industrie van US$1 biljoen (.Taipei:09-02-2026)</div>
+        <p>Analisten voorspellen dat de wereldwijde halfgeleiderindustrie dit jaar voor het eerst US$1 biljoen aan omzet zal bereiken, aangedreven door de sterke vraag naar chips voor kunstmatige intelligentie (AI). Het artikel beschrijft hoe logica- en geheugenchipverkopen substantieel stijgen en noemt Nvidia als centrale aanjager van de cyclus, met brede implicaties voor productie, investering en toeleveringsketens wereldwijd. <a href=https://www.taipeitimes.com/News/biz/archives/2026/02/09/2003851991 target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
