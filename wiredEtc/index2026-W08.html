@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W07.html" class="week-display" id="week-display">2026-W07</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 7;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Google brengt gebruikers in gevaar door gezondheidsdisclaimers onder AI-overzichten te bagatelliseren (.theguardian:16-2-2026)</div>
+        <p>Google zet mensen volgens dit onderzoek op gevaarlijke wijze bloot aan risico’s door veiligheidswaarschuwingen voor AI-gegenereerde medische adviezen te verbergen: AI Overviews tonen geen disclaimer bij de eerste weergave; waarschuwingen verschijnen alleen als gebruikers op "Show more" klikken en staan onderaan in kleinere, lichtere letters. Experts van MIT, Queen Mary en Stanford en patiëntenorganisaties waarschuwen dat dat misleidt, omdat Overviews voorrang geven aan snelheid en gebruikerstevredenheid boven nauwkeurigheid, kunnen hallucineren en valse zekerheid scheppen. Google zegt dat Overviews mensen aanmoedigen professioneel advies te zoeken en soms in de samenvatting verwijzen, maar critici eisen een veel zichtbaardere, prominente disclaimer bovenaan. <a href=https://www.theguardian.com/technology/2026/feb/16/google-puts-users-at-risk-downplaying-disclaimers-ai-overviews target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Het is het meest urgente volksgezondheidsprobleem’: Dr Rangan Chatterjee over schermtijd, mentale gezondheid – en het verbieden van sociale media tot 18 jaar (.theguardian:16-2-2026)</div>
+        <p>Dr Rangan Chatterjee waarschuwt dat schermgebruik bij kinderen "het meest urgente volksgezondheidsprobleem" is; hij pleit voor een wettelijke leeftijdsgrens van 18 voor sociale media en voor afschaffing van schermgebaseerd huiswerk. Hij koppelt hoge schermtijd aan slechtere slaap, angst, laag zelfbeeld, taalachterstand, nek- en houdingsklachten en toegenomen myopie, en noemt blootstelling aan pornografie en schadelijke content. Techbedrijven worden verantwoordelijk gehouden vanwege hun winstgedreven ontwerp. Chatterjee verliet de huisartsenpraktijk voor een podcastcarrière om preventieve gezondheid te stimuleren; hij wil meer gezondheidscoaches in de NHS, een langjarig plan en deelt persoonlijke voorbeelden van zijn gezin en migratieachtergrond. <a href=https://www.theguardian.com/lifeandstyle/2026/feb/16/dr-rangan-chatterjee-interview-screen-time-mental-health-banning-social-media-18-podcaster target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Regering schrapt plannen om lokale verkiezingen in 30 raadsgebieden in mei uit te stellen – VK-politiek live (.theguardian:16-2-2026)</div>
+        <p>De regering heeft na juridisch advies haar voornemen laten vallen om lokale verkiezingen in mei in 30 gebieden uit te stellen; alle lokale verkiezingen gaan nu door in mei 2026. Reform-leider Nigel Farage claimt via een openbaar gemaakte brief een politieke overwinning. Verder behandelt de liveblog meerdere politieke ontwikkelingen: Keir Starmer voert interviews en pleit voor verscherpte regels voor tieners op sociale media, waarbij een totaalverbod voor onder‑16ʼs als optie wordt genoemd maar ook gerichte maatregelen (oudomscrollen, leeftijdsverificatie, VPN‑beperkingen) worden onderzocht. Organisaties als NSPCC en Internet Watch Foundation reageren positief op strengere regels. Daarnaast verdedigt Downing Street minister Josh Simons en prijst het bestuur Antonia Romeo ondanks eerdere klachten; er loopt ook aandacht voor een onderzoek naar Labour Together en journalisten. <a href=https://www.theguardian.com/politics/live/2026/feb/16/social-media-online-safety-act-keir-starmer-uk-politics-live-news-updates target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">TikTok-maker ByteDance belooft AI-videotool in te perken na dreigement van Disney (.theguardian:16-2-2026)</div>
+        <p>ByteDance, eigenaar van TikTok, zegt het AI-videogenerator Seedance 2.0 te zullen afremmen na juridische bedreigingen van Disney en kritiek uit Hollywood. Seedance maakt realistische clips uit korte tekstprompts; een virale video toonde Tom Cruise en Brad Pitt vechtend. Disney stuurde een cease-and-desist en beschuldigt ByteDance van gebruik van een “gepirateerde bibliotheek” met onder meer Marvel- en Star Wars-personages; MPA en SAG‑AFTRA noemen het onrechtmatig gebruik van auteursrechtelijk beschermd materiaal. ByteDance meldt dat het intellectuele eigendom respecteert en extra safeguards invoert. Het conflict illustreert bredere spanningen over AI, auteursrecht, compensatie voor makers en de behoefte aan licenties (tegenover voorbeelden van samenwerkingen zoals Disney‑OpenAI). <a href=https://www.theguardian.com/technology/2026/feb/16/tiktok-bytedance-ai-video-tool-disney-seedance-tom-cruise-brad-pitt target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Wat technologie ons afneemt — en hoe we het terugwinnen — podcast (.theguardian:16-2-2026)</div>
+        <p>Rebecca Solnit onderzoekt in deze Audio Long Read hoe technologie — vooral uit Silicon Valley, AI en chatbots — ons leven ontmenselijkt: beslissingen worden uitbesteed, virtuele gesprekspartners vervangen echte relaties en de natuurlijke wereld wordt een bijzaak. Ze waarschuwt dat zulke systemen verbinding, autonomie en betekenis uithollen en betoogt dat herstel collectieve actie en het heroveren van mensgerichte, ecologische waarden vereist. Podcast gelezen door Laurel Lefkow; tekstversie beschikbaar. <a href=https://www.theguardian.com/news/audio/2026/feb/16/what-technology-takes-from-us-and-how-to-take-it-back-podcast target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Waarom kreeg ik een boete van £100 terwijl ik mijn elektrische auto oplaadde? (.theguardian:16-2-2026)</div>
+        <p>Een bestuurder laadde zijn elektrische auto bij een Mer‑lader in de B&Q‑parkeerplaats in Redhill, waarna Ocean Parking een boete van £100 uitschreef omdat parkeren tussen 21.00–06.00 verboden zou zijn. Mer adverteerde de lader als 24 uur, erkende later verwarring en paste de website aan; Ocean hield aanvankelijk vol maar zegde uiteindelijk aan alle openstaande boetes op die locatie af en bood terugbetalingen aan vanwege minimale bewegwijzering. In een tweede casus kreeg CH in Leicestershire twee £100‑PCN’s van Euro Parking Services toen hij kortstondig stopte; foto’s tonen onleesbare, hoog bevestigde bordjes en geen gele markeringen. EPS, lid van de International Parking Community (IPC), schond daarmee vermoedelijk de eis voor duidelijke borden en een vijfminutengrace; één boete werd later ingetrokken, de andere bleef gehandhaafd en CH kan bij de IPC in beroep gaan. <a href=https://www.theguardian.com/money/2026/feb/16/parking-fine-charging-electric-car-mer target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Dit zou niet normaal moeten zijn’: ontwikkelaars spreken zich uit over haat en discriminatie op Steam, ’s werelds grootste pc-gameswinkel (.theguardian:16-2-2026)</div>
+        <p>Hoofdonderwerp: moderatiefalen en haatdragende inhoud op Steam, effect op ontwikkelaars.
+
+Belangrijke thema's: gebrek aan effectieve moderatoring; anti‑woke/gerichte reviewcampagnes en curatorlijsten; transfobie, antisemitisme en homofobie in reviews en discussies; economische en professionele schade voor ontwikkelaars; Valve’s afwijzing en beperkte ondersteuning.
+
+Veel ontwikkelaars rapporteren dat haat, vooral tegen trans en LGBTQ+ makers, ongereguleerd op Steam blijft staan en dat moderators vaak haatvolle reviews en fora laten passeren. Voorbeelden: Nathalie Lawhead moest publiek mobiliseren om antisemitische en beschuldigende reviews verwijderd te krijgen; games zijn doelwit van “NO WOKE”‑curatoren en losse reviewcampagnes die zichtbaarheid en verkoop schaden. Valve reageert zelden, verwijst naar vrije meningsuiting of accuracy‑beleid, en biedt weinig effectieve beroepsmogelijkheden; ontwikkelaars voelen zich gevangengezet door Steam’s marktdominantie en gebrekkige moderatieprocessen. <a href=https://www.theguardian.com/games/2026/feb/16/bigotry-steam-pc-moderation-developers-speak-out target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
