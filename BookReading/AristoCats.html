@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AristoCats</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;
+        }
+        h1 { text-align: center; color: #333; }
+        .toggle-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .mode-toggle, .translation-toggle { display: flex; }
+        .mode-toggle button, .translation-toggle button {
+            padding: 10px 20px; font-size: 16px; border: 2px solid #007bff;
+            background: white; color: #007bff; cursor: pointer; transition: all 0.2s;
+        }
+        .mode-toggle button:first-child, .translation-toggle button:first-child { border-radius: 8px 0 0 8px; }
+        .mode-toggle button:last-child, .translation-toggle button:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+        .mode-toggle button.active, .translation-toggle button.active { background: #007bff; color: white; }
+        .translation-toggle button { border-color: #28a745; color: #28a745; }
+        .translation-toggle button.active { background: #28a745; color: white; }
+        .navigation { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; }
+        button { padding: 12px 24px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        button:hover:not(:disabled) { transform: scale(1.05); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .nav-btn { background-color: #007bff; color: white; }
+        .nav-btn:hover:not(:disabled) { background-color: #0056b3; }
+        .play-btn { background-color: #28a745; color: white; min-width: 120px; }
+        .play-btn.playing { background-color: #dc3545; }
+        .play-btn:hover:not(:disabled) { filter: brightness(1.1); }
+        .page-indicator { font-size: 16px; color: #666; min-width: 150px; text-align: center; }
+        .text-container { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); min-height: 200px; }
+        .text-content { font-size: 20px; line-height: 1.8; color: #333; white-space: pre-wrap; }
+        .page-title { font-size: 14px; color: #999; margin-bottom: 15px; text-align: center; }
+        .sentence-highlight { background-color: #fff3cd; padding: 2px 4px; border-radius: 4px; }
+        .translation-container { margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd; }
+        .translation-label { font-size: 14px; color: #28a745; margin-bottom: 10px; font-weight: bold; }
+        .translation-text { font-size: 18px; line-height: 1.6; color: #555; font-style: italic; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>AristoCats</h1>
+    <div class="toggle-row">
+        <div class="mode-toggle">
+            <button id="mode-page" class="active">Pagina</button>
+            <button id="mode-sentence">Zinnen</button>
+        </div>
+        <div class="translation-toggle">
+            <button id="trans-off" class="active">Vertaling uit</button>
+            <button id="trans-on">Vertaling aan</button>
+        </div>
+    </div>
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" disabled>&larr; Vorige</button>
+        <span class="page-indicator" id="page-indicator">-</span>
+        <button class="nav-btn" id="next-btn" disabled>Volgende &rarr;</button>
+    </div>
+    <div class="navigation">
+        <button class="play-btn" id="play-btn" disabled>&#9658; Play</button>
+    </div>
+    <div class="text-container">
+        <div class="page-title" id="page-title"></div>
+        <div class="text-content" id="text-content"></div>
+        <div class="translation-container hidden" id="translation-container">
+            <div class="translation-label">Nederlandse vertaling:</div>
+            <div class="translation-text" id="translation-text"></div>
+        </div>
+    </div>
+    <audio id="audio-player"></audio>
+    <script>
+        const DATA = {"name": "AristoCats", "items": [{"jpegname": "page 03.jpeg", "text": "Duchess was a beautiful white cat. She lived in one of the finest houses in Paris with her kittens, Berlioz, Toulouse, and Marie. Their owner, Madame Bonfamille, was very kind. The cats had a wonderful life.\n\nThe three kittens were polite to all animals. After they rode home, they always told the horse, \"Thank you, Miss Frou-Frou.\"", "text_nl": "Duchess was a beautiful white cat. She lived in one of the finest houses in Paris with her kittens, Berlioz, Toulouse, and Marie. Their owner, Madame Bonfamille, was very kind. The cats had a wonderful life.\n\nThe three kittens were polite to all animals. After they rode home, they always told the horse, \"Thank you, Miss Frou-Frou.\"\n\nDuchess was een mooie witte kat. Ze woonde in een van de mooiste huizen in Parijs met haar kittens, Berlioz, Toulouse en Marie. Hun baasvrouw, Madame Bonfamille, was erg aardig. De katten hadden een heerlijk leven.\n\nDe drie kittens waren beleefd tegen alle dieren. Nadat ze naar huis reden, zeiden ze altijd tegen het paard: \"Dank je wel, juffrouw Frou-Frou.\"", "mp3": "./AristoCats/page 03.mp3", "sentences": [{"text": "Duchess was a beautiful white cat.", "mp3": "./AristoCats/page 03-01.mp3", "text_nl": "Hertogin was een prachtige witte kat."}, {"text": "She lived in one of the finest houses in Paris with her kittens, Berlioz, Toulouse, and Marie.", "text_nl": "Ze woonde in een van de mooiste huizen van Parijs met haar katjes, Berlioz, Toulouse en Marie.", "mp3": "./AristoCats/page 03-02.mp3"}, {"text": "Their owner, Madame Bonfamille, was very kind.", "text_nl": "Hun eigenares, Madame Bonfamille, was erg aardig.", "mp3": "./AristoCats/page 03-03.mp3"}, {"text": "The cats had a wonderful life.", "text_nl": "De katten hadden een wonderbaarlijk leven.", "mp3": "./AristoCats/page 03-04.mp3"}, {"text": "The three kittens were polite to all animals.", "text_nl": "De drie katjes waren beleefd tegen alle dieren.", "mp3": "./AristoCats/page 03-05.mp3"}, {"text": "After they rode home, they always told the horse, \"Thank you, Miss Frou-Frou.\"", "text_nl": "Nadat ze naar huis reden, zeiden ze altijd tegen het paard: \"Dank je wel, juffrouw Frou-Frou.\"", "mp3": "./AristoCats/page 03-06.mp3"}]}, {"jpegname": "page 04.jpeg", "text": "Madame Bonfamille asked an old friend, Georges, to visit.\n\nHe was a lawyer.\n\n\"I want to write my will,\" Madame told him.\n\nFrom a different room, her butler Edgar could hear Madame's words.\n\n\"Her will? I'm going to get all of her money,\" going to be rich.\"\n\nexcitedly. \"I'm going to be rich.\"", "text_nl": "Madame Bonfamille vroeg een oude vriend, Georges, om op bezoek te komen.\n\nHij was advocaat.\n\n\"Ik wil mijn testament schrijven,\" zei Madame tegen hem.\n\nUit een ander vertrek kon haar butler Edgar Madames woorden horen.\n\n\"Haar testament? Ik zal al haar geld krijgen,\" zal ik rijk zijn.\"\n\nriep hij opgewonden. \"Ik zal rijk zijn.\"", "mp3": "./AristoCats/page 04.mp3", "sentences": [{"text": "Madame Bonfamille asked an old friend, Georges, to visit.", "text_nl": "Madame Bonfamille vroeg een oude vriend, Georges, om haar op te zoeken.", "mp3": "./AristoCats/page 04-01.mp3"}, {"text": "He was a lawyer.", "text_nl": "Hij was advocaat.", "mp3": "./AristoCats/page 04-02.mp3"}, {"text": "\"I want to write my will,\" Madame told him.", "text_nl": "\"Ik wil mijn testament schrijven,\" zei Madame tegen hem.", "mp3": "./AristoCats/page 04-03.mp3"}, {"text": "From a different room, her butler Edgar could hear Madame's words.", "text_nl": "Uit een ander vertrek kon haar bediende Edgar de woorden van Madame horen.", "mp3": "./AristoCats/page 04-04.mp3"}, {"text": "\"Her will?", "text_nl": "\"Haar testament?\"", "mp3": "./AristoCats/page 04-05.mp3"}, {"text": "I'm going to get all of her money,\" going to be rich.\"\n\nexcitedly.", "text_nl": "\"Ik ga al haar geld krijgen,\" ga ik rijk worden.\"\n\nopgewonden.", "mp3": "./AristoCats/page 04-06.mp3"}, {"text": "\"I'm going to be rich.\"", "text_nl": "\"Ik ga rijk zijn.\"", "mp3": "./AristoCats/page 04-07.mp3"}]}, {"jpegname": "page 05.jpeg", "text": "\"I want my cats to have my money,\" Madame Bonfamille said. \"My butter Edgar must look after them. He can have the money at the end of the cats' lives.\"\n\nEdgar was not happy. \"I don't want to look after those cats,\" he cried. \"He had an idea. He got some sleeping pills and put them into the cats' milk.", "text_nl": "\"Ik wil dat mijn katten mijn geld krijgen,\" zei Madame Bonfamille. \"Mijn butler Edgar moet voor hen zorgen. Hij kan het geld krijgen aan het einde van het leven van de katten.\"\n\nEdgar was niet blij. \"Ik wil niet voor die katten zorgen,\" riep hij. Hij had een idee. Hij kreeg wat slaappillen en deed ze in de melk van de katten.", "mp3": "./AristoCats/page 05.mp3", "sentences": [{"text": "\"I want my cats to have my money,\" Madame Bonfamille said.", "text_nl": "\"Ik wil dat mijn katten mijn geld krijgen,\" zei Madame Bonfamille.", "mp3": "./AristoCats/page 05-01.mp3"}, {"text": "\"My butter Edgar must look after them.", "text_nl": "\"Mijn boter Edgar moet voor hen zorgen.\"", "mp3": "./AristoCats/page 05-02.mp3"}, {"text": "He can have the money at the end of the cats' lives.\"\n\nEdgar was not happy.", "text_nl": "\"Hij kan het geld krijgen aan het einde van het leven van de katten.\"\n\nEdgar was niet blij.", "mp3": "./AristoCats/page 05-03.mp3"}, {"text": "\"I don't want to look after those cats,\" he cried.", "text_nl": "\"Ik wil niet voor die katten zorgen,\" riep hij uit.", "mp3": "./AristoCats/page 05-04.mp3"}, {"text": "\"He had an idea.", "text_nl": "Hij had een idee.", "mp3": "./AristoCats/page 05-05.mp3"}, {"text": "He got some sleeping pills and put them into the cats' milk.", "text_nl": "Hij haalde wat slaappillen en deed ze in de melk van de katten.", "mp3": "./AristoCats/page 05-06.mp3"}]}, {"jpegname": "page 06.jpeg", "text": "Edgar brought the milk to the cats.\n\"Sleep well!,\" he said. \"I mean, eat well!.\"\nThe cats started to drink their milk.\nAfter a minute, a little mouse come out. Mice are usually afraid of cats, but Duchess and her kittens were\nfriends with all the animals in the house.\n\"Please eat with us Roquefort,\" Duchess told\nthe mouse.", "text_nl": "Edgar bracht de melk naar de katten.\n\"Slaap goed!,\" zei hij. \"Ik bedoel, eet smakelijk!.\"\nDe katten begonnen hun melk te drinken.\nNa een minuut kwam een klein muisje tevoorschijn. Muizen zijn meestal bang voor katten, maar Duchess en haar kittens waren vrienden met alle dieren in het huis.\n\"Alsjeblieft, eet met ons mee Roquefort,\" zei Duchess tegen het muisje.", "mp3": "./AristoCats/page 06.mp3", "sentences": [{"text": "Edgar brought the milk to the cats.", "text_nl": "Edgar bracht de melk naar de katten.", "mp3": "./AristoCats/page 06-01.mp3"}, {"text": "\"Sleep well!,\" he said.", "text_nl": "\"Slaap goed!\", zei hij.", "mp3": "./AristoCats/page 06-02.mp3"}, {"text": "\"I mean, eat well!.\"\nThe cats started to drink their milk.", "text_nl": "\"Eet goed!\"\nDe katten begonnen hun melk te drinken.", "mp3": "./AristoCats/page 06-03.mp3"}, {"text": "After a minute, a little mouse come out.", "text_nl": "Na een minuut komt een klein muisje naar buiten.", "mp3": "./AristoCats/page 06-04.mp3"}, {"text": "Mice are usually afraid of cats, but Duchess and her kittens were\nfriends with all the animals in the house.", "text_nl": "Muizen zijn meestal bang voor katten, maar Hertogin en haar katjes waren vrienden met alle dieren in het huis.", "mp3": "./AristoCats/page 06-05.mp3"}, {"text": "\"Please eat with us Roquefort,\" Duchess told\nthe mouse.", "text_nl": "\"Eet alstublieft met ons mee, Roquefort,\" zei de Hertogin tegen de muis.", "mp3": "./AristoCats/page 06-06.mp3"}]}, {"jpegname": "page 07.jpeg", "text": "The cats went to sleep quickly. Edgar cornered them in a basket to his motorbike outside.\n\nHe had a terrible plan. \"I'm going to take these cats, I'm going to get all of the money in no cats. Madame will...\"\n\nHe rode through the dark streets of the city.", "text_nl": "De katten gingen snel slapen. Edgar drong ze in een mand naar zijn motor buiten.\n\nHij had een verschrikkelijk plan. \"Ik ga deze katten meenemen, ik ga al het geld zonder katten krijgen. Mevrouw zal...\"\n\nHij reed door de donkere straten van de stad.", "mp3": "./AristoCats/page 07.mp3", "sentences": [{"text": "The cats went to sleep quickly.", "text_nl": "De katten gingen snel slapen.", "mp3": "./AristoCats/page 07-01.mp3"}, {"text": "Edgar cornered them in a basket to his motorbike outside.", "text_nl": "Edgar drong hen in een mand naar zijn motorfiets buiten in het nauw.", "mp3": "./AristoCats/page 07-02.mp3"}, {"text": "He had a terrible plan.", "text_nl": "Hij had een verschrikkelijk plan.", "mp3": "./AristoCats/page 07-03.mp3"}, {"text": "\"I'm going to take these cats, I'm going to get all of the money in no cats.", "text_nl": "\"Ik ga deze katten nemen, ik ga al het geld in geen katten krijgen.\"", "mp3": "./AristoCats/page 07-04.mp3"}, {"text": "Madame will...\"\n\nHe rode through the dark streets of the city.", "text_nl": "Mevrouw zal...\"\n\nHij reed door de donkere straten van de stad.", "mp3": "./AristoCats/page 07-05.mp3"}]}, {"jpegname": "page 08.jpeg", "text": "Duchess woke up to the sound of a storm. \"Where am I?\" She looked for her kittens. They were under a bridge.\n\nBut why?\n\n\"I'm afraid,\" said Marie. \"I want to go home.\"\n\nThe family climbed in the basket and watched the rain. What's going to happen to us?\" asked Toulouse. Duchess did not know the answer.", "text_nl": "Hertogin werd wakker van het geluid van een storm. \"Waar ben ik?\" Ze zocht naar haar kittens. Ze waren onder een brug.\n\nMaar waarom?\n\n\"Ik ben bang,\" zei Marie. \"Ik wil naar huis.\"\n\nDe familie klom in de mand en keek naar de regen. \"Wat gaat er met ons gebeuren?\" vroeg Toulouse. Hertogin wist het antwoord niet.", "mp3": "./AristoCats/page 08.mp3", "sentences": [{"text": "Duchess woke up to the sound of a storm.", "text_nl": "Hertogin werd wakker van het geluid van een storm.", "mp3": "./AristoCats/page 08-01.mp3"}, {"text": "\"Where am I?\" She looked for her kittens.", "text_nl": "\"Waar ben ik?\" Ze zocht naar haar katjes.", "mp3": "./AristoCats/page 08-02.mp3"}, {"text": "They were under a bridge.", "text_nl": "Ze waren onder een brug.", "mp3": "./AristoCats/page 08-03.mp3"}, {"text": "But why?", "text_nl": "Maar waarom?", "mp3": "./AristoCats/page 08-04.mp3"}, {"text": "\"I'm afraid,\" said Marie.", "text_nl": "\"Ik ben bang,\" zei Marie.", "mp3": "./AristoCats/page 08-05.mp3"}, {"text": "\"I want to go home.\"\n\nThe family climbed in the basket and watched the rain.", "text_nl": "\"Ik wil naar huis gaan.\"\n\nDe familie klom in de mand en keek naar de regen.", "mp3": "./AristoCats/page 08-06.mp3"}, {"text": "What's going to happen to us?\" asked Toulouse.", "text_nl": "\"Wat gaat er met ons gebeuren?\" vroeg Toulouse.", "mp3": "./AristoCats/page 08-07.mp3"}, {"text": "Duchess did not know the answer.", "text_nl": "De hertogin kende het antwoord niet.", "mp3": "./AristoCats/page 08-08.mp3"}]}, {"jpegname": "page 09.jpeg", "text": "In the morning, Duchess heard the happy sound of a cat's song. It was Thomas O'Malley. He was a cat with no owner and no home.\n\n\"What's the problem?\" O'Malley asked Duchess.\n\n\"I have to go back to Paris,\" she said.\n\n\"I can get you there,\" said O'Malley. Then he saw Duchess's kittens. \"And your family.\" O'Malley liked the kittens.", "text_nl": "In de ochtend hoorde Hertogin het blije geluid van een kattenlied. Het was Thomas O'Malley. Hij was een kat zonder eigenaar en zonder thuis.\n\n\"Wat is het probleem?\" vroeg O'Malley aan Hertogin.\n\n\"Ik moet terug naar Parijs,\" zei ze.\n\n\"Ik kan je daar brengen,\" zei O'Malley. Toen zag hij de kittens van Hertogin. \"En je familie.\" O'Malley mocht de kittens graag.", "mp3": "./AristoCats/page 09.mp3", "sentences": [{"text": "In the morning, Duchess heard the happy sound of a cat's song.", "text_nl": "In de ochtend hoorde Hertogin het vrolijke geluid van een kattendeuntje.", "mp3": "./AristoCats/page 09-01.mp3"}, {"text": "It was Thomas O'Malley.", "text_nl": "Het was Thomas O'Malley.", "mp3": "./AristoCats/page 09-02.mp3"}, {"text": "He was a cat with no owner and no home.", "text_nl": "Hij was een kat zonder eigenaar en zonder thuis.", "mp3": "./AristoCats/page 09-03.mp3"}, {"text": "\"What's the problem?\" O'Malley asked Duchess.", "text_nl": "\"Wat is het probleem?\" vroeg O'Malley aan Duchess.", "mp3": "./AristoCats/page 09-04.mp3"}, {"text": "\"I have to go back to Paris,\" she said.", "text_nl": "\"Ik moet terug naar Parijs,\" zei ze.", "mp3": "./AristoCats/page 09-05.mp3"}, {"text": "\"I can get you there,\" said O'Malley.", "text_nl": "\"Ik kan je daar brengen,\" zei O'Malley.", "mp3": "./AristoCats/page 09-06.mp3"}, {"text": "Then he saw Duchess's kittens.", "text_nl": "Toen zag hij de katjes van Hertogin.", "mp3": "./AristoCats/page 09-07.mp3"}, {"text": "\"And your family.\" O'Malley liked the kittens.", "text_nl": "\"En je familie.\" O'Malley hield van de katjes.", "mp3": "./AristoCats/page 09-08.mp3"}]}, {"jpegname": "page 10.jpeg", "text": "O'Malley waited for the next truck to drive by them. He jumped in front of it and the driver stopped.\n\nBefore the truck started again, the family of cats climbed into the back.\n\nO'Malley sat in the road and called, \"Bye.\"\n\n\"Goodbye,\" cried Marie. But she was not careful and she fell out of the truck.", "text_nl": "O'Malley wachtte tot de volgende vrachtwagen voorbij zou rijden. Hij sprong ervoor en de chauffeur stopte.\n\nVoordat de vrachtwagen weer vertrok, klom de kattenfamilie in de laadklap.\n\nO'Malley zat op de weg en riep: \"Tot ziens.\"\n\n\"Tot ziens,\" riep Marie. Maar ze was niet voorzichtig en viel uit de vrachtwagen.", "mp3": "./AristoCats/page 10.mp3", "sentences": [{"text": "O'Malley waited for the next truck to drive by them.", "text_nl": "O'Malley wachtte tot de volgende vrachtwagen langs hen heen zou rijden.", "mp3": "./AristoCats/page 10-01.mp3"}, {"text": "He jumped in front of it and the driver stopped.", "text_nl": "Hij sprong ervoor en de bestuurder stopte.", "mp3": "./AristoCats/page 10-02.mp3"}, {"text": "Before the truck started again, the family of cats climbed into the back.", "text_nl": "Voordat de vrachtwagen weer vertrok, klom de kattenfamilie in de laadak.", "mp3": "./AristoCats/page 10-03.mp3"}, {"text": "O'Malley sat in the road and called, \"Bye.\"\n\n\"Goodbye,\" cried Marie.", "text_nl": "O'Malley zat op de weg en riep: \"Tot ziens.\"\n\n\"Tot ziens,\" riep Marie.", "mp3": "./AristoCats/page 10-04.mp3"}, {"text": "But she was not careful and she fell out of the truck.", "text_nl": "Maar ze was niet voorzichtig en ze viel uit de vrachtwagen.", "mp3": "./AristoCats/page 10-05.mp3"}]}]};
+
+        let mode = 'page'; // 'page' of 'sentence'
+        let showTranslation = false;
+        let currentPageIndex = 0;
+        let currentSentenceIndex = 0;
+        let sortedItems = [];
+        let allSentences = [];
+
+        const audio = document.getElementById('audio-player');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const playBtn = document.getElementById('play-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        const pageTitle = document.getElementById('page-title');
+        const textContent = document.getElementById('text-content');
+        const modePageBtn = document.getElementById('mode-page');
+        const modeSentenceBtn = document.getElementById('mode-sentence');
+        const transOffBtn = document.getElementById('trans-off');
+        const transOnBtn = document.getElementById('trans-on');
+        const translationContainer = document.getElementById('translation-container');
+        const translationText = document.getElementById('translation-text');
+
+        function getPageNumber(filename) {
+            const match = filename.match(/(\d+)/);
+            return match ? parseInt(match[1]) : 0;
+        }
+
+        function sortItems(items) {
+            return [...items].sort((a, b) => getPageNumber(a.jpegname) - getPageNumber(b.jpegname));
+        }
+
+        function buildAllSentences() {
+            allSentences = [];
+            sortedItems.forEach((item, pageIdx) => {
+                (item.sentences || []).forEach((sentence, sentIdx) => {
+                    allSentences.push({
+                        pageIndex: pageIdx,
+                        sentenceIndex: sentIdx,
+                        text: sentence.text,
+                        text_nl: sentence.text_nl,
+                        mp3: sentence.mp3,
+                        pageName: item.jpegname
+                    });
+                });
+            });
+        }
+
+        function init() {
+            sortedItems = sortItems(DATA.items);
+            buildAllSentences();
+            updateUI();
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            modePageBtn.classList.toggle('active', mode === 'page');
+            modeSentenceBtn.classList.toggle('active', mode === 'sentence');
+
+            if (mode === 'sentence' && allSentences.length > 0) {
+                const firstSentence = allSentences.findIndex(s => s.pageIndex === currentPageIndex);
+                currentSentenceIndex = firstSentence >= 0 ? firstSentence : 0;
+            }
+            stopAudio();
+            updateUI();
+        }
+
+        function setTranslation(show) {
+            showTranslation = show;
+            transOffBtn.classList.toggle('active', !show);
+            transOnBtn.classList.toggle('active', show);
+            updateUI();
+        }
+
+        function updateUI() {
+            if (mode === 'page') {
+                updateUIPage();
+            } else {
+                updateUISentence();
+            }
+        }
+
+        function updateUIPage() {
+            if (sortedItems.length === 0) {
+                pageIndicator.textContent = '-';
+                pageTitle.textContent = '';
+                textContent.textContent = 'Geen paginas gevonden';
+                translationContainer.classList.add('hidden');
+                return;
+            }
+            const item = sortedItems[currentPageIndex];
+            prevBtn.disabled = currentPageIndex === 0;
+            nextBtn.disabled = currentPageIndex === sortedItems.length - 1;
+            playBtn.disabled = !item.mp3;
+            pageIndicator.textContent = 'Pagina ' + (currentPageIndex + 1) + ' / ' + sortedItems.length;
+            pageTitle.textContent = item.jpegname;
+            textContent.textContent = item.text || 'Geen tekst beschikbaar';
+            if (item.mp3) { audio.src = item.mp3; }
+
+            // Vertaling
+            if (showTranslation && item.text_nl) {
+                translationText.textContent = item.text_nl;
+                translationContainer.classList.remove('hidden');
+            } else {
+                translationContainer.classList.add('hidden');
+            }
+        }
+
+        function updateUISentence() {
+            if (allSentences.length === 0) {
+                pageIndicator.textContent = '-';
+                pageTitle.textContent = '';
+                textContent.textContent = 'Geen zinnen gevonden';
+                translationContainer.classList.add('hidden');
+                return;
+            }
+            const sentence = allSentences[currentSentenceIndex];
+            prevBtn.disabled = currentSentenceIndex === 0;
+            nextBtn.disabled = currentSentenceIndex === allSentences.length - 1;
+            playBtn.disabled = !sentence.mp3;
+            pageIndicator.textContent = 'Zin ' + (currentSentenceIndex + 1) + ' / ' + allSentences.length;
+            pageTitle.textContent = sentence.pageName + ' - zin ' + (sentence.sentenceIndex + 1);
+            textContent.innerHTML = '<span class="sentence-highlight">' + sentence.text + '</span>';
+            if (sentence.mp3) { audio.src = sentence.mp3; }
+
+            // Vertaling
+            if (showTranslation && sentence.text_nl) {
+                translationText.textContent = sentence.text_nl;
+                translationContainer.classList.remove('hidden');
+            } else {
+                translationContainer.classList.add('hidden');
+            }
+        }
+
+        function goPrev() {
+            if (mode === 'page') {
+                if (currentPageIndex > 0) { currentPageIndex--; stopAudio(); updateUI(); }
+            } else {
+                if (currentSentenceIndex > 0) { currentSentenceIndex--; stopAudio(); updateUI(); }
+            }
+        }
+
+        function goNext() {
+            if (mode === 'page') {
+                if (currentPageIndex < sortedItems.length - 1) { currentPageIndex++; stopAudio(); updateUI(); }
+            } else {
+                if (currentSentenceIndex < allSentences.length - 1) { currentSentenceIndex++; stopAudio(); updateUI(); }
+            }
+        }
+
+        function togglePlay() { if (audio.paused) { audio.play(); } else { audio.pause(); } }
+        function stopAudio() { audio.pause(); audio.currentTime = 0; updatePlayButton(false); }
+        function updatePlayButton(isPlaying) {
+            if (isPlaying) { playBtn.innerHTML = '&#10074;&#10074; Pauze'; playBtn.classList.add('playing'); }
+            else { playBtn.innerHTML = '&#9658; Play'; playBtn.classList.remove('playing'); }
+        }
+
+        modePageBtn.addEventListener('click', () => setMode('page'));
+        modeSentenceBtn.addEventListener('click', () => setMode('sentence'));
+        transOffBtn.addEventListener('click', () => setTranslation(false));
+        transOnBtn.addEventListener('click', () => setTranslation(true));
+        prevBtn.addEventListener('click', goPrev);
+        nextBtn.addEventListener('click', goNext);
+        playBtn.addEventListener('click', togglePlay);
+        audio.addEventListener('play', () => updatePlayButton(true));
+        audio.addEventListener('pause', () => updatePlayButton(false));
+        audio.addEventListener('ended', () => updatePlayButton(false));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') goPrev();
+            else if (e.key === 'ArrowRight') goNext();
+            else if (e.key === ' ') { e.preventDefault(); if (!playBtn.disabled) togglePlay(); }
+            else if (e.key === 't' || e.key === 'T') setTranslation(!showTranslation);
+        });
+
+        init();
+    </script>
+</body>
+</html>
