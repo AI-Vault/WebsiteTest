@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W08.html" class="week-display" id="week-display">2026-W08</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 8;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Deze AI-agent is ontworpen om niet te ontsporen. (.wired:26-2-2026)</div>
+        <p>Het open-sourceproject IronCurtain van Niels Provos draait agentische AI-assistenten in een geïsoleerde virtuele machine en dwingt hun gedrag af met door de eigenaar opgestelde “constituties”: natuurlijke-taalbeleidsregels die via een LLM worden vertaald naar afdwingbare beveiligingsregels. Het bemiddelt tussen de agent en externe diensten (model context protocol), houdt auditlogs, verfijnt beleid via gebruikersfeedback, is model-onafhankelijk en bedoeld om risico’s zoals dat van OpenClaw (onvoorspelbaar, schadelijk gedrag) te beperken door strikte, deterministische beperkingen. Hoofdonderwerp: IronCurtain; Thema’s: AI-veiligheid, beleidsafgedwongen toegangscontrole, isolatie/VM, LLM-beleidstransformatie, auditing, open-source onderzoek. <a href=https://www.wired.com/story/ironcurtain-ai-agent-security/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Hoe Chinese AI-chatbots zichzelf censureren (.wired:26-2-2026)</div>
+        <p>Hoofdonderwerp: hoe Chinese AI-chatbots zichzelf censureren. Onderzoekers van Stanford en Princeton voerden 145 politiek gevoelige vragen (100 herhalingen) bij vier Chinese en vijf Amerikaanse LLM’s. Chinese modellen weigerden veel vaker te antwoorden (bv. DeepSeek 36%, Baidu Ernie 32% vs GPT/Llama <3%), gaven kortere en onnauwkeurigere antwoorden. Studie probeerde pre-training (censuur in trainingsdata) en post-training (handmatige instructies) te scheiden; resultaten wijzen erop dat ontwikkelaarsinterventies een belangrijke rol spelen, want censuur bleef ook bij Engelse prompts zichtbaar. Problemen: hallucinerende versus intentioneel misleidende antwoorden (bv. foutieve bewering over Liu Xiaobo), moeilijkheden bij automatisch ontcijferen van verborgen instructies, risico op verlies van toegang, hoge rekenkosten en snelle modelvernieuwing. Thema’s: censuur, methodologie, AI-veiligheid en onderzoeksethiek. <a href=https://www.wired.com/story/made-in-china-how-chinese-ai-chatbots-censor-themselves/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Ben jij proactief genoeg voor het AI-tijdperk? (.wired:26-2-2026)</div>
+        <p>Silicon Valley waardeert 'high‑agency' mensen steeds hoger nu AI‑codeeragents routinetaken overnemen: de belangrijkste vaardigheid wordt bepalen wat die agents moeten doen. Notion‑oprichters zoals Akshay Kothari en Simon Last gebruiken meerdere agents; Last werkt als een “super IC” die taken delegeert, reviewt en corrigeert. Startups en investeerders zoeken mensen die automatisering van hun eigen werk omarmen en machines bouwen om sneller features end‑to‑end te leveren (Phoebe‑voorbeeld). Sommige dieptechnische rollen blijven weinig te automatiseren; verantwoordelijkheid blijft bij de indiener ('no slop rule'). Kritiek noemt 'agentic' cultureel problematisch, maar de vraag naar agentic talent stijgt en agents kunnen naar andere sectoren doorstoten. <a href=https://www.wired.com/story/silicon-valley-agentic-individuals-future-of-work/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">OpenAI kondigt grote uitbreiding van kantoor in Londen aan (.wired:26-2-2026)</div>
+        <p>OpenAI zet zijn Londense kantoor om tot het grootste onderzoekscentrum buiten de VS en breidt het onderzoeksteam uit, met nadruk op het aantrekken van talent van Britse universiteiten. Het initiatief plaatst OpenAI in directe concurrentie met Google DeepMind, dat al nauwe banden heeft met Oxford en Cambridge. Londensteams blijven bijdragen aan producten zoals Codex en GPT-5.2, maar krijgen eigenaarschap over onderdelen van modelontwikkeling rond veiligheid, betrouwbaarheid en prestatie-evaluatie. Voorstanders wijzen op meer vraag naar AI-talent op universitaire banenmarkten en mogelijke tweede-orde effecten als medewerkers later eigen labs starten. De uitbreiding valt samen met Britse inspanningen om datacenters en energie-infrastructuur op te schalen. <a href=https://www.wired.com/story/openai-expands-london-office-major-research-hub/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Wie is jouw vader? Een chatbot (.wired:26-2-2026)</div>
+        <p>Het artikel behandelt hoe AI-chatbots steeds vaker worden gebruikt in BDSM: van ChatGPT dat straffen voorstelt tot commerciële platforms zoals Joi AI, Character.AI, Replika en Soulmaite die aangepaste “AI-doms” aanbieden. Voorstanders noemen beschikbaarheid, aanpasbaarheid, veilige verkenning, structuur, taaktoewijzing en zelfs veilige vormen van consensuele non‑consent; sekstarters licentiëren soms hun beeltenis. Tegenstanders waarschuwen dat bots repetitief, hallucinerend of ethisch problematisch kunnen zijn, trauma reproduceren, intimiteit vervangen en mensen in gevaar brengen. Binnen de community bestaan drie kampen: afwijzend, instrumenteel gebruik en volledige afhankelijkheid. Thema’s: machtsoverdracht, consent, veiligheid, authenticiteit en de grenzen van simulatie versus menselijke ervaring. <a href=https://www.wired.com/story/whos-your-daddy-a-chatbot/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">Nieuwe methode kan trainingsefficiëntie van grote taalmodellen verhogen (.mit:26-2-2026)</div>
+        <p>Onderzoekers van MIT en partners ontwikkelden "Taming the Long Tail" (TLT), een systeem dat idle rekenkracht gebruikt om training van reasoning-large language models (LLM) te versnellen. RL-training lijdt aan een rollout-bottleneck (tot ~85% van de tijd) doordat modellen veel kandidaat-antwoorden genereren. TLT traint adaptief een lichte "drafter" tijdens ongebruikte processors en past een adaptieve speculative-decoding engine toe zodat het grotere model alleen verificatie doet. Zo worden onbenutte resources benut, wat trainingssnelheid met 70–210% (tot ~2×) verhoogt zonder nauwkeurigheidsverlies, verlaagt kosten/energie en levert een compacte drafter voor efficiënte inzet. Werk van Qinghao Hu, Shang Yang, Junxian Guo, Song Han e.a.; gepresenteerd op een ACM-conferentie. <a href=https://news.mit.edu/2026/new-method-could-increase-llm-training-efficiency-0226 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Riley Walz, de nar van Silicon Valley, sluit zich aan bij OpenAI. (.wired:25-2-2026)</div>
+        <p>Riley Walz, bekend om virale webstunts zoals Jmail en Find My Parking Cops, neemt een baan bij OpenAI om bij OAI Labs te werken aan nieuwe manieren waarop mensen met AI-systemen samenwerken. OAI Labs, geleid door Joanne Jang, prototypeert verborgen interfaces voor menselijke-AI-interactie. OpenAI wedijvert met Google en Anthropic om vernieuwende gebruiksinterfaces nu ChatGPT massaal wordt gebruikt en ontwikkelaars steeds vaker met code-agents werken. Walz’ projecten leverden juridische en veiligheidsproblemen op—een tool werd afgesloten door San Francisco—en hij kreeg soms bedreigingen toen hij met autoriteiten samenwerkte. Het aannemen van gewaagde makers als Walz past in OpenAI’s strategie om de volgende generatie AI-producten te ontwikkelen. <a href=https://www.wired.com/story/openai-hires-riley-walz/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">OpenClaw-gebruikers zouden naar verluidt anti-botsystemen omzeilen. (.wired:25-2-2026)</div>
+        <p>Gebruikers van de virale AI-agent OpenClaw zouden een open-source tool, Scrapling, gebruiken om anti-botmaatregelen zoals Cloudflare Turnstile te omzeilen. Scrapling (geschreven in Python) automatiseert stealthy webscraping, is meer dan 200.000 keer gedownload en werd op X viral gepromoot. Cloudflare heeft eerdere versies al geblokkeerd en werkt aan patches; CTO Dane Knecht beschrijft een kat-en-muisspel maar zegt dat hun signaalsystemen voorsprong geven. Website-eigenaren voeren strengere blokkades of betaalmodellen in; Cloudflare meldt 416 miljard ongewenste scrapingpogingen geblokkeerd in minder dan een jaar. Scrapling-ontwikkelaar Karim Shoair raakte verwikkeld in een $Scrapling-memecoinpump, trok geld terug en distantieerde zich, terwijl community-accounts promoties verwijderden. Knecht pleit voor een toekomst waarin AI-agents en websites met wederzijdse toestemming samenwerken. <a href=https://www.wired.com/story/openclaw-users-bypass-anti-bot-systems-cloudflare-scrapling/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Gemini kan nu een Uber voor je boeken of via DoorDash een maaltijd op je telefoon bestellen. Zo werkt het. (.wired:25-2-2026)</div>
+        <p>Google’s Gemini op de Galaxy S26 (later ook Pixel 10) kan in een vroege preview taken automatiseren in apps als Uber, Uber Eats, DoorDash en Grubhub in de VS en Zuid‑Korea. Gemini opent apps in een virtueel venster, leest context van schermen of berichten (bijv. groepschat met pizzawensen), navigeert door knoppen en menu’s, vraagt aanvullende details als nodig is en voltooit stappen tot aan de checkout—de gebruiker bevestigt de uiteindelijke betaling. Er zijn ook MCP‑integraties en App Functions voor backend‑uitvoering. Google benadrukt privacy (geen gevoelige apps, data niet voor advertenties, verwijderbaar) en ziet dit als begin van bredere mobiele AI‑automatisering, ook naar XR en andere apparaten. <a href=https://www.wired.com/story/google-gemini-task-automation-galaxy-s26-uber-doordash/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Praat met je eigen Isaac Newton via de hologram-avatars van Ailias. (.wired:25-2-2026)</div>
+        <p>Hoofdonderwerp: Ailias’ interactieve 3D‑hologramavatars van historische figuren
+
+Belangrijke thema's: technologie & educatie; AI‑gegenereerde conversatie; auteursrecht en portretrecht; commerciële toepassingen en prijzen; ethiek en risico’s van misbruik
+
+Samenvatting: Ailias, een bedrijf uit Surrey, UK, maakt levensgrote, converserende hologrammen van vooral historische personages voor musea, evenementen en marketing. De avatars (meer dan 70 beschikbaar) gebruiken open‑source AI en generatieve video, reageren binnen ~2 seconden en combineren praat met herhaalde videoacts (jongleren, dansen). Huur, koop of maatwerk kost duizenden ponden; hedendaagse beroemdheden vermijden ze vanwege juridische rechten. Maatwerkavatars kunnen binnen een maand gemaakt worden met opnamegegevens. Er bestaan ethische richtlijnen, maar het platform biedt duidelijk mogelijkheden voor zowel nuttig gebruik als misbruik. <a href=https://www.wired.com/story/ailias-hologram-avatars/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">Generatieve AI en natuurkunde combineren om persoonlijke voorwerpen te ontwerpen die in de echte wereld functioneren (.mit:25-2-2026)</div>
+        <p>MIT-CSAIL-onderzoekers ontwikkelden PhysiOpt, een systeem dat generatieve AI combineert met fysica-gebaseerde vormoptimalisatie zodat 3D-ontwerpen voor persoonlijke gebruiks- en decorvoorwerpen daadwerkelijk bruikbaar en duurzaam zijn. Gebruikers voeren tekst of een afbeelding, materiaal en gewenste belastingen in; PhysiOpt voert in ~30 s iteratieve finite-element-simulaties uit, genereert spannings-heatmaps en past subtiele geometriewijzigingen toe om stevigheid te garanderen zonder het uiterlijk te verliezen. Het werkt training-vrij met pre-trained shape-priors, is veel sneller dan DiffIPC en leverde voorbeelden zoals een flamingo-drinkglas, steampunk-haken en een giraffentafel. Toekomstig werk richt zich op automatische last-/randvoorwaardepredictie via vision-language-modellen, het verminderen van artefacten en modellering van complexere fabricagebeperkingen. Ondersteund door MIT‑IBM Watson AI Lab en Wistron; gepresenteerd op SIGGRAPH Asia. <a href=https://news.mit.edu/2026/mixing-ai-with-physics-to-create-personal-items-0225 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">AI helpt onderzoekers het grotere plaatje in de celbiologie te zien (.mit:25-2-2026)</div>
+        <p>Onderzoekers van het Broad Institute, MIT en ETH Zürich/PSI ontwikkelden een AI‑framework (“Partially shared multi‑modal embedding”) dat multimodale single‑cellmetingen uitsplitst in gedeelde en modaliteit‑specifieke informatie. In plaats van afzonderlijke autoencoders gebruikt het model een gedeelde representatieruimte plus per‑modaliteitruimtes en een tweefasen trainingsprocedure om te bepalen welke signalen overlappen. Op synthetische en echte datasets identificeert het framework gezamenlijk versus uniek vastgelegde genactiviteit en lokaliseert het welke modaliteit een eiwitmarker (bijv. DNA‑schade) detecteert. Dit vergemakkelijkt experimentplanning, voorspelt welke modaliteiten te meten of te infereren zijn en helpt bij het begrijpen van ziektemechanismen (kanker, Alzheimer, diabetes). Eerste auteur Xinyi Zhang; medeauteur G.V. Shivashankar; senior auteur Caroline Uhler. Gepubliceerd in Nature Computational Science. <a href=https://news.mit.edu/2026/ai-help-researchers-see-bigger-picture-cell-biology-0225 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">Maritieme cyberveiligheid versterken met technologie en beleid (.mit:25-2-2026)</div>
+        <p>Strahinja (Strajo) Janjusevic, afkomstig uit Montenegro en opgeleid aan de U.S. Naval Academy, volgt een master in het MIT Technology and Policy Program. Zijn onderzoek bij LIDS en het MIT Maritime Consortium richt zich op maritieme cybersecurity van cyber-fysische systemen, met name het detecteren van GPS‑spoofing op legacy-schepen via een hybride aanpak: LSTM-autoencoder voor signaalintegriteit gecombineerd met een fysica-gebaseerde voorspeller van vaarroutes. Hij onderzocht ook risico’s van agent‑AI en het Model Context Protocol tijdens een stage bij Vectra AI (preprint over misbruik van MCP). Janjusevic verbindt technische oplossingen met beleidswerk, internationale samenwerking en conferentieorganisatie om maritieme veiligheid, AI-beleid en nationale veiligheid te bevorderen. <a href=https://news.mit.edu/2026/enhancing-maritime-cybersecurity-technology-policy-strahinja-janjusevic-0225 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI zal nooit bewustzijn hebben.
+
+Alternatieven:
+- AI zal nooit bewust zijn. (korter)
+- AI zal nooit bewustzijn bezitten. (iets formeler) (.wired:24-2-2026)</div>
+        <p>Michael Pollan betoogt in A World Appears dat AI veel kan maar geen echte persoon of noodzakelijkerwijs bewustzijn kan hebben. Hij bespreekt de Blake Lemoine‑zaak en het 2023 "Butlin‑rapport" dat stelt dat er geen duidelijke obstakels zijn voor kunstmatig bewustzijn, en uit bezorgdheid over de gevolgen voor menselijke eigenwaarde. Pollan bekritiseert de aannames van computational functionalism en de metafoor "brein = computer": hersenen zijn niet los te scheiden in hardware/software, ze worden fysiek hervormd door ervaring, werken met complexe chemie en oscillaties, en neuronen zijn veel rijker dan transistors. Huidige theorieën (global workspace, IIT e.a.) zijn onbewijsbaar en negeren belichaming en affect. Pollan waarschuwt voor morele dilemma’s als machines kunnen lijden, haalt Frankenstein aan en blijft sceptisch over de plausibiliteit van bewust AI ondanks pleidooien van sommige transhumanisten. <a href=https://www.wired.com/story/book-excerpt-a-world-appears-michael-pollan/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
