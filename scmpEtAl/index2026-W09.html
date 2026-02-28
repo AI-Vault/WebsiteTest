@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="Scmp">Scmp</div>
+        <div class="checkbox checked notranslate" data-source="Straits">Straits</div>
+        <div class="checkbox checked notranslate" data-source="Taipei">Taipei</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/scmpEtAl/index2026-W08.html" class="week-display" id="week-display">2026-W08</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 8;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/scmpEtAl/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Straits">
+        <div class="headline">OpenAI haalt $139 miljard op met Amazon, Nvidia en SoftBank als investeerders (.Straits:28-02-2026)</div>
+        <p>OpenAI kondigde een grote investeringsronde aan ter waarde van naar verluidt US$139 miljard, met deelname van onder meer Amazon, Nvidia en SoftBank. De financiering is bedoeld om toegang tot geavanceerde AI‑chips en rekenkracht veilig te stellen en de concurrentiepositie van OpenAI te verstevigen. Het nieuws benadrukt de schaal en snelheid van kapitaalinjecties in de AI‑sector. citeturn1search3 <a href=https://www.straitstimes.com/business/companies-markets/openai-139-billion-funding-round-draws-investment-from-amazon-nvidia-softbank target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">Taiwanese onderzoekers ontwikkelen AI-platform voor vroege detectie van alvleesklierkanker (.Taipei:27-02-2026)</div>
+        <p>Onderzoekers van NTUH, Academia Sinica en een Litouwse universiteit ontwikkelden een AI‑platform (PanMETAI) dat op basis van metabolomics biomerkers identificeert voor vroege detectie van pancreasadenocarcinoom. Het artikel vermeldt dat de methode in Nature Communications is gepubliceerd en potentieel niet‑invasief en snel kan helpen bij vroegtijdige opsporing. citeturn1search9 <a href=https://www.taipeitimes.com/News/front/archives/2026/02/27/2003852961 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Zuid‑Koreaanse beleggers steken miljoenen in MiniMax en andere Chinese AI‑aandelen (.Scmp:26-02-2026)</div>
+        <p>Zuid‑Koreaanse retailbeleggers hebben in korte tijd honderden miljoenen dollars gekocht in Hongkong‑ en mainland‑aandelen, met sterke focus op AI‑ en chipnamen. Start‑up MiniMax AI trok bijvoorbeeld ongeveer US$21 miljoen aan nettoaankopen, wat de aanhoudende beleggershonger naar Chinese AI‑speelvelden en gerelateerde chips illustreert. citeturn1search7 <a href=https://www.scmp.com/business/markets/article/3344586/south-korean-investors-pour-millions-minimax-other-chinese-ai-and-chip-stocks target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Waar AI woont: de datacenter‑boom in Zuidoost‑Azië (.Straits:26-02-2026)</div>
+        <p>Door de sterke vraag naar AI groeit de bouw van datacenters in Zuidoost‑Azië snel; capaciteit wordt naar verwachting sterk uitgebreid richting 2030. Het artikel bespreekt economische kansen en tegelijk milieu‑uitdagingen zoals grotere energiebehoefte en waterschaarste, en hoe bedrijven (zoals Microsoft) investeren in efficiëntere infrastructuur. De reportage plaatst de technologische expansie in de context van regionale planning en duurzaamheid. citeturn1search11 <a href=https://www.straitstimes.com/asia/se-asia/where-artificial-intelligence-lives-south-east-asias-data-centre-boom target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Nvidia overtreft verwachtingen dankzij AI‑boom (.Straits:26-02-2026)</div>
+        <p>Nvidia rapporteerde een recordkwartaal met een omzet van ongeveer US$68,1 miljard, gedreven door enorme vraag naar zijn AI‑chips (GPU’s). De winst verdubbelde jaar‑op‑jaar, wat onderstreept dat investeringen in AI‑infrastructuur de markt blijven aanjagen en dat Nvidia een centrale rol speelt in de wereldwijde AI‑opbouw. Het resultaat versterkt signalen dat de AI‑economie doorgaat met snelle groei. citeturn1search0 <a href=https://www.straitstimes.com/business/companies-markets/nvidia-smashes-forecasts-with-record-quarter-as-ai-boom-rolls-on/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">Amerikaanse minister van Defensie zet druk op Anthropic over militair gebruik van AI (.Taipei:26-02-2026)</div>
+        <p>US Secretary of Defense Pete Hegseth gaf volgens het verslag Anthropic’s CEO een ultimatum om hun AI‑technologie beschikbaar te maken voor onbeperkt militair gebruik, met mogelijke maatregelen zoals aanwijzing als toeleveringsrisico of gebruik van de Defense Production Act. Het verhaal belicht het spanningsveld tussen commerciële AI‑ethiek en nationale veiligheidsbelangen. citeturn2search3 <a href=https://www.taipeitimes.com/News/world/archives/2026/02/26/2003852925 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Kleiner, sneller, slimmer: Chinese transistor klaar voor toekomstige AI‑chips (.Scmp:25-02-2026)</div>
+        <p>Een Chinees onderzoeksteam presenteerde een zeer kleine en energiezuinige ferro‑elektrische transistor (FeFET) die in‑memory computing mogelijk maakt en daarmee de efficiëntie van AI‑hardware sterk kan verbeteren. De onderzoekers stellen dat deze ontwikkeling neuromorfe benaderingen en grootschalige toepassing van AI‑specifieke chips dichterbij brengt; het werk werd gepubliceerd in Science Advances. citeturn1search4 <a href=https://www.scmp.com/news/china/science/article/3344495/smaller-faster-smarter-chinese-transistor-ready-future-ai-chips target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Singaporese premier doelwit van honderden Chinese‑taalige valse AI‑video's (.Scmp:25-02-2026)</div>
+        <p>Honderden AI‑gegenereerde Chinese‑taalige YouTube‑video's richten zich op premier Lawrence Wong en verspreiden vervalste verhalen over zijn leiderschap en vermeende machtsstrijd. De video's hebben miljoenen weergaven verzameld en vormen volgens experts een omvangrijke desinformatiecampagne, waarbij automatisering en botverkeer als mogelijke factoren worden genoemd. citeturn1search3 <a href=https://www.scmp.com/news/asia/southeast-asia/article/3344522/singapore-prime-minister-attacked-hundreds-chinese-language-fake-ai-videos target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Zuid‑Koreaanse president gebruikt AI‑video om gedeeld fabrieksverleden met Lula te eren (.Scmp:25-02-2026)</div>
+        <p>President Lee Jae Myung publiceerde een AI‑gegenereerde video die archieffoto's van hem en de Braziliaanse president Lula animeert om hun gedeelde verleden als fabrieksarbeiders te benadrukken. De korte clip bereikte miljoenen views en illustreert zowel de creatieve inzet van generatieve AI in diplomatieke communicatie als de vragen rond authenticiteit en presentatie. citeturn1search2 <a href=https://www.scmp.com/week-asia/politics/article/3344566/south-koreas-lee-uses-ai-video-honour-shared-factory-worker-past-brazils-lula target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">Verenigde Staten-AI‑giganten beschuldigen Chinese concurrenten van datadiefstal (.Taipei:25-02-2026)</div>
+        <p>Verschillende Amerikaanse AI‑bedrijven (onder meer Anthropic) hebben volgens het artikel campagnes ontdekt waarbij Chinese bedrijven technieken gebruiken om capaciteit en data van geavanceerde AI‑modellen te ‘distilleren’, wat neerkomt op het afleiden van modellen door outputs te hergebruiken. De beschuldigingen wijzen op een groeiende zorg over intellectueel eigendom en grensoverschrijdende concurrentie in de AI‑sector. citeturn2search8 <a href=https://www.taipeitimes.com/News/biz/archives/2026/02/25/2003852826 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Scmp">
+        <div class="headline">Beschuldigingen van 'distilling' door Anthropic aan Chinese AI‑bedrijven (.Scmp:24-02-2026)</div>
+        <p>Anthropic beschuldigt Chinese AI‑bedrijven (onder meer DeepSeek, Moonshot AI en MiniMax AI) van het ‘distillen’ van zijn Claude‑modellen door gebruik te maken van naar verluidt tienduizenden frauduleuze accounts om miljoenen interacties met Claude te genereren. De zaak zette een debat in gang over de grenzen en ethiek van knowledge distillation en over intellectuele eigendom en trainingstechnieken in de AI‑sector. citeturn1search6 <a href=https://www.scmp.com/tech/tech-war/article/3344499/anthropics-distilling-charges-against-chinese-firms-expose-ai-training-grey-area?module=latest&pgtype=homepage target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Anthropic beschuldigt Chinese concurrenten van massale datadiefstal (.Straits:24-02-2026)</div>
+        <p>Het Amerikaanse AI‑bedrijf Anthropic zei campagnes te hebben ontdekt van meerdere Chinese AI‑bedrijven (onder andere DeepSeek) die op grote schaal probeert capaciteiten te ontlenen aan Anthropic’s Claude‑systeem via technieken als ‘distillation’. Anthropic beschrijft dit als industriële diefstal van intellectuele eigendom, met risico’s voor concurrentie en vertrouwen in de sector. Het artikel behandelt de aantijgingen en mogelijke gevolgen voor AI‑ontwikkeling en beveiliging. citeturn1search5 <a href=https://www.straitstimes.com/business/companies-markets/us-ai-giant-anthropic-accuses-chinese-rivals-of-mass-data-theft// target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">SK Hynix verhoogt productie van AI-geheugenchips (.Taipei:24-02-2026)</div>
+        <p>SK Hynix zegt de productie van geheugenchips voor AI-toepassingen (zoals HBM) op te voeren om te voldoen aan een sterke wereldwijde vraag van datacenters en hyperscalers. Het bericht meldt dat het bedrijf zijn kapitaaluitgaven omhoog ziet gaan om deze productie-uitbreiding mogelijk te maken en dat HBM-chips essentieel blijven voor AI-acceleratoren. citeturn2search6 <a href=https://www.taipeitimes.com/News/biz/archives/2026/02/24/2003852767 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">OpenAI verwacht sterke omzetgroei richting 2030 (.Taipei:23-02-2026)</div>
+        <p>OpenAI voorspelt volgens het bericht dat de omzet tegen 2030 sterk zal stijgen (projecties noemen rond US$280 miljard), aangedreven door abonnementsinkomsten en nieuwe advertentie- en zakelijke modellen. Het artikel bespreekt ook opmerkingen van OpenAI‑leiders over de noodzaak van internationale AI‑veiligheidsnormen en toezicht. citeturn2search9 <a href=https://www.taipeitimes.com/News/biz/archives/2026/02/23/2003852708 target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
