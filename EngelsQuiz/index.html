@@ -387,6 +387,16 @@
     <h2>Categorie 4: Kies am, are, is, was of were</h2>
     <p>Lees de zin goed en kies het juiste werkwoord. Let op het onderwerp én of het <em>nu</em> is of <em>vroeger</em>!</p>
   </div>
+  <div class="menu-card" onclick="startGame(5)">
+    <div class="mc-icon">📅</div>
+    <h2>Categorie 5: Months of the Year</h2>
+    <p>Ken jij alle maanden in het Engels? Vertaal, vul de volgorde aan en raad het maandnummer!</p>
+  </div>
+  <div class="menu-card" onclick="startGame(6)">
+    <div class="mc-icon">🗓️</div>
+    <h2>Categorie 6: Days of the Week</h2>
+    <p>Ken jij alle dagen van de week in het Engels? Vertaal, volgorde en dagnummer!</p>
+  </div>
 </div>
 
 <!-- SCORE -->
@@ -482,6 +492,37 @@
     <div class="tw-row"><span class="tw-label">Present:</span><span class="tw-words">today, right now, at the moment, now</span></div>
     <div class="tw-row"><span class="tw-label">Past:</span><span class="tw-words">yesterday, last week, last night, last year, this morning, ago</span></div>
     <div class="tw-row"><span class="tw-label">Future:</span><span class="tw-words">tomorrow, next week, next year, soon, next month, later</span></div>
+  </div>
+  <div class="vocab-section">
+    <h4>📅 Months of the Year</h4>
+    <table class="vocab-table">
+      <tr><th>#</th><th>English</th><th>Nederlands</th></tr>
+      <tr><td>1</td><td>January</td><td>januari</td></tr>
+      <tr><td>2</td><td>February</td><td>februari</td></tr>
+      <tr><td>3</td><td>March</td><td>maart</td></tr>
+      <tr><td>4</td><td>April</td><td>april</td></tr>
+      <tr><td>5</td><td>May</td><td>mei</td></tr>
+      <tr><td>6</td><td>June</td><td>juni</td></tr>
+      <tr><td>7</td><td>July</td><td>juli</td></tr>
+      <tr><td>8</td><td>August</td><td>augustus</td></tr>
+      <tr><td>9</td><td>September</td><td>september</td></tr>
+      <tr><td>10</td><td>October</td><td>oktober</td></tr>
+      <tr><td>11</td><td>November</td><td>november</td></tr>
+      <tr><td>12</td><td>December</td><td>december</td></tr>
+    </table>
+  </div>
+  <div class="vocab-section">
+    <h4>🗓️ Days of the Week</h4>
+    <table class="vocab-table">
+      <tr><th>#</th><th>English</th><th>Nederlands</th></tr>
+      <tr><td>1</td><td>Monday</td><td>maandag</td></tr>
+      <tr><td>2</td><td>Tuesday</td><td>dinsdag</td></tr>
+      <tr><td>3</td><td>Wednesday</td><td>woensdag</td></tr>
+      <tr><td>4</td><td>Thursday</td><td>donderdag</td></tr>
+      <tr><td>5</td><td>Friday</td><td>vrijdag</td></tr>
+      <tr><td>6</td><td>Saturday</td><td>zaterdag</td></tr>
+      <tr><td>7</td><td>Sunday</td><td>zondag</td></tr>
+    </table>
   </div>
 </div>
 
@@ -684,6 +725,175 @@
     { sentence: 'My dog <span class="blank">_____</span> very scared during the storm last night.',   answer: "was",  explain: 'My dog (it) + last night → was' },
   ];
 
+  // ─── CATEGORY 5: Months of the Year ───
+  const months = [
+    { en: "January",   nl: "januari",   nr: 1 },
+    { en: "February",  nl: "februari",  nr: 2 },
+    { en: "March",     nl: "maart",     nr: 3 },
+    { en: "April",     nl: "april",     nr: 4 },
+    { en: "May",       nl: "mei",       nr: 5 },
+    { en: "June",      nl: "juni",      nr: 6 },
+    { en: "July",      nl: "juli",      nr: 7 },
+    { en: "August",    nl: "augustus",   nr: 8 },
+    { en: "September", nl: "september", nr: 9 },
+    { en: "October",   nl: "oktober",   nr: 10 },
+    { en: "November",  nl: "november",  nr: 11 },
+    { en: "December",  nl: "december",  nr: 12 },
+  ];
+
+  function generateCat5Questions() {
+    const q = [];
+
+    months.forEach(m => {
+      // ── Type A: Engels → Nederlands
+      const wrongNL = months.filter(x => x.nl !== m.nl).map(x => x.nl);
+      q.push({
+        sentence: '<span class="vocab-word">' + m.en + '</span>',
+        dirLabel: '🇬🇧 Engels → Nederlands 🇳🇱',
+        answer: m.nl,
+        options: shuffle([m.nl, ...shuffle(wrongNL).slice(0, 3)]),
+        explain: m.en + ' = ' + m.nl,
+      });
+
+      // ── Type B: Nederlands → Engels
+      const wrongEN = months.filter(x => x.en !== m.en).map(x => x.en);
+      q.push({
+        sentence: '<span class="vocab-word">' + m.nl + '</span>',
+        dirLabel: '🇳🇱 Nederlands → Engels 🇬🇧',
+        answer: m.en,
+        options: shuffle([m.en, ...shuffle(wrongEN).slice(0, 3)]),
+        explain: m.nl + ' = ' + m.en,
+      });
+
+      // ── Type C: Which month comes AFTER ...?
+      const nextIdx = m.nr % 12; // 0-based index of next month
+      const nextMonth = months[nextIdx];
+      const wrongAfter = months.filter(x => x.en !== nextMonth.en).map(x => x.en);
+      q.push({
+        sentence: 'Which month comes <b>after</b> <span class="vocab-word">' + m.en + '</span>?',
+        dirLabel: '📆 Volgorde',
+        answer: nextMonth.en,
+        options: shuffle([nextMonth.en, ...shuffle(wrongAfter).slice(0, 3)]),
+        explain: m.en + ' → ' + nextMonth.en,
+      });
+
+      // ── Type D: Which month comes BEFORE ...?
+      const prevIdx = (m.nr - 2 + 12) % 12; // 0-based index of previous month
+      const prevMonth = months[prevIdx];
+      const wrongBefore = months.filter(x => x.en !== prevMonth.en).map(x => x.en);
+      q.push({
+        sentence: 'Which month comes <b>before</b> <span class="vocab-word">' + m.en + '</span>?',
+        dirLabel: '📆 Volgorde',
+        answer: prevMonth.en,
+        options: shuffle([prevMonth.en, ...shuffle(wrongBefore).slice(0, 3)]),
+        explain: prevMonth.en + ' → ' + m.en,
+      });
+
+      // ── Type E: Which month is number X?
+      q.push({
+        sentence: 'Which month is <b>number ' + m.nr + '</b>?',
+        dirLabel: '🔢 Nummer → maand',
+        answer: m.en,
+        options: shuffle([m.en, ...shuffle(months.filter(x => x.en !== m.en).map(x => x.en)).slice(0, 3)]),
+        explain: 'Month ' + m.nr + ' = ' + m.en,
+      });
+
+      // ── Type F: What number is [month]?
+      const wrongNrs = months.filter(x => x.nr !== m.nr).map(x => String(x.nr));
+      q.push({
+        sentence: '<span class="vocab-word">' + m.en + '</span> is month number...?',
+        dirLabel: '🔢 Maand → nummer',
+        answer: String(m.nr),
+        options: shuffle([String(m.nr), ...shuffle(wrongNrs).slice(0, 3)]),
+        explain: m.en + ' = month ' + m.nr,
+      });
+    });
+
+    return q;
+  }
+
+  // ─── CATEGORY 6: Days of the Week ───
+  const days = [
+    { en: "Monday",    nl: "maandag",    nr: 1 },
+    { en: "Tuesday",   nl: "dinsdag",    nr: 2 },
+    { en: "Wednesday", nl: "woensdag",   nr: 3 },
+    { en: "Thursday",  nl: "donderdag",  nr: 4 },
+    { en: "Friday",    nl: "vrijdag",    nr: 5 },
+    { en: "Saturday",  nl: "zaterdag",   nr: 6 },
+    { en: "Sunday",    nl: "zondag",     nr: 7 },
+  ];
+
+  function generateCat6Questions() {
+    const q = [];
+
+    days.forEach(d => {
+      // Type A: Engels → Nederlands
+      const wrongNL = days.filter(x => x.nl !== d.nl).map(x => x.nl);
+      q.push({
+        sentence: '<span class="vocab-word">' + d.en + '</span>',
+        dirLabel: '🇬🇧 Engels → Nederlands 🇳🇱',
+        answer: d.nl,
+        options: shuffle([d.nl, ...shuffle(wrongNL).slice(0, 3)]),
+        explain: d.en + ' = ' + d.nl,
+      });
+
+      // Type B: Nederlands → Engels
+      const wrongEN = days.filter(x => x.en !== d.en).map(x => x.en);
+      q.push({
+        sentence: '<span class="vocab-word">' + d.nl + '</span>',
+        dirLabel: '🇳🇱 Nederlands → Engels 🇬🇧',
+        answer: d.en,
+        options: shuffle([d.en, ...shuffle(wrongEN).slice(0, 3)]),
+        explain: d.nl + ' = ' + d.en,
+      });
+
+      // Type C: Which day comes AFTER ...?
+      const nextIdx = d.nr % 7; // 0-based index of next day
+      const nextDay = days[nextIdx];
+      const wrongAfter = days.filter(x => x.en !== nextDay.en).map(x => x.en);
+      q.push({
+        sentence: 'Which day comes <b>after</b> <span class="vocab-word">' + d.en + '</span>?',
+        dirLabel: '📆 Volgorde',
+        answer: nextDay.en,
+        options: shuffle([nextDay.en, ...shuffle(wrongAfter).slice(0, 3)]),
+        explain: d.en + ' → ' + nextDay.en,
+      });
+
+      // Type D: Which day comes BEFORE ...?
+      const prevIdx = (d.nr - 2 + 7) % 7; // 0-based index of previous day
+      const prevDay = days[prevIdx];
+      const wrongBefore = days.filter(x => x.en !== prevDay.en).map(x => x.en);
+      q.push({
+        sentence: 'Which day comes <b>before</b> <span class="vocab-word">' + d.en + '</span>?',
+        dirLabel: '📆 Volgorde',
+        answer: prevDay.en,
+        options: shuffle([prevDay.en, ...shuffle(wrongBefore).slice(0, 3)]),
+        explain: prevDay.en + ' → ' + d.en,
+      });
+
+      // Type E: Which day is number X?
+      q.push({
+        sentence: 'Which day is <b>day ' + d.nr + '</b> of the week?',
+        dirLabel: '🔢 Nummer → dag',
+        answer: d.en,
+        options: shuffle([d.en, ...shuffle(days.filter(x => x.en !== d.en).map(x => x.en)).slice(0, 3)]),
+        explain: 'Day ' + d.nr + ' = ' + d.en,
+      });
+
+      // Type F: What number is [day]?
+      const wrongNrs = days.filter(x => x.nr !== d.nr).map(x => String(x.nr));
+      q.push({
+        sentence: '<span class="vocab-word">' + d.en + '</span> is day number...?',
+        dirLabel: '🔢 Dag → nummer',
+        answer: String(d.nr),
+        options: shuffle([String(d.nr), ...shuffle(wrongNrs).slice(0, 3)]),
+        explain: d.en + ' = day ' + d.nr,
+      });
+    });
+
+    return q;
+  }
+
   const TOTAL = 15;
   let activeCategory = 0;
   let order = [];
@@ -707,7 +917,9 @@
     if (cat === 1) pool = cat1Questions;
     else if (cat === 2) pool = cat2Questions;
     else if (cat === 3) pool = generateCat3Questions();
-    else pool = cat4Questions;
+    else if (cat === 4) pool = cat4Questions;
+    else if (cat === 5) pool = generateCat5Questions();
+    else pool = generateCat6Questions();
 
     order = shuffle(pool).slice(0, TOTAL);
     current = 0;
@@ -722,6 +934,8 @@
       2: 'Kies het juiste werkwoord!',
       3: 'Wat is de vertaling?',
       4: 'Kies am, are, is, was of were!',
+      5: 'Ken jij de maanden van het jaar?',
+      6: 'Ken jij de dagen van de week?',
     };
     document.getElementById('subtitle').textContent = subtitles[cat];
 
@@ -730,6 +944,8 @@
       2: '✏️ Categorie 2: Vul het werkwoord in',
       3: '📚 Categorie 3: Woordjes oefenen',
       4: '🧩 Categorie 4: am / are / is / was / were',
+      5: '📅 Categorie 5: Months of the Year',
+      6: '🗓️ Categorie 6: Days of the Week',
     };
     const label = document.getElementById('cat-label');
     label.textContent = catLabels[cat];
@@ -774,8 +990,8 @@
         btn.onclick = () => handleAnswer(opt);
         container.appendChild(btn);
       });
-    } else if (activeCategory === 3) {
-      // Category 3: vocab – 4 options
+    } else if (activeCategory === 3 || activeCategory === 5 || activeCategory === 6) {
+      // Category 3, 5 & 6: vocab / months / days – 4 options
       const icons = ['🅰️', '🅱️', '🅲', '🅳'];
       q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
@@ -816,6 +1032,11 @@
       dirLabel.style.display = 'block';
       document.getElementById('sentence').innerHTML =
         '<span class="vocab-word">' + q.prompt + '</span>';
+    } else if (activeCategory === 5 || activeCategory === 6) {
+      // Months / Days: show per-question direction label
+      dirLabel.textContent = q.dirLabel;
+      dirLabel.style.display = 'block';
+      document.getElementById('sentence').innerHTML = q.sentence;
     } else {
       dirLabel.style.display = 'none';
       document.getElementById('sentence').innerHTML = q.sentence;
