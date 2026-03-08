@@ -312,6 +312,23 @@
     #help-box td { padding: 6px 8px; border-bottom: 1px solid #e2e8f0; color: #4a5568; }
     #help-box tr:last-child td { border-bottom: none; }
 
+    /* Category 4: verb grid */
+    #choices-container.verb-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    #choices-container.verb-grid .choice-btn {
+      flex: 0 0 auto;
+      min-width: 80px;
+      justify-content: center;
+      padding: 14px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
     /* Direction label for cat 3 */
     #direction-label {
       display: none;
@@ -364,6 +381,11 @@
     <div class="mc-icon">📚</div>
     <h2>Categorie 3: Woordjes oefenen</h2>
     <p>Ken jij de vertaling? Soms Engels → Nederlands, soms Nederlands → Engels. Kies het juiste antwoord!</p>
+  </div>
+  <div class="menu-card" onclick="startGame(4)">
+    <div class="mc-icon">🧩</div>
+    <h2>Categorie 4: Kies am, are, is, was of were</h2>
+    <p>Lees de zin goed en kies het juiste werkwoord. Let op het onderwerp én of het <em>nu</em> is of <em>vroeger</em>!</p>
   </div>
 </div>
 
@@ -617,6 +639,51 @@
     return questions;
   }
 
+  // ─── CATEGORY 4: am / are / is / was / were in context ───
+  const cat4Questions = [
+    // ── PRESENT: am ──
+    { sentence: 'I <span class="blank">_____</span> happy today.',                                   answer: "am",   explain: 'I + present → am' },
+    { sentence: 'I <span class="blank">_____</span> not feeling well.',                               answer: "am",   explain: 'I + present → am' },
+    { sentence: 'I <span class="blank">_____</span> in the kitchen right now.',                       answer: "am",   explain: 'I + present → am' },
+    { sentence: 'I <span class="blank">_____</span> your new teacher.',                               answer: "am",   explain: 'I + present → am' },
+    // ── PRESENT: is ──
+    { sentence: 'She <span class="blank">_____</span> my best friend.',                               answer: "is",   explain: 'She + present → is' },
+    { sentence: 'He <span class="blank">_____</span> a good football player.',                        answer: "is",   explain: 'He + present → is' },
+    { sentence: 'My mother <span class="blank">_____</span> a teacher.',                              answer: "is",   explain: 'My mother (she) + present → is' },
+    { sentence: 'It <span class="blank">_____</span> cold outside today.',                            answer: "is",   explain: 'It + present → is' },
+    { sentence: 'Tom <span class="blank">_____</span> very hungry right now.',                        answer: "is",   explain: 'Tom (he) + present → is' },
+    { sentence: 'The dog <span class="blank">_____</span> sleeping on the couch.',                    answer: "is",   explain: 'The dog (it) + present → is' },
+    // ── PRESENT: are ──
+    { sentence: 'We <span class="blank">_____</span> in the classroom.',                              answer: "are",  explain: 'We + present → are' },
+    { sentence: 'They <span class="blank">_____</span> very nice.',                                   answer: "are",  explain: 'They + present → are' },
+    { sentence: 'You <span class="blank">_____</span> very smart.',                                   answer: "are",  explain: 'You + present → are' },
+    { sentence: 'My friends <span class="blank">_____</span> at the park.',                           answer: "are",  explain: 'My friends (they) + present → are' },
+    { sentence: 'We <span class="blank">_____</span> big fans of romantic comedies.',                 answer: "are",  explain: 'We + present → are' },
+    // ── PAST: was ──
+    { sentence: 'My father <span class="blank">_____</span> watching TV last night.',                 answer: "was",  explain: 'My father (he) + last night → was' },
+    { sentence: 'She <span class="blank">_____</span> sick last week.',                               answer: "was",  explain: 'She + last week → was' },
+    { sentence: 'He <span class="blank">_____</span> not happy about the test.',                      answer: "was",  explain: 'He + past → was' },
+    { sentence: 'My brother <span class="blank">_____</span> at home too.',                           answer: "was",  explain: 'My brother (he) + past → was' },
+    { sentence: 'The movie <span class="blank">_____</span> really funny.',                           answer: "was",  explain: 'The movie (it) + past → was' },
+    { sentence: 'It <span class="blank">_____</span> raining all day yesterday.',                     answer: "was",  explain: 'It + yesterday → was' },
+    { sentence: 'I <span class="blank">_____</span> at my grandma\'s house last weekend.',            answer: "was",  explain: 'I + last weekend → was' },
+    { sentence: 'My dad\'s favourite team <span class="blank">_____</span> not very good and they lost.', answer: "was", explain: 'Team (it) + past (lost) → was' },
+    { sentence: 'My brother <span class="blank">_____</span> happy because his favourite team won.',  answer: "was",  explain: 'My brother (he) + past (won) → was' },
+    // ── PAST: were ──
+    { sentence: 'They <span class="blank">_____</span> watching a sports programme.',                 answer: "were", explain: 'They + past → were' },
+    { sentence: 'We <span class="blank">_____</span> at school this morning.',                        answer: "were", explain: 'We + this morning → were' },
+    { sentence: 'The children <span class="blank">_____</span> very tired after the game.',           answer: "were", explain: 'The children (they) + past → were' },
+    { sentence: 'You <span class="blank">_____</span> very brave yesterday.',                         answer: "were", explain: 'You + yesterday → were' },
+    { sentence: 'My brother and sister <span class="blank">_____</span> fighting last night.',        answer: "were", explain: 'Brother and sister (they) + last night → were' },
+    { sentence: 'We <span class="blank">_____</span> on holiday last summer.',                        answer: "were", explain: 'We + last summer → were' },
+    // ── MIX: need context ──
+    { sentence: 'Tomorrow, my mother and I <span class="blank">_____</span> going to watch TV together.', answer: "are", explain: 'My mother and I (we) + tomorrow → are' },
+    { sentence: 'Look! There <span class="blank">_____</span> a cat in the tree!',                   answer: "is",   explain: 'There + a cat (it) + now → is' },
+    { sentence: 'There <span class="blank">_____</span> many children at the party last Saturday.',   answer: "were", explain: 'There + children (they) + last Saturday → were' },
+    { sentence: 'Sarah and Tom <span class="blank">_____</span> best friends.',                       answer: "are",  explain: 'Sarah and Tom (they) + present → are' },
+    { sentence: 'My dog <span class="blank">_____</span> very scared during the storm last night.',   answer: "was",  explain: 'My dog (it) + last night → was' },
+  ];
+
   const TOTAL = 15;
   let activeCategory = 0;
   let order = [];
@@ -639,7 +706,8 @@
     let pool;
     if (cat === 1) pool = cat1Questions;
     else if (cat === 2) pool = cat2Questions;
-    else pool = generateCat3Questions();
+    else if (cat === 3) pool = generateCat3Questions();
+    else pool = cat4Questions;
 
     order = shuffle(pool).slice(0, TOTAL);
     current = 0;
@@ -653,6 +721,7 @@
       1: 'Welke tijd is het: past, present of future?',
       2: 'Kies het juiste werkwoord!',
       3: 'Wat is de vertaling?',
+      4: 'Kies am, are, is, was of were!',
     };
     document.getElementById('subtitle').textContent = subtitles[cat];
 
@@ -660,6 +729,7 @@
       1: '🔍 Categorie 1: Herken de tijd',
       2: '✏️ Categorie 2: Vul het werkwoord in',
       3: '📚 Categorie 3: Woordjes oefenen',
+      4: '🧩 Categorie 4: am / are / is / was / were',
     };
     const label = document.getElementById('cat-label');
     label.textContent = catLabels[cat];
@@ -677,6 +747,7 @@
   function buildChoices(q) {
     const container = document.getElementById('choices-container');
     container.innerHTML = '';
+    container.className = activeCategory === 4 ? 'verb-grid' : '';
 
     if (activeCategory === 1) {
       const tenses = [
@@ -703,7 +774,7 @@
         btn.onclick = () => handleAnswer(opt);
         container.appendChild(btn);
       });
-    } else {
+    } else if (activeCategory === 3) {
       // Category 3: vocab – 4 options
       const icons = ['🅰️', '🅱️', '🅲', '🅳'];
       q.options.forEach((opt, i) => {
@@ -712,6 +783,17 @@
         btn.dataset.value = opt;
         btn.innerHTML = `<span class="icon">${icons[i] || '▪️'}</span><span class="label">${opt}</span>`;
         btn.onclick = () => handleAnswer(opt);
+        container.appendChild(btn);
+      });
+    } else {
+      // Category 4: am / are / is / was / were
+      const verbs = ['am', 'are', 'is', 'was', 'were'];
+      verbs.forEach(v => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.dataset.value = v;
+        btn.innerHTML = `<span class="label">${v}</span>`;
+        btn.onclick = () => handleAnswer(v);
         container.appendChild(btn);
       });
     }
