@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engels Quiz – Groep 7</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    header h1 { font-size: 2rem; color: #2d3748; }
+    header p  { font-size: 1rem; color: #4a5568; margin-top: 6px; }
+
+    /* Menu */
+    #menu {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 3px solid transparent;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-color: #667eea;
+    }
+
+    .menu-card .mc-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .menu-card h2 { font-size: 1.2rem; color: #2d3748; margin-bottom: 6px; }
+    .menu-card p  { font-size: 0.9rem; color: #718096; line-height: 1.4; }
+
+    /* Score bar */
+    #scorebar {
+      display: none;
+      gap: 20px;
+      background: white;
+      border-radius: 16px;
+      padding: 10px 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    #scorebar span { display: flex; align-items: center; gap: 6px; }
+    .score-good { color: #38a169; }
+    .score-bad  { color: #e53e3e; }
+
+    /* Category label */
+    #cat-label {
+      display: none;
+      background: #667eea;
+      color: white;
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Progress bar */
+    #progress-wrap {
+      display: none;
+      width: 100%;
+      max-width: 560px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      height: 10px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    /* Card */
+    #card {
+      display: none;
+      background: white;
+      border-radius: 24px;
+      padding: 36px 32px 28px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    #question-number {
+      font-size: 0.85rem;
+      color: #a0aec0;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    #sentence {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    #sentence .time-signal {
+      color: #d69e2e;
+      font-style: italic;
+    }
+
+    #sentence .blank {
+      display: inline-block;
+      min-width: 100px;
+      border-bottom: 3px dashed #667eea;
+      color: #667eea;
+      font-weight: 800;
+      padding: 0 4px;
+    }
+
+    #hint {
+      font-size: 0.9rem;
+      color: #718096;
+      margin-bottom: 28px;
+      min-height: 20px;
+    }
+
+    /* Dynamic choice buttons */
+    #choices-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .choice-btn {
+      padding: 16px;
+      border: 2.5px solid #e2e8f0;
+      border-radius: 14px;
+      background: #f7fafc;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      background: #ebf4ff;
+      border-color: #667eea;
+      transform: translateY(-2px);
+    }
+
+    .choice-btn .icon { font-size: 1.4rem; }
+    .choice-btn .label { flex: 1; text-align: left; }
+    .choice-btn .example { font-size: 0.78rem; color: #a0aec0; font-weight: 400; }
+
+    .choice-btn.correct {
+      background: #f0fff4;
+      border-color: #38a169;
+      color: #276749;
+    }
+
+    .choice-btn.wrong {
+      background: #fff5f5;
+      border-color: #e53e3e;
+      color: #c53030;
+    }
+
+    .choice-btn.show-correct {
+      background: #f0fff4;
+      border-color: #38a169;
+      color: #276749;
+    }
+
+    /* Feedback */
+    #feedback {
+      margin-top: 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      min-height: 24px;
+    }
+
+    #feedback.good { color: #38a169; }
+    #feedback.bad  { color: #e53e3e; }
+
+    /* Next button */
+    #next-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(102,126,234,0.4);
+    }
+
+    #next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+    }
+
+    /* End screen */
+    #end-screen {
+      display: none;
+      background: white;
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    #end-screen .trophy { font-size: 4rem; margin-bottom: 16px; }
+    #end-screen h2 { font-size: 1.8rem; color: #2d3748; margin-bottom: 8px; }
+    #end-screen .result-text { font-size: 1.1rem; color: #4a5568; margin-bottom: 24px; }
+    #end-screen .big-score {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #667eea;
+      margin-bottom: 4px;
+    }
+
+    .end-btn {
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+      box-shadow: 0 4px 14px rgba(102,126,234,0.4);
+    }
+
+    .end-btn:hover { opacity: 0.9; }
+
+    .end-btn.secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      box-shadow: none;
+    }
+
+    .end-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+    /* Help card */
+    #help-toggle {
+      margin-top: 24px;
+      background: none;
+      border: 2px solid #667eea;
+      color: #667eea;
+      padding: 8px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    #help-box {
+      display: none;
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      max-width: 560px;
+      width: 100%;
+      margin-top: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    #help-box h3 { color: #2d3748; margin-bottom: 12px; font-size: 1rem; }
+    #help-box table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    #help-box th { background: #ebf4ff; color: #4a5568; padding: 8px; text-align: left; border-radius: 4px; }
+    #help-box td { padding: 6px 8px; border-bottom: 1px solid #e2e8f0; color: #4a5568; }
+    #help-box tr:last-child td { border-bottom: none; }
+
+    /* Direction label for cat 3 */
+    #direction-label {
+      display: none;
+      font-size: 0.85rem;
+      color: #667eea;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    #sentence .vocab-word {
+      color: #667eea;
+      font-size: 1.8rem;
+    }
+
+    /* Vocab help table */
+    #help-box .vocab-section { margin-top: 16px; }
+    #help-box .vocab-section h4 { color: #2d3748; margin-bottom: 8px; font-size: 0.95rem; }
+    #help-box .vocab-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    #help-box .vocab-table th { background: #fefcbf; color: #744210; padding: 6px 8px; text-align: left; }
+    #help-box .vocab-table td { padding: 5px 8px; border-bottom: 1px solid #e2e8f0; color: #4a5568; }
+
+    #help-box .time-words { margin-top: 16px; }
+    #help-box .time-words h4 { color: #2d3748; margin-bottom: 8px; font-size: 0.95rem; }
+    #help-box .tw-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: baseline; }
+    #help-box .tw-label { font-weight: 700; min-width: 70px; font-size: 0.85rem; }
+    #help-box .tw-words { font-size: 0.85rem; color: #718096; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌍 Engels Quiz – Groep 7</h1>
+  <p id="subtitle">Kies een oefening!</p>
+</header>
+
+<!-- MENU -->
+<div id="menu">
+  <div class="menu-card" onclick="startGame(1)">
+    <div class="mc-icon">🔍</div>
+    <h2>Categorie 1: Herken de tijd</h2>
+    <p>Je ziet een zin met het werkwoord erbij. Kies of het <strong>past</strong>, <strong>present</strong> of <strong>future</strong> is.</p>
+  </div>
+  <div class="menu-card" onclick="startGame(2)">
+    <div class="mc-icon">✏️</div>
+    <h2>Categorie 2: Vul het werkwoord in</h2>
+    <p>Het werkwoord ontbreekt! Gebruik het signaalwoord (bijv. <em>yesterday</em>, <em>tomorrow</em>) om het juiste werkwoord te kiezen.</p>
+  </div>
+  <div class="menu-card" onclick="startGame(3)">
+    <div class="mc-icon">📚</div>
+    <h2>Categorie 3: Woordjes oefenen</h2>
+    <p>Ken jij de vertaling? Soms Engels → Nederlands, soms Nederlands → Engels. Kies het juiste antwoord!</p>
+  </div>
+</div>
+
+<!-- SCORE -->
+<div id="scorebar">
+  <span>✅ <span id="correct-count" class="score-good">0</span> goed</span>
+  <span>❌ <span id="wrong-count" class="score-bad">0</span> fout</span>
+</div>
+
+<div id="cat-label"></div>
+
+<div id="progress-wrap">
+  <div id="progress-bar" style="width: 0%"></div>
+</div>
+
+<!-- QUESTION CARD -->
+<div id="card">
+  <div id="question-number"></div>
+  <div id="direction-label"></div>
+  <div id="sentence"></div>
+  <div id="hint"></div>
+  <div id="choices-container"></div>
+  <div id="feedback"></div>
+  <button id="next-btn" onclick="nextQuestion()">Volgende →</button>
+</div>
+
+<!-- END SCREEN -->
+<div id="end-screen">
+  <div class="trophy" id="trophy-icon">🏆</div>
+  <h2 id="end-title">Goed gedaan!</h2>
+  <div class="big-score" id="end-score"></div>
+  <div class="result-text" id="end-text"></div>
+  <div class="end-buttons">
+    <button class="end-btn" onclick="restartSame()">🔄 Opnieuw spelen</button>
+    <button class="end-btn secondary" onclick="backToMenu()">← Terug naar menu</button>
+  </div>
+</div>
+
+<button id="help-toggle" onclick="toggleHelp()">📖 Hulpkaart</button>
+<div id="help-box">
+  <h3>📌 Verb "to be" – overzicht</h3>
+  <table>
+    <tr><th>Subject</th><th>Present</th><th>Past</th><th>Future</th></tr>
+    <tr><td>I</td><td>am</td><td>was</td><td>am going to be</td></tr>
+    <tr><td>He / She / It</td><td>is</td><td>was</td><td>is going to be</td></tr>
+    <tr><td>We / You / They</td><td>are</td><td>were</td><td>are going to be</td></tr>
+  </table>
+  <div class="vocab-section">
+    <h4>📚 Woordenlijst</h4>
+    <table class="vocab-table">
+      <tr><th>Engels</th><th>Nederlands</th></tr>
+      <tr><td>one</td><td>een</td></tr>
+      <tr><td>fine</td><td>mooi</td></tr>
+      <tr><td>finer</td><td>mooier</td></tr>
+      <tr><td>finest</td><td>mooiste</td></tr>
+      <tr><td>their</td><td>hun</td></tr>
+      <tr><td>there</td><td>daar</td></tr>
+      <tr><td>kind</td><td>aardig</td></tr>
+      <tr><td>polite</td><td>beleefd</td></tr>
+      <tr><td>to ride</td><td>rijden</td></tr>
+      <tr><td>rode</td><td>reden</td></tr>
+      <tr><td>they</td><td>zij</td></tr>
+      <tr><td>his</td><td>zijn (bezittelijk)</td></tr>
+      <tr><td>to be</td><td>zijn (werkwoord)</td></tr>
+      <tr><td>to ask</td><td>vragen</td></tr>
+      <tr><td>lawyer</td><td>advocaat</td></tr>
+      <tr><td>to write</td><td>opschrijven</td></tr>
+      <tr><td>me</td><td>mij</td></tr>
+      <tr><td>my</td><td>mijn</td></tr>
+      <tr><td>must</td><td>moeten</td></tr>
+      <tr><td>I want</td><td>ik wil</td></tr>
+      <tr><td>mouse</td><td>muis</td></tr>
+      <tr><td>to carry</td><td>dragen</td></tr>
+      <tr><td>terrible</td><td>verschrikkelijk</td></tr>
+      <tr><td>liked</td><td>hield van</td></tr>
+      <tr><td>to drive</td><td>rijden</td></tr>
+      <tr><td>called</td><td>riep</td></tr>
+      <tr><td>to walk</td><td>lopen</td></tr>
+      <tr><td>to wait</td><td>wachten</td></tr>
+      <tr><td>to watch</td><td>kijken</td></tr>
+      <tr><td>to paint</td><td>schilderen</td></tr>
+      <tr><td>may</td><td>mogen</td></tr>
+      <tr><td>king</td><td>koning</td></tr>
+      <tr><td>money</td><td>geld</td></tr>
+      <tr><td>poor</td><td>arm</td></tr>
+      <tr><td>to answer</td><td>antwoorden</td></tr>
+      <tr><td>clothes</td><td>kleren</td></tr>
+      <tr><td>to look</td><td>kijken</td></tr>
+      <tr><td>looked</td><td>keek</td></tr>
+    </table>
+  </div>
+  <div class="time-words">
+    <h4>📅 Signaalwoorden</h4>
+    <div class="tw-row"><span class="tw-label">Present:</span><span class="tw-words">today, right now, at the moment, now</span></div>
+    <div class="tw-row"><span class="tw-label">Past:</span><span class="tw-words">yesterday, last week, last night, last year, this morning, ago</span></div>
+    <div class="tw-row"><span class="tw-label">Future:</span><span class="tw-words">tomorrow, next week, next year, soon, next month, later</span></div>
+  </div>
+</div>
+
+<script>
+  // ─── CATEGORY 1: Herken de tijd ───
+  const cat1Questions = [
+    { sentence: "I <b>am</b> happy.",              answer: "present", explain: '"am" is present tense.' },
+    { sentence: "She <b>is</b> at school.",         answer: "present", explain: '"is" is present tense.' },
+    { sentence: "He <b>is</b> tired.",              answer: "present", explain: '"is" is present tense.' },
+    { sentence: "We <b>are</b> late.",              answer: "present", explain: '"are" is present tense.' },
+    { sentence: "They <b>are</b> friends.",         answer: "present", explain: '"are" is present tense.' },
+    { sentence: "You <b>are</b> very kind.",        answer: "present", explain: '"are" is present tense.' },
+    { sentence: "Tom <b>is</b> hungry.",            answer: "present", explain: '"is" is present tense.' },
+    { sentence: "Sarah <b>is</b> at home.",         answer: "present", explain: '"is" is present tense.' },
+    { sentence: "It <b>is</b> cold outside.",       answer: "present", explain: '"is" is present tense.' },
+    { sentence: "I <b>am</b> your teacher.",        answer: "present", explain: '"am" is present tense.' },
+
+    { sentence: "I <b>was</b> late.",               answer: "past", explain: '"was" is past tense.' },
+    { sentence: "She <b>was</b> happy.",            answer: "past", explain: '"was" is past tense.' },
+    { sentence: "He <b>was</b> sick yesterday.",    answer: "past", explain: '"was" is past tense.' },
+    { sentence: "We <b>were</b> at school.",        answer: "past", explain: '"were" is past tense.' },
+    { sentence: "They <b>were</b> tired.",          answer: "past", explain: '"were" is past tense.' },
+    { sentence: "You <b>were</b> very brave.",      answer: "past", explain: '"were" is past tense.' },
+    { sentence: "Tom <b>was</b> late this morning.",answer: "past", explain: '"was" is past tense.' },
+    { sentence: "Sarah <b>was</b> at the park.",    answer: "past", explain: '"was" is past tense.' },
+    { sentence: "It <b>was</b> very hot.",          answer: "past", explain: '"was" is past tense.' },
+    { sentence: "I <b>was</b> at home last night.", answer: "past", explain: '"was" is past tense.' },
+
+    { sentence: "I <b>am going to be</b> late.",          answer: "future", explain: '"am going to be" is future tense.' },
+    { sentence: "She <b>is going to be</b> happy.",       answer: "future", explain: '"is going to be" is future tense.' },
+    { sentence: "He <b>is going to be</b> at school.",    answer: "future", explain: '"is going to be" is future tense.' },
+    { sentence: "We <b>are going to be</b> friends.",     answer: "future", explain: '"are going to be" is future tense.' },
+    { sentence: "They <b>are going to be</b> tired.",     answer: "future", explain: '"are going to be" is future tense.' },
+    { sentence: "You <b>are going to be</b> so proud.",   answer: "future", explain: '"are going to be" is future tense.' },
+    { sentence: "Tom <b>is going to be</b> a doctor.",    answer: "future", explain: '"is going to be" is future tense.' },
+    { sentence: "Sarah <b>is going to be</b> there.",     answer: "future", explain: '"is going to be" is future tense.' },
+    { sentence: "It <b>is going to be</b> a great day.",  answer: "future", explain: '"is going to be" is future tense.' },
+    { sentence: "I <b>am going to be</b> ready soon.",    answer: "future", explain: '"am going to be" is future tense.' },
+  ];
+
+  // ─── CATEGORY 2: Vul het werkwoord in ───
+  const cat2Questions = [
+    // I - present
+    { sentence: 'Right now, I <span class="blank">_____</span> happy.',          answer: "am",                options: ["am", "was", "am going to be"],   explain: '"Right now" = present → I am' },
+    { sentence: 'Today, I <span class="blank">_____</span> at school.',          answer: "am",                options: ["am", "was", "am going to be"],   explain: '"Today" = present → I am' },
+    { sentence: 'At the moment, I <span class="blank">_____</span> very tired.', answer: "am",                options: ["am", "was", "am going to be"],   explain: '"At the moment" = present → I am' },
+    // I - past
+    { sentence: 'Yesterday, I <span class="blank">_____</span> late.',           answer: "was",               options: ["am", "was", "am going to be"],   explain: '"Yesterday" = past → I was' },
+    { sentence: 'Last night, I <span class="blank">_____</span> at home.',       answer: "was",               options: ["am", "was", "am going to be"],   explain: '"Last night" = past → I was' },
+    { sentence: 'Last week, I <span class="blank">_____</span> sick.',           answer: "was",               options: ["am", "was", "am going to be"],   explain: '"Last week" = past → I was' },
+    // I - future
+    { sentence: 'Tomorrow, I <span class="blank">_____</span> ready.',           answer: "am going to be",    options: ["am", "was", "am going to be"],   explain: '"Tomorrow" = future → I am going to be' },
+    { sentence: 'Next week, I <span class="blank">_____</span> at the park.',    answer: "am going to be",    options: ["am", "was", "am going to be"],   explain: '"Next week" = future → I am going to be' },
+    { sentence: 'Soon, I <span class="blank">_____</span> a great swimmer.',     answer: "am going to be",    options: ["am", "was", "am going to be"],   explain: '"Soon" = future → I am going to be' },
+
+    // He/She - present
+    { sentence: 'Right now, she <span class="blank">_____</span> happy.',          answer: "is",                options: ["is", "was", "is going to be"],   explain: '"Right now" = present → she is' },
+    { sentence: 'Today, he <span class="blank">_____</span> at school.',           answer: "is",                options: ["is", "was", "is going to be"],   explain: '"Today" = present → he is' },
+    { sentence: 'At the moment, Tom <span class="blank">_____</span> very hungry.',answer: "is",                options: ["is", "was", "is going to be"],   explain: '"At the moment" = present → Tom is' },
+    // He/She - past
+    { sentence: 'Yesterday, she <span class="blank">_____</span> tired.',          answer: "was",               options: ["is", "was", "is going to be"],   explain: '"Yesterday" = past → she was' },
+    { sentence: 'Last year, he <span class="blank">_____</span> very small.',      answer: "was",               options: ["is", "was", "is going to be"],   explain: '"Last year" = past → he was' },
+    { sentence: 'This morning, Sarah <span class="blank">_____</span> late.',      answer: "was",               options: ["is", "was", "is going to be"],   explain: '"This morning" = past → Sarah was' },
+    // He/She - future
+    { sentence: 'Tomorrow, she <span class="blank">_____</span> at the party.',    answer: "is going to be",    options: ["is", "was", "is going to be"],   explain: '"Tomorrow" = future → she is going to be' },
+    { sentence: 'Next month, Tom <span class="blank">_____</span> ten years old.', answer: "is going to be",    options: ["is", "was", "is going to be"],   explain: '"Next month" = future → Tom is going to be' },
+    { sentence: 'Soon, he <span class="blank">_____</span> a doctor.',             answer: "is going to be",    options: ["is", "was", "is going to be"],   explain: '"Soon" = future → he is going to be' },
+
+    // We/You/They - present
+    { sentence: 'Right now, we <span class="blank">_____</span> at school.',       answer: "are",               options: ["are", "were", "are going to be"], explain: '"Right now" = present → we are' },
+    { sentence: 'Today, they <span class="blank">_____</span> very happy.',        answer: "are",               options: ["are", "were", "are going to be"], explain: '"Today" = present → they are' },
+    { sentence: 'At the moment, you <span class="blank">_____</span> the best!',   answer: "are",               options: ["are", "were", "are going to be"], explain: '"At the moment" = present → you are' },
+    // We/You/They - past
+    { sentence: 'Yesterday, we <span class="blank">_____</span> at the zoo.',      answer: "were",              options: ["are", "were", "are going to be"], explain: '"Yesterday" = past → we were' },
+    { sentence: 'Last week, they <span class="blank">_____</span> on holiday.',    answer: "were",              options: ["are", "were", "are going to be"], explain: '"Last week" = past → they were' },
+    { sentence: 'Last night, you <span class="blank">_____</span> very brave.',    answer: "were",              options: ["are", "were", "are going to be"], explain: '"Last night" = past → you were' },
+    // We/You/They - future
+    { sentence: 'Tomorrow, we <span class="blank">_____</span> friends.',          answer: "are going to be",   options: ["are", "were", "are going to be"], explain: '"Tomorrow" = future → we are going to be' },
+    { sentence: 'Next year, they <span class="blank">_____</span> in high school.',answer: "are going to be",   options: ["are", "were", "are going to be"], explain: '"Next year" = future → they are going to be' },
+    { sentence: 'Soon, you <span class="blank">_____</span> so proud!',            answer: "are going to be",   options: ["are", "were", "are going to be"], explain: '"Soon" = future → you are going to be' },
+  ];
+
+  // ─── CATEGORY 3: Woordjes oefenen ───
+  const vocabPairs = [
+    // Blad 1
+    { en: "one",       nl: "een" },
+    { en: "fine",      nl: "mooi" },
+    { en: "finer",     nl: "mooier" },
+    { en: "finest",    nl: "mooiste" },
+    { en: "their",     nl: "hun" },
+    { en: "there",     nl: "daar" },
+    { en: "kind",      nl: "aardig" },
+    { en: "polite",    nl: "beleefd" },
+    { en: "to ride",   nl: "rijden" },
+    { en: "rode",      nl: "reden" },
+    { en: "they",      nl: "zij" },
+    { en: "his",       nl: "zijn (bezittelijk)" },
+    { en: "to be",     nl: "zijn (werkwoord)" },
+    { en: "to ask",    nl: "vragen" },
+    { en: "lawyer",    nl: "advocaat" },
+    { en: "to write",  nl: "opschrijven" },
+    { en: "me",        nl: "mij" },
+    { en: "my",        nl: "mijn" },
+    { en: "must",      nl: "moeten" },
+    // Blad 2
+    { en: "I want",    nl: "ik wil" },
+    { en: "mouse",     nl: "muis" },
+    { en: "to carry",  nl: "dragen" },
+    { en: "terrible",  nl: "verschrikkelijk" },
+    { en: "liked",     nl: "hield van" },
+    { en: "to drive",  nl: "rijden" },
+    { en: "called",    nl: "riep" },
+    { en: "to walk",   nl: "lopen" },
+    { en: "to wait",   nl: "wachten" },
+    { en: "to watch",  nl: "kijken" },
+    { en: "to paint",  nl: "schilderen" },
+    { en: "may",       nl: "mogen" },
+    { en: "king",      nl: "koning" },
+    { en: "money",     nl: "geld" },
+    { en: "poor",      nl: "arm" },
+    { en: "to answer", nl: "antwoorden" },
+    { en: "clothes",   nl: "kleren" },
+    { en: "to look",   nl: "kijken" },
+    { en: "looked",    nl: "keek" },
+  ];
+
+  function generateCat3Questions() {
+    const questions = [];
+    vocabPairs.forEach(pair => {
+      // Engels → Nederlands
+      const wrongNL = vocabPairs
+        .filter(p => p.nl !== pair.nl)
+        .map(p => p.nl);
+      const pickedNL = shuffle(wrongNL).slice(0, 3);
+      questions.push({
+        direction: 'en→nl',
+        prompt: pair.en,
+        answer: pair.nl,
+        options: shuffle([pair.nl, ...pickedNL]),
+        explain: pair.en + ' = ' + pair.nl,
+      });
+      // Nederlands → Engels
+      const wrongEN = vocabPairs
+        .filter(p => p.en !== pair.en)
+        .map(p => p.en);
+      const pickedEN = shuffle(wrongEN).slice(0, 3);
+      questions.push({
+        direction: 'nl→en',
+        prompt: pair.nl,
+        answer: pair.en,
+        options: shuffle([pair.en, ...pickedEN]),
+        explain: pair.nl + ' = ' + pair.en,
+      });
+    });
+    return questions;
+  }
+
+  const TOTAL = 15;
+  let activeCategory = 0;
+  let order = [];
+  let current = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let answered = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startGame(cat) {
+    activeCategory = cat;
+    let pool;
+    if (cat === 1) pool = cat1Questions;
+    else if (cat === 2) pool = cat2Questions;
+    else pool = generateCat3Questions();
+
+    order = shuffle(pool).slice(0, TOTAL);
+    current = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    answered = false;
+
+    document.getElementById('menu').style.display = 'none';
+
+    const subtitles = {
+      1: 'Welke tijd is het: past, present of future?',
+      2: 'Kies het juiste werkwoord!',
+      3: 'Wat is de vertaling?',
+    };
+    document.getElementById('subtitle').textContent = subtitles[cat];
+
+    const catLabels = {
+      1: '🔍 Categorie 1: Herken de tijd',
+      2: '✏️ Categorie 2: Vul het werkwoord in',
+      3: '📚 Categorie 3: Woordjes oefenen',
+    };
+    const label = document.getElementById('cat-label');
+    label.textContent = catLabels[cat];
+    label.style.display = 'inline-block';
+
+    document.getElementById('scorebar').style.display = 'flex';
+    document.getElementById('progress-wrap').style.display = 'block';
+    document.getElementById('card').style.display = 'block';
+    document.getElementById('end-screen').style.display = 'none';
+
+    updateScore();
+    showQuestion();
+  }
+
+  function buildChoices(q) {
+    const container = document.getElementById('choices-container');
+    container.innerHTML = '';
+
+    if (activeCategory === 1) {
+      const tenses = [
+        { key: 'past',    icon: '⏪', label: 'Past',    sub: '(verleden tijd)' },
+        { key: 'present', icon: '⏺',  label: 'Present', sub: '(tegenwoordige tijd)' },
+        { key: 'future',  icon: '⏩', label: 'Future',  sub: '(toekomende tijd)' },
+      ];
+      tenses.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.dataset.value = t.key;
+        btn.innerHTML = `<span class="icon">${t.icon}</span><span class="label">${t.label} <span class="example">${t.sub}</span></span>`;
+        btn.onclick = () => handleAnswer(t.key);
+        container.appendChild(btn);
+      });
+    } else if (activeCategory === 2) {
+      const icons = ['🅰️', '🅱️', '🅲'];
+      const shuffledOptions = shuffle(q.options);
+      shuffledOptions.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.dataset.value = opt;
+        btn.innerHTML = `<span class="icon">${icons[i] || '▪️'}</span><span class="label">${opt}</span>`;
+        btn.onclick = () => handleAnswer(opt);
+        container.appendChild(btn);
+      });
+    } else {
+      // Category 3: vocab – 4 options
+      const icons = ['🅰️', '🅱️', '🅲', '🅳'];
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.dataset.value = opt;
+        btn.innerHTML = `<span class="icon">${icons[i] || '▪️'}</span><span class="label">${opt}</span>`;
+        btn.onclick = () => handleAnswer(opt);
+        container.appendChild(btn);
+      });
+    }
+  }
+
+  function showQuestion() {
+    answered = false;
+    const q = order[current];
+    document.getElementById('question-number').textContent = `Vraag ${current + 1} van ${TOTAL}`;
+
+    const dirLabel = document.getElementById('direction-label');
+
+    if (activeCategory === 3) {
+      // Show direction and vocab word
+      if (q.direction === 'en→nl') {
+        dirLabel.textContent = '🇬🇧 Engels → Nederlands 🇳🇱';
+      } else {
+        dirLabel.textContent = '🇳🇱 Nederlands → Engels 🇬🇧';
+      }
+      dirLabel.style.display = 'block';
+      document.getElementById('sentence').innerHTML =
+        '<span class="vocab-word">' + q.prompt + '</span>';
+    } else {
+      dirLabel.style.display = 'none';
+      document.getElementById('sentence').innerHTML = q.sentence;
+    }
+
+    document.getElementById('hint').textContent = '';
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = '';
+    document.getElementById('next-btn').style.display = 'none';
+
+    buildChoices(q);
+
+    const pct = (current / TOTAL) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  }
+
+  function handleAnswer(chosen) {
+    if (answered) return;
+    answered = true;
+    const q = order[current];
+    const correct = q.answer;
+
+    const buttons = document.querySelectorAll('#choices-container .choice-btn');
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (chosen === correct) {
+      correctCount++;
+      buttons.forEach(btn => {
+        if (btn.dataset.value === chosen) btn.classList.add('correct');
+      });
+      document.getElementById('feedback').textContent = '🎉 Goed zo!';
+      document.getElementById('feedback').className = 'good';
+    } else {
+      wrongCount++;
+      buttons.forEach(btn => {
+        if (btn.dataset.value === chosen)  btn.classList.add('wrong');
+        if (btn.dataset.value === correct) btn.classList.add('show-correct');
+      });
+      document.getElementById('feedback').innerHTML = '❌ Helaas! Het juiste antwoord is: <strong>' + correct + '</strong>';
+      document.getElementById('feedback').className = 'bad';
+    }
+
+    document.getElementById('hint').textContent = q.explain;
+    updateScore();
+    document.getElementById('next-btn').style.display = 'inline-block';
+    document.getElementById('next-btn').textContent =
+      current === TOTAL - 1 ? 'Bekijk resultaat 🏁' : 'Volgende →';
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current >= TOTAL) {
+      showEnd();
+    } else {
+      showQuestion();
+    }
+  }
+
+  function updateScore() {
+    document.getElementById('correct-count').textContent = correctCount;
+    document.getElementById('wrong-count').textContent = wrongCount;
+  }
+
+  function showEnd() {
+    document.getElementById('card').style.display = 'none';
+    document.getElementById('direction-label').style.display = 'none';
+    document.getElementById('progress-bar').style.width = '100%';
+
+    const pct = Math.round((correctCount / TOTAL) * 100);
+    let trophy, title, text;
+
+    if (pct === 100) {
+      trophy = '🌟'; title = 'Perfect! Alle goed!';
+      text = 'Je bent een echte Engelse kampioen!';
+    } else if (pct >= 80) {
+      trophy = '🥇'; title = 'Heel goed!';
+      text = 'Je kent de woordjes bijna allemaal!';
+    } else if (pct >= 60) {
+      trophy = '🥈'; title = 'Goed gedaan!';
+      text = 'Oefen nog een keer en je wordt nog beter!';
+    } else if (pct >= 40) {
+      trophy = '🥉'; title = 'Blijf oefenen!';
+      text = 'Gebruik de hulpkaart en probeer het nog een keer!';
+    } else {
+      trophy = '💪'; title = 'Niet opgeven!';
+      text = 'Kijk de hulpkaart goed door en probeer opnieuw!';
+    }
+
+    document.getElementById('trophy-icon').textContent = trophy;
+    document.getElementById('end-title').textContent = title;
+    document.getElementById('end-score').textContent = correctCount + ' / ' + TOTAL;
+    document.getElementById('end-text').textContent = text;
+    document.getElementById('end-screen').style.display = 'block';
+  }
+
+  function restartSame() {
+    startGame(activeCategory);
+  }
+
+  function backToMenu() {
+    document.getElementById('end-screen').style.display = 'none';
+    document.getElementById('card').style.display = 'none';
+    document.getElementById('scorebar').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('cat-label').style.display = 'none';
+    document.getElementById('direction-label').style.display = 'none';
+    document.getElementById('menu').style.display = 'flex';
+    document.getElementById('subtitle').textContent = 'Kies een oefening!';
+  }
+
+  function toggleHelp() {
+    const box = document.getElementById('help-box');
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+</body>
+</html>
