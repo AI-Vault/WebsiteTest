@@ -397,6 +397,11 @@
     <h2>Categorie 6: Days of the Week</h2>
     <p>Ken jij alle dagen van de week in het Engels? Vertaal, volgorde en dagnummer!</p>
   </div>
+  <div class="menu-card" onclick="startGame(7)">
+    <div class="mc-icon">❓</div>
+    <h2>Categorie 7: Question Words</h2>
+    <p>Who, What, Where, When, Why of How? Kies het juiste vraagwoord bij elke zin!</p>
+  </div>
 </div>
 
 <!-- SCORE -->
@@ -522,6 +527,18 @@
       <tr><td>5</td><td>Friday</td><td>vrijdag</td></tr>
       <tr><td>6</td><td>Saturday</td><td>zaterdag</td></tr>
       <tr><td>7</td><td>Sunday</td><td>zondag</td></tr>
+    </table>
+  </div>
+  <div class="vocab-section">
+    <h4>❓ Question Words</h4>
+    <table class="vocab-table">
+      <tr><th>Question Word</th><th>Nederlands</th><th>Gebruik</th></tr>
+      <tr><td><strong>Who</strong></td><td>wie</td><td>over een persoon</td></tr>
+      <tr><td><strong>What</strong></td><td>wat</td><td>over een ding of feit</td></tr>
+      <tr><td><strong>Where</strong></td><td>waar</td><td>over een plaats</td></tr>
+      <tr><td><strong>When</strong></td><td>wanneer</td><td>over een tijd</td></tr>
+      <tr><td><strong>Why</strong></td><td>waarom</td><td>over een reden</td></tr>
+      <tr><td><strong>How</strong></td><td>hoe</td><td>over een manier</td></tr>
     </table>
   </div>
 </div>
@@ -894,6 +911,34 @@
     return q;
   }
 
+  // ─── CATEGORY 7: Question Words (Who, What, Where, When, Why, How) ───
+  const cat7Questions = [
+    // ── Who ──
+    { sentence: '<span class="blank">_____</span> is your teacher?',           answer: "Who",   explain: 'Who = wie → over een persoon' },
+    { sentence: '<span class="blank">_____</span> are you playing with?',      answer: "Who",   explain: 'Who = wie → over een persoon' },
+    { sentence: '<span class="blank">_____</span> left the door open?',        answer: "Who",   explain: 'Who = wie → over een persoon' },
+    // ── Where ──
+    { sentence: '<span class="blank">_____</span> do you live?',               answer: "Where", explain: 'Where = waar → over een plaats' },
+    { sentence: '<span class="blank">_____</span> do you go on holiday?',      answer: "Where", explain: 'Where = waar → over een plaats' },
+    { sentence: '<span class="blank">_____</span> did you find it?',           answer: "Where", explain: 'Where = waar → over een plaats' },
+    // ── Why ──
+    { sentence: '<span class="blank">_____</span> do you want to go there?',   answer: "Why",   explain: 'Why = waarom → vraagt naar een reden' },
+    { sentence: '<span class="blank">_____</span> do you like horse riding?',  answer: "Why",   explain: 'Why = waarom → vraagt naar een reden' },
+    { sentence: '<span class="blank">_____</span> did you call him?',          answer: "Why",   explain: 'Why = waarom → vraagt naar een reden' },
+    // ── What ──
+    { sentence: '<span class="blank">_____</span> is your name?',              answer: "What",  explain: 'What = wat → vraagt naar een ding/feit' },
+    { sentence: '<span class="blank">_____</span> are you doing?',             answer: "What",  explain: 'What = wat → vraagt naar een ding/feit' },
+    { sentence: '<span class="blank">_____</span> did you find?',              answer: "What",  explain: 'What = wat → vraagt naar een ding/feit' },
+    // ── When ──
+    { sentence: '<span class="blank">_____</span> is your birthday?',          answer: "When",  explain: 'When = wanneer → vraagt naar een tijd' },
+    { sentence: '<span class="blank">_____</span> do you have PE?',            answer: "When",  explain: 'When = wanneer → vraagt naar een tijd' },
+    { sentence: '<span class="blank">_____</span> does recess start?',         answer: "When",  explain: 'When = wanneer → vraagt naar een tijd' },
+    // ── How ──
+    { sentence: '<span class="blank">_____</span> do you spell your name?',    answer: "How",   explain: 'How = hoe → vraagt naar een manier' },
+    { sentence: '<span class="blank">_____</span> do you play this game?',     answer: "How",   explain: 'How = hoe → vraagt naar een manier' },
+    { sentence: '<span class="blank">_____</span> did he do that?',            answer: "How",   explain: 'How = hoe → vraagt naar een manier' },
+  ];
+
   const TOTAL = 15;
   let activeCategory = 0;
   let order = [];
@@ -919,7 +964,8 @@
     else if (cat === 3) pool = generateCat3Questions();
     else if (cat === 4) pool = cat4Questions;
     else if (cat === 5) pool = generateCat5Questions();
-    else pool = generateCat6Questions();
+    else if (cat === 6) pool = generateCat6Questions();
+    else pool = cat7Questions;
 
     order = shuffle(pool).slice(0, TOTAL);
     current = 0;
@@ -936,6 +982,7 @@
       4: 'Kies am, are, is, was of were!',
       5: 'Ken jij de maanden van het jaar?',
       6: 'Ken jij de dagen van de week?',
+      7: 'Kies het juiste vraagwoord!',
     };
     document.getElementById('subtitle').textContent = subtitles[cat];
 
@@ -946,6 +993,7 @@
       4: '🧩 Categorie 4: am / are / is / was / were',
       5: '📅 Categorie 5: Months of the Year',
       6: '🗓️ Categorie 6: Days of the Week',
+      7: '❓ Categorie 7: Question Words',
     };
     const label = document.getElementById('cat-label');
     label.textContent = catLabels[cat];
@@ -963,7 +1011,7 @@
   function buildChoices(q) {
     const container = document.getElementById('choices-container');
     container.innerHTML = '';
-    container.className = activeCategory === 4 ? 'verb-grid' : '';
+    container.className = (activeCategory === 4 || activeCategory === 7) ? 'verb-grid' : '';
 
     if (activeCategory === 1) {
       const tenses = [
@@ -999,6 +1047,17 @@
         btn.dataset.value = opt;
         btn.innerHTML = `<span class="icon">${icons[i] || '▪️'}</span><span class="label">${opt}</span>`;
         btn.onclick = () => handleAnswer(opt);
+        container.appendChild(btn);
+      });
+    } else if (activeCategory === 7) {
+      // Category 7: question words
+      const qwords = ['Who', 'What', 'Where', 'When', 'Why', 'How'];
+      qwords.forEach(w => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.dataset.value = w;
+        btn.innerHTML = `<span class="label">${w}</span>`;
+        btn.onclick = () => handleAnswer(w);
         container.appendChild(btn);
       });
     } else {
