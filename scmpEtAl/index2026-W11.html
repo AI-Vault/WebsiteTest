@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="Scmp">Scmp</div>
+        <div class="checkbox checked notranslate" data-source="Straits">Straits</div>
+        <div class="checkbox checked notranslate" data-source="Taipei">Taipei</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/scmpEtAl/index2026-W10.html" class="week-display" id="week-display">2026-W10</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 10;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/scmpEtAl/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="Taipei">
+        <div class="headline">OpenAI-topfunctionaris stapt op vanwege Pentagon-deal (.Taipei:09-03-2026)</div>
+        <p>De hoofdverantwoordelijke voor robotica en consumentenhardware bij OpenAI, Caitlin Kalinowski, heeft ontslag genomen uit onvrede over een contract van het bedrijf met het Amerikaanse ministerie van Defensie dat inzet van de technologie voor oorlog en binnenlandse surveillance mogelijk maakt. Haar vertrek volgt op kritiek dat het contract te weinig waarborgen bood; OpenAI’s CEO kondigde daarna aan het contract aan te passen om gebruik voor ‘domestic surveillance’ van Amerikaanse personen te beperken. <a href=https://www.taipeitimes.com/News/world/archives/2026/03/09/2003853514 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="Straits">
+        <div class="headline">Singapore start nationale AI‑strategie voor bedrijven en werknemers (.Straits:09-03-2026)</div>
+        <p>Gevonden binnen periode 02-03-2026 t/m 09-03-2026. Premier Lawrence Wong leidt een interministeriële aanpak om AI‑missies op nationale schaal uit te voeren in vier sleutelsectoren (geavanceerde maakindustrie, financiën, gezondheidszorg, connectiviteit/logistiek). The Straits Times constateert dat veel projecten nog pilotniveau hebben; opschaling vereist heldere regelgeving, privacy‑ en validatiestandaarden, en mechanismen voor transparantie en aansprakelijkheid alvorens brede economische voordelen zichtbaar worden. <a href=https://www.straitstimes.com/tech/singapores-national-ai-push-what-does-it-mean-for-businesses-workers// target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
