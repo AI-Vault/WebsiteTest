@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verkeersborden Galerij</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-color: #f8fafc;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-secondary: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.15), transparent 25%);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 500px;
+            transition: transform 0.3s ease;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            flex: 1;
+            margin-bottom: 2rem;
+            gap: 2rem;
+        }
+
+        .image-container {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1rem;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
+            z-index: -1;
+            border-radius: 22px;
+            opacity: 0.5;
+            filter: blur(8px);
+        }
+
+        img.sign-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .desc-container {
+            width: 100%;
+            max-width: 600px;
+            height: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            transform: translateY(20px);
+            background: rgba(255,255,255,0.85); /* Wit laagje voor leesbaarheid in dark mode */
+            border-radius: 16px;
+            padding: 0;
+        }
+
+        .desc-container.active {
+            height: auto;
+            min-height: 120px;
+            opacity: 1;
+            transform: translateY(0);
+            padding: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent-secondary);
+        }
+
+        img.desc-img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        img.sign-img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button.btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+        
+        button.btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button:disabled {
+            background: #475569;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.7;
+        }
+
+        .instruction {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .counter {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* SVG Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    
+        .desc-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #1e293b;
+            font-weight: 500;
+            text-align: center;
+        }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Verkeersborden Scanner</h1>
+            <p class="subtitle">Oefen je kennis</p>
+        </header>
+
+        <div class="card">
+            <div class="content-area">
+                <div class="image-container">
+                    <img id="signDisplay" class="sign-img" src="" alt="Verkeersbord">
+                </div>
+                
+                <div id="descContainer" class="desc-container">
+                    <p id="descText" class="desc-text"></p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="prevBtn" class="btn-secondary" onclick="prevSign()">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                    Vorige
+                </button>
+                <button id="descBtn" class="btn-primary" onclick="toggleDescription()">
+                    <span id="descBtnText">Naar Beschrijving</span>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </button>
+                <button id="nextBtn" class="btn-secondary" onclick="nextSign()">
+                    Volgende
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+            
+            <p class="instruction" id="instructionText">Bekijk het bord en bedenk wat het betekent. Klik dan op 'Naar Beschrijving'.</p>
+
+            <div class="counter" id="counterDisplay">1 / 45</div>
+        </div>
+    </div>
+
+    <script>
+        // Array met de opgeschoonde verkeersborden
+        const descriptionsData = {
+            "bord_19.png": "Er komt verkeer tegemoet rijden. Je mag hier niet lopen.",
+            "bord_24.png": "Je mag hier niet je fiets parkeren. Je mag hier ook geen scooter parkeren. Je mag hier niet verder fietsen als er iemand tegemoet komt rijden.",
+            "bord_53.png": "Je mag niet links afslaan. Kijk, hier is een doorgang waar jij eerst mag als er iemand tegemoet komt rijden.",
+            "bord_52.png": "Er kunnen kinderen oversteken. Pas op, er wordt aan de weg gewerkt. Pas op, de weg wordt smaller.",
+            "bord_13.png": "Je moet hier lopen. Je moet hier het voetpad opgaan. Je mag hier ook skaten, skelteren en steppen. Je moet hier fietsen. Je moet hier het fietspad opgaan.",
+            "bord_30.png": "Je moet hier links of rechts afslaan als je fietst. Je mag niet rechtdoor rijden. Je moet hier rechts voorbij rijden.",
+            "bord_47.png": "Op het onderbord staat wat gevaarlijk is. Pas op, een scherpe bocht naar rechts. Pas op, een steile helling.",
+            "bord_20.png": "Je mag hier niet de straat van deze kant in fietsen. Dit is een eenrichtingsstraat. Er komt wel verkeer tegemoet rijden. Je mag hier niet lopen.",
+            "bord_57.png": "Kijk, hier is een eenrichtingsstraat. Er mag geen verkeer tegemoet komen rijden. Kijk, hier is een kruising.",
+            "bord_49.png": "De weg wordt smaller. Pas op, gevaar. Op het onderbord staat wat gevaarlijk is. Pas op, een scherpe bocht naar rechts.",
+            "bord_3.png": "Je moet hier rechts afslaan als je fietst. Je mag niet rechtdoor of linksaf als je fietst.",
+            "bord_31.png": "Je mag hier niet fietsen. Als je verder wil, moet je gaan lopen met je fiets aan je hand. Je mag hier niet fietsen. Je mag hier ook niet met een scooter rijden.",
+            "bord_25.png": "LET OP! Een schuine rode lijn geeft het einde aan van een 'Je moet hier...' bord. Je mag hier niet...",
+            "bord_11.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang geven aan de andere bestuurders die uit een zijweg van links en/of rechts komen rijden. Bij dit verkeersbord staan altijd haaientanden op het wegdek.",
+            "bord_48.png": "Kijk, hier is een doodlopende weg. Kijk, hier is de bebouwde kom.",
+            "bord_4.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang krijgen van andere bestuurders die uit een zijweg van links en/of rechts komen rijden.",
+            "bord_27.png": "Je mag hier niet fietsen. Je mag hier ook niet met een scooter of tractor rijden. Je mag hier niet met de auto rijden. Je mag hier wel rijden.",
+            "bord_51.png": "Er wordt aan de weg gewerkt. Pas op, de weg wordt smaller. Pas op, gevaar. Op het onderbord staat wat gevaarlijk is.",
+            "bord_7.png": "Je moet hier de richting van de pijlen volgen als je fietst op de rotonde. Je moet hier rechtdoor rijden. Je mag niet linksaf of rechtsaf als je fietst.",
+            "bord_44.png": "Kijk, einde bebouwde kom. Kijk, hier is een fietsstraat. Hier mag je fietsen, maar je moet wel rekening met auto's houden. LET OP! Een schuine rode lijn geeft het einde aan.",
+            "bord_50.png": "Kijk, hier is een parkeerplaats. Kijk, hier is een doodlopende weg.",
+            "bord_54.png": "Gelijkwaardige kruising. Je moet hier extra goed uitkijken. Pas op, er kunnen kinderen oversteken. Pas op, er wordt aan de weg gewerkt.",
+            "bord_8.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang krijgen van andere bestuurders die uit een zijweg van links en/of rechts komen rijden. Einde voorrangsweg.",
+            "bord_29.png": "Je mag hier niet fietsen. Je mag hier ook niet met een scooter rijden. Je mag hier niet fietsen. Je mag hier ook niet met een scooter of tractor rijden.",
+            "bord_12.png": "Je moet hier fietsen. Je moet hier het fietspad opgaan. Je mag hier ook lopen als er geen voetpad is. Je moet hier het fiets-/bromfietspad opgaan. Op dit pad mogen ook scooters rijden.",
+            "bord_14.png": "Als je bestuurder bent en op deze weg rijdt, moet je stoppen voor de stopstreep, ook als er geen andere bestuurders aankomen. Op deze plaats moet je naar links en/of rechts kijken en voorrang geven aan de andere bestuurders die uit een zijweg van links en/of rechts komen rijden, voordat je verder gaat.",
+            "bord_5.png": "Je moet hier rechtdoor rijden. Je mag niet linksaf of rechtsaf als je fietst. Je moet hier rechts afslaan als je fietst.",
+            "bord_26.png": "Je mag hier niet met de auto rijden. Je mag hier wel rijden met de fiets. Je mag hier niet je fiets parkeren.",
+            "bord_46.png": "Scherpe bocht naar rechts. Pas op, een steile helling. Pas op, een steile afdaling.",
+            "bord_9.png": "Je moet hier paardrijden. Je moet hier de richting van de pijlen volgen als je fietst op de rotonde.",
+            "bord_21.png": "Je mag hier niet deze straat inrijden. Als je fietst moet je stappen en verder gaan lopen met je fiets aan de hand.",
+            "bord_45.png": "Een steile helling. Pas op, een steile afdaling. Pas op, slecht wegdek.",
+            "bord_43.png": "Een steile afdaling. Pas op, slecht wegdek. Pas op, een spoorwegovergang.",
+            "bord_32.png": "Je moet hier rechtdoor of rechts afslaan als je fietst. Je mag hier niet linksaf als je fietst. Je moet hier links of rechts afslaan als je fietst.",
+            "bord_0.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang krijgen van andere bestuurders die uit een zijweg van links en/of rechts komen rijden.",
+            "bord_10.png": "Je moet hier het fiets-/bromfietspad opgaan. Op dit pad mogen ook scooters rijden. Je moet hier paardrijden.",
+            "bord_18.png": "Je mag niemand hinderen. Kijk, hier is een oversteekplaats voor voetgangers (zebrapad).",
+            "bord_6.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang krijgen van andere bestuurders die uit een zijweg van links en/of rechts komen rijden. Einde voorrangsweg.",
+            "bord_28.png": "Je moet hier rechts voorbij rijden. LET OP! Een schuine rode lijn...",
+            "bord_56.png": "De pijl wijst naar boven. Pas op, een gevaarlijke kruising. Je moet hier extra goed uitkijken. Pas op, er kunnen kinderen oversteken.",
+            "bord_2.png": "Als je bestuurder bent en op deze weg rijdt, moet je voorrang krijgen van andere bestuurders die uit een zijweg van links en/of rechts komen rijden.",
+            "bord_55.png": "Kijk, hier is een kruising waar je rechtsaf moet slaan. Je mag niet links afslaan. Kijk, hier is een doorgang waar jij eerst mag als er iemand tegemoet komt.",
+            "bord_22.png": "Je mag hier niet verder fietsen als er iemand tegemoet komt rijden.",
+            "bord_42.png": "Slecht wegdek. Pas op, een spoorwegovergang. Pas op, er zijn werkzaamheden."
+        };
+        const images = [
+            "bord_0.png", "bord_2.png", "bord_3.png", "bord_4.png", "bord_5.png",
+            "bord_6.png", "bord_7.png", "bord_8.png", "bord_9.png", "bord_10.png",
+            "bord_11.png", "bord_12.png", "bord_13.png", "bord_14.png", "bord_18.png",
+            "bord_19.png", "bord_20.png", "bord_21.png", "bord_22.png", "bord_24.png",
+            "bord_25.png", "bord_26.png", "bord_27.png", "bord_28.png", "bord_29.png",
+            "bord_30.png", "bord_31.png", "bord_32.png", "bord_41.png", "bord_42.png",
+            "bord_43.png", "bord_44.png", "bord_45.png", "bord_46.png", "bord_47.png",
+            "bord_48.png", "bord_49.png", "bord_50.png", "bord_51.png", "bord_52.png",
+            "bord_53.png", "bord_54.png", "bord_55.png", "bord_56.png", "bord_57.png"
+        ];
+
+        let currentIndex = 0;
+        let isDescriptionShowing = false;
+
+        const imgElement = document.getElementById('signDisplay');
+        const descContainer = document.getElementById('descContainer');
+        const counterDisplay = document.getElementById('counterDisplay');
+        const prevBtn = document.getElementById('prevBtn');
+        const descBtn = document.getElementById('descBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const descBtnText = document.getElementById('descBtnText');
+        const instructionText = document.getElementById('instructionText');
+
+        function updateDisplay() {
+            // Animatie reset
+            imgElement.classList.remove('active');
+            isDescriptionShowing = false;
+            descContainer.classList.remove('active');
+            
+            descBtnText.textContent = "Toon Beschrijving";
+            instructionText.style.opacity = "1";
+            
+            setTimeout(() => {
+                const currentSignName = images[currentIndex];
+                imgElement.src = `verkeersborden/${currentSignName}`;
+                
+                const descTextEl = document.getElementById('descText');
+                if (descriptionsData[currentSignName]) {
+                    descTextEl.textContent = descriptionsData[currentSignName];
+                } else {
+                    descTextEl.textContent = 'Geen beschrijving gevonden.';
+                }
+                
+                imgElement.onload = () => {
+                    imgElement.classList.add('active');
+                };
+                
+                counterDisplay.textContent = `${currentIndex + 1} / ${images.length}`;
+                
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === images.length - 1;
+            }, 150);
+        }
+        
+        function toggleDescription() {
+            isDescriptionShowing = !isDescriptionShowing;
+            if (isDescriptionShowing) {
+                descContainer.classList.add('active');
+                descBtnText.textContent = "Verberg Beschrijving";
+                instructionText.style.opacity = "0";
+            } else {
+                descContainer.classList.remove('active');
+                descBtnText.textContent = "Toon Beschrijving";
+                instructionText.style.opacity = "1";
+            }
+        }
+
+        function nextSign() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                updateDisplay();
+            }
+        }
+
+        function prevSign() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+            }
+        }
+
+        // Init
+        updateDisplay();
+        
+        // Keyboard navigatie
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSign();
+            if (e.key === 'ArrowLeft') prevSign();
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                toggleDescription();
+            }
+        });
+    </script>
+</body>
+</html>
