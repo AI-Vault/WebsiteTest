@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W12.html" class="week-display" id="week-display">2026-W12</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 12;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Ontmoet de goden van AI-oorlogsvoering
+
+Alternatieven:
+- Maak kennis met de goden van AI-oorlogsvoering
+- Ontmoet de goden van oorlogsvoering met AI
+- Ontmoet de goden van oorlogsvoering met kunstmatige intelligentie (.wired:23-3-2026)</div>
+        <p>Project Maven’s ontwikkeling en opschaling binnen het Pentagon: van interne controverse naar breed ingezet AI‑doelsysteem. Het fragment beschrijft hoe kolonel Drew Cukor en later viceadmiraal Trey Whitworth Maven Smart System (Palantir) bouwden en promootten voor automatische target recognition en geospatiale datavergaring. Maven werd gebruikt in Oekraïne, het Midden‑Oosten en tegen Iran, verkortte kill chains drastisch en verspreidde zich naar CENTCOM, NORAD, NORTHCOM, SOUTHCOM en grens‑/drugtaken. Kernonderwerpen: militarisering en normalisering van AI, automatisering van dodelijke beslissingen, verantwoordelijkheid/rekenschap, gebrek aan training en doctrine, datakwaliteit, modelfouten/hallucinaties, kwetsbaarheid voor manipulatie en commerciële belangen. <a href=https://www.wired.com/story/project-maven-katrina-manson-book-excerpt/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">De AI-race zet nutsbedrijven onder druk om meer uit de Europese elektriciteitsnetten te halen. (.wired:23-3-2026)</div>
+        <p>Europese netbeheerders krijgen enorme druk doordat AI‑rijke datacenters massaal stroom willen aansluiten; in het VK alleen wachten voorstellen voor meer dan 30 GW aansluiting—ongeveer twee derde van het piekverbruik—op verbinding. Het tekort is niet productie maar transport: er is te weinig transmissiecapaciteit en nieuwbouw van lijnen duurt 7–14 jaar. Netbeheerders proberen capaciteit te winnen met “grid‑enhancing” technologieën (zoals dynamic line rating, betere geleiders, omleidingssoftware, en vraagflexibiliteit/batterijen bij datacenters). Een EU‑studie noemt tot 40% extra capaciteit mogelijk; National Grid heeft DLR op 275 km toegepast en claimt 16 GW extra in vijf jaar via technieken en vervanging. Beperkingen blijven: hitte verlaagt netcapaciteit precies wanneer koeling van datacenters piekt, en huidige regels houden rekening met flexibiliteit onvoldoende. Ofgem bereidt hervormingen en sancties voor om speculatieve aanvragen te beperken en aansluitingen te versnellen, maar uiteindelijk is veel fysieke infrastructuur nodig. <a href=https://www.wired.com/story/europe-squeeze-power-energy-grid-ai-data-center/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Wereldwijde omroepen roepen de EU op regels voor grote techbedrijven aan te scherpen in de strijd om smart-tv's (.theguardian:23-3-2026)</div>
+        <p>Wereldwijde omroepen, verenigd in ACT (onder meer Canal+, RTL, Mediaset, ITV, Paramount+, NBCUniversal, Disney, Warner Bros Discovery, Sky, TF1), hebben de EU opgeroepen om strengere regels toe te passen op smart-tv‑besturingssystemen en spraakassistenten van Google, Amazon, Apple en Samsung. In een brief aan antitrustchef Teresa Ribera waarschuwen ze dat deze techreuzen als “poortwachters” fungeren: hun ingebouwde zoek- en aanbevelingssystemen kunnen content bevoordelen en zo toegang tot publieken en distributie vormen beheersen. ACT vraagt designation onder de Digital Markets Act en streng toezicht om eerlijkheid en concurrentie te waarborgen. Dit komt temidden van verhoogde EU‑handhaving tegen Amerikaanse techbedrijven en geopolitieke spanningen over regulering, waaronder lopende onderzoeken naar Google en eerdere Amerikaanse sancties tegen Europese functionarissen. <a href=https://www.theguardian.com/business/2026/mar/23/broadcasters-eu-big-tech-smart-tv-google-amazon-apple-samsung target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">‘Kinderen zeggen dat ze even snel op TikTok kijken’: een nieuw soort afgeleid rijden neemt toe (.theguardian:23-3-2026)</div>
+        <p>Een nieuwe golf van afgeleid rijden verschuift van sms’en naar het kijken naar en maken van video’s (YouTube, TikTok, livestreams) achter het stuur. Cliëntverhalen (een Uber-driver die video keek) en incidenten (botsingen tegen politieauto’s, fatale livestreamingcrashs) illustreren het probleem. NHTSA: in 2023 overleden 3.275 mensen door afleiding en >300.000 raakten gewond; jonge bestuurders (15–20) vormen een grote groep. Onderzoekers waarschuwen dat zelfs “hands‑free” of schermhouders riskant zijn: ogen van de weg >2 seconden verdubbelt kans op een ongeluk. Auto‑touchscreens zijn wijdverbreid en verminderen reactietijd (soms meer dan alcohol/cannabis); sommige fabrikanten herintroduceren knoppen. Wetgeving loopt achter bij streamingpraktijken; experts roepen op tot meer bewustzijn en regels. <a href=https://www.theguardian.com/technology/2026/mar/23/distracted-driving-smartphones-tiktok target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">iPhone 17-recensie: Apple verbetert zijn goedkoopste nieuwe smartphone (.theguardian:23-3-2026)</div>
+        <p>Hoofdonderwerp: iPhone 17e — Apples goedkoopste nieuwe smartphone.
+
+Belangrijke thema's: prestaties (A19‑chip), batterijduur, camera‑beperkingen, ontwerp en scherm, MagSafe en functies, prijs en duurzaamheid.
+
+De 17e behoudt een iPhone‑14‑achtig ontwerp met 6,1" OLED, Ceramic Shield 2 en grote notch. Hij gebruikt de A19‑chip (één gpu‑core minder dan iPhone 17), 8GB RAM en minimaal 256GB opslag; batterij gaat circa 52 uur bij normaal gebruik. MagSafe, Action Button, Face ID en USB‑C aanwezig; wifi7, Thread en UWB ontbreken. Camera: enkele 48MP hoofdsensor zonder ultrawide, telefoto of macromodus; automatische portretten mogelijk. Duurzaamheid: >30% gerecyclede materialen, redelijke reparatie‑score. Prijs vanaf £599; aantrekkelijk als goedkoopste nieuwe iPhone maar minder geschikt voor serieuze fotografen.
+
+Pros: snel, goede batterij, MagSafe, lange software‑ondersteuning. Cons: beperkte camera, verouderd schermontwerp, mist some draadloze standaarden. <a href=https://www.theguardian.com/technology/2026/mar/23/iphone-17e-review-apple-cheapest-new-smartphone-chip-magsafe-storage target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">We Know You Can Pay a Million van Anja Shortland — recensie: de angstaanjagende nieuwe wereld van ransomware (.theguardian:23-3-2026)</div>
+        <p>Anja Shortlands boek beschrijft de opkomst en industrialisatie van ransomware: begonnen met Joseph Popp’s 1989 “Aids Trojan”, geëvolueerd dankzij TOR, bitcoin en asymmetrische encryptie tot een criminaliteitssector met merken, affiliates, helpdesks en zelfs HR. Ransomware gebruikt encryptie en vaak “double extortion” (gegevens stelen en dreigen te lekken); criminelen verdienen circa $1mrd per jaar maar veroorzaken veel grotere schade (~$57mrd in 2025). Voorbeelden: British Library, Costa Rica (Conti, 2022), LockBit/Royal Mail, WannaCry, NotPetya; hoofdrol van staten (Rusland, Noord-Korea). Shortland waarschuwt voor AI-gestuurde cyberoorlogsvoering, pleit voor verplichte cyberhygiëne, betere steun en vervolgingen, en vergelijkt de dreiging met covid: niet totaal uitroeien maar risico’s beheersen. <a href=https://www.theguardian.com/books/2026/mar/23/we-know-you-can-pay-a-million-by-anja-shortland-review-the-terrifying-new-world-of-ransomware target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
