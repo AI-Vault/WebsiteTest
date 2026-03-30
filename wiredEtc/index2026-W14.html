@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W13.html" class="week-display" id="week-display">2026-W13</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 13;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">De IRS wil slimmere belastingcontroles. Palantir kan helpen bepalen wie voor controle wordt geselecteerd. (.wired:30-3-2026)</div>
+        <p>Hoofdonderwerp: IRS test met Palantir‑tool SNAP om "hoogwaardige" audit‑, incasso‑ en strafrechtelijke onderzoekscases te selecteren.
+
+Belangrijke thema's: Palantir, IRS, SNAP, case‑selectie, ongestructureerde data, legacy‑systemen, audits (DIF), belastingkredieten en schenkingsaangiften, privacy en toezicht, moderniseringsproblemen, personeels‑ en politieke beperkingen.
+
+De IRS betaalde $1,8M voor een pilot van Palantir's Selection and Analytic Platform (SNAP) dat informatie uit meer dan honderd systemen en ongestructureerde ondersteunende documenten moet samenvoegen om suboptimale, duplicerende processen te verminderen en "hoogste waarde" doelwitten te vinden. Drie casusmethoden omvatten rampclaims, Residential Clean Energy Credits en Form 709 (schenkingen). SNAP zou vergelijkbaar boven verouderde databases kunnen draaien; gebruik van externe bronnen (Venmo/Depop) kan alleen als de IRS die data al bezit. Palantir heeft lange relatie met IRS (> $200M). Kritische punten: zwarte doos‑scores, moderniseringsfalen, personeelsverlies en politieke weerstand die grootschalige IT‑upgrades bemoeilijken. <a href=https://www.wired.com/story/documents-reveal-palantir-irs-contract-fraud-clean-energy-credits/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Dochterbedrijf van Apple beboet door Britse regering wegens schending van sancties tegen Moskou (.theguardian:30-3-2026)</div>
+        <p>Apple-dochter Apple Distribution International (ADI) kreeg van de Britse sanctiewaakhond OFSI een boete van £390.000 omdat een in het Verenigd Koninkrijk aangehouden ADI-bankrekening in juni/juli 2022 twee betalingen van in totaal meer dan £635.000 aan de Russische streamingdienst Okko uitvoerde. Okko was eerder door Sberbank overgenomen en in maart 2022 door Sberbank verkocht aan JSC New Opportunities, dat in juni 2022 op de Britse sanctielijst kwam. ADI meldde de transacties vrijwillig; de boete volgde na schikking. Belangrijke thema’s: sanctienaleving en handhaving, grensoverschrijdend gebruik van Britse financiële instellingen, due diligence-risico’s bij derdencreening, en Apples verklaring dat het naleving serieus neemt en protocollen aanscherpt. <a href=https://www.theguardian.com/technology/2026/mar/30/apple-subsidiary-fine-uk-government-sanctions-russia target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">VK's grote, riskante AI-gok — podcast (.theguardian:30-3-2026)</div>
+        <p>Podcast onderzoekt de Britse, grote en riskante weddenschap op AI. Verslaggeefster Aisha Down volgt de spoorvorming van miljarden beloofde AI‑investeringen: vertraagde bouwprojecten, vage uitgaveloften, zogenaamde "fantoominvesteringen" en enorme uitgaven aan chips die snel verouderen. Keir Starmer’s ambitie om AI te "ontketenen" botst met onduidelijkheid over besteding en uitvoering. Nosheen Iqbal onderzoekt wat dit betekent voor burgers en economie en waarschuwt voor het risico dat AI een barstende bubbel wordt. Thema’s: overheidsbeleid, infrastructuur, financiële risico’s en verantwoordingsplicht. <a href=https://www.theguardian.com/news/audio/2026/mar/30/uk-big-risky-ai-bet target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Ik deed mijn koptelefoon af – en zag een onbekende in gevaar (.theguardian:30-3-2026)</div>
+        <p>Ella Hopkins droeg jarenlang noise‑cancelling koptelefoons, maar op een januariavond merkte ze een vrouw op die leunend op de stoep niet leek te ademen; omdat haar koptelefoon uit was belde ze 112, volgde instructies en de hulpdiensten arriveerden. Die ervaring overtuigde haar om vaker zonder muziek te lopen. Ze hoort nu stadsgeluiden, gesprekken, vogelkreten (leerde roodborst en gaai herkennen na lezing van Jenny Odell), en kleine onverwachte momenten. Het vergroot haar waakzaamheid en sociale openheid, al gebruikt ze muziek nog doelbewust bij hardlopen en op reis. <a href=https://www.theguardian.com/lifeandstyle/2026/mar/30/i-took-off-my-headphones-and-noticed-a-stranger-in-peril target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
