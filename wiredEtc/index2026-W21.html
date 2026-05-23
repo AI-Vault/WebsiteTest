@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W20.html" class="week-display" id="week-display">2026-W20</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 20;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Zelfs als je AI haat, zul je Google AI Search gebruiken (.wired:22-5-2026)</div>
+        <p>Steven Levy beschrijft hoe Google op I/O 2026 traditionele '10 blauwe links' heeft ingeruild voor Gemini‑gestuurde AI‑antwoorden (AI Overview/AI Mode) die gepersonaliseerde, agent‑gedreven presentaties, interactieve grafieken en conversatiegestuurde prompts leveren. De nieuwe zoekervaring gebruikt ook persoonlijke data en kan mini‑publicaties genereren, waardoor links en originele websites naar de achtergrond verdwijnen. Thema's: verschuiving van open web naar AI‑centrische antwoorden, risico’s voor uitgevers, schrijvers en kunstenaars die verkeer en erkenning verliezen, de opkomst van agentic AI, en de gevaar van fouten/hallucinaties. Google verdedigt de aanpak en zegt originele bronnen te willen waarderen, maar deelt weinig metrics; gebruikers stappen massaal over. <a href=https://www.wired.com/story/even-if-you-hate-ai-you-will-use-google-ai-search/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">De AI‑boom in de Golf heeft een probleem met onderzeese kabels (.wired:22-5-2026)</div>
+        <p>Golfstaten investeren miljarden in AI‑datacenters maar zijn afhankelijk van een handvol onderzeese kabels door strategisch kwetsbare zeestraten. Die kabels vervoeren ~95% van het internationale dataverkeer; breuken in 2025 in de Rode Zee veroorzaakten dagenlange uitval en ~$3,5 mrd schade. Hyperscalers eisen nu meerdere onafhankelijke paden, voorspelbare latency en overlevingsvermogen. Oplossingen: nieuwe terrestrische en subsea‑corridors (SilkLink via Syrië, WorldLink via Irak), noordelijke overlandroutes door Irak/Syrië/Turkije en satellietredundantie. Maar terrestrische routes brengen eigen risico’s; glasvezel blijft cruciaal. Thema’s: infrastructuurdiversificatie, geopolitieke kwetsbaarheid, AI‑eisen voor netwerkresistentie.
+
+Hoofdonderwerp: kwetsbaarheid van de Golfregio’s AI‑ambities door geconcentreerde onderzeese kabelinfrastructuur. <a href=https://www.wired.com/story/the-gulfs-ai-boom-has-an-undersea-cable-problem/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Kan OpenAI’s ‘Master of Disaster’ de reputatiecrisis van AI oplossen? (.wired:22-5-2026)</div>
+        <p>Hoofdonderwerp: OpenAI, reputatie en regulering van AI. Chris Lehane, chief of global affairs en veteraan in crisiscommunicatie, probeert publieke scepsis en politieke druk te keren door genuanceerdere boodschappen, concrete beleidsvoorstellen (vierdaagse werkweek, betere zorg, belasting op AI-arbeid) en staatsgerichte lobbystrategie om uniforme wetten te stimuleren ("reverse federalism"). Het artikel behandelt image‑crises na bedreigingen en protesten, Lehane’s rol bij opzetten van pro‑AI super PACs (Leading the Future) en de terugslag daarop, interne kritiek van voormalige onderzoekers, en beleidsconflicten rond aansprakelijkheid en verplichte externe veiligheidsaudits (Illinois). Kern thema’s: reputatiemanagement, lobbyen, regelgeving, economische en veiligheidszorgen van AI. <a href=https://www.wired.com/story/openai-chris-lehane-global-affairs-pr/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Meta in crisis, Google Search krijgt een make-over en AI wordt uitgejouwd door afgestudeerden (.wired:21-5-2026)</div>
+        <p>Hoofdonderwerp: de invloed van AI op grote techbedrijven, de arbeidsmarkt en gezinsleven. Kernpunten: Meta voert ~10% ontslagen door, moraal daalt, medewerkers krijgen niet-optional monitoring-software en worden intern naar AI-teams gedirigeerd; Google I/O toont een verschuiving naar agentische zoekfuncties (Gemini Spark) die webverkeer en uitgevers kunnen kanaliseren; Elon Musk verliest zijn rechtszaak tegen OpenAI; groeiende publieke terugslag op AI—studenten boo-en sprekers, en partners van AI-ingenieurs voelen relationele en emotionele lasten. Thema’s: technologische mission drift, vervanging van instapfuncties door AI, privacy en mediakannibalisatie, economische ongelijkheid en politieke invloed van AI‑belangen. Impact: arbeidsverschuiving, publisher‑inkomsten onder druk, en sociale spanningen thuis en politiek. <a href=https://www.wired.com/story/uncanny-valley-podcast-meta-in-crisis-google-search-makeover-ai-booed-by-graduates/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Ik kloonde mezelf met Gemini's AI-avatartool. Het resultaat was verontrustend echt. (.wired:21-5-2026)</div>
+        <p>Reece Rogers gebruikte Google’s Gemini-app om zichzelf te klonen met de nieuwe Omni‑avatarfunctie: na een korte setup met telefooncamera en hoofdbewegingen maakte hij via het $20/maand AI‑Pro‑abonnement twee korte, fotorealistische video’s waarin zijn digitale dubbel zingt voor een dinosaurus in Dolores Park en 'surft' onder de Golden Gate Bridge. De avatar leek overtuigend en angstaanjagend echt, maar vertoonde ook haperingen, onlogische props en vreemde kledingkeuzes. Google beperkt avatarcreatie tot volwassenen en claimt veiligheidsmaatregelen, maar de auteur benadrukt het onbehagen en de reële risico’s van misbruik, zoals non‑consensuele deepfakes, en vergelijkt Gemini met eerdere apps zoals OpenAI’s Sora. <a href=https://www.wired.com/story/i-cloned-myself-with-geminis-ai-avatar-tool-the-result-was-unnervingly-me/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">SpaceX vermeldde de 'Spicy'-modus van Grok als een risico in zijn aanvraag voor de beursgang. (.wired:21-5-2026)</div>
+        <p>SpaceX waarschuwt in zijn IPO‑dossier dat xAI’s AI‑functies, met name Grok’s “Spicy” en “Unhinged” modi die minder filters gebruiken, het bedrijf blootstellen aan juridische, regelgevende en reputatieschade. Het bedrijf reserveerde $530 miljoen voor mogelijke rechtsverliezen; er lopen onderzoeken en class actions over klachten dat Grok seksueel getinte beelden van vermeende minderjarigen produceerde. SpaceX meldt circa 550 miljoen maandelijkse gebruikers van X+Grok (117 miljoen gebruiken Grok‑AI), 6,3 miljoen betaalde abonnees en dat de AI‑divisie in 2025 $6,3 miljard operationeel verlies had tegen $3,2 miljard omzet. Ook genoemd: een $15 miljard/jaar compute‑deal met Anthropic. Thema’s: AI‑veiligheid versus productvrijheid, regelgevende risico’s, financiële gevolgen en IPO‑implicaties. <a href=https://www.wired.com/story/spacex-ipo-grok-spicy-mode-risks/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">SpaceX besteedt 2,8 miljard dollar aan gasturbines voor zijn AI-datacenters (.wired:20-5-2026)</div>
+        <p>SpaceX heeft recent ruim $2,8 miljard toegezegd voor de aankoop van draagbare gasturbines om datacenters van Elon Musks AI‑unit xAI van stroom te voorzien, blijkt uit een IPO‑prospectus. De turbines voeden Colossus 1 (Memphis) en Colossus 2 (Southaven), ondersteunen de Grok‑chatbot en maken serververhuur aan Anthropic (ongeveer $15 miljard per jaar) mogelijk. SpaceX sloot in maart een $805M‑deal en meldde in april een aanvullende $2B‑order (nog in afwachting). Portable turbines bieden snelle, off‑grid vermogenstoegang maar roepen milieuzorgen op: klachten, een NAACP‑rechtszaak en regulatorische vragen over vergunningen en emissies; recent werden 19 turbines toegevoegd (totaal 46). SpaceX rapporteert ~1 GW serververmogen en heeft >$14 miljard aan bouw in uitvoering. <a href=https://www.wired.com/story/elon-musk-spacex-spending-gas-turbines-grok/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">Ik gaf mijn OpenClaw-agent een fysiek lichaam (.wired:20-5-2026)</div>
+        <p>Will Knight gaf zijn OpenClaw-AI een fysieke LeRobot 101-robotarm en beschrijft hoe moderne codeervaardigheden van AI het bouwen en aansturen van robots eenvoudiger maken. De LeRobot heeft een bedieningsarm en een volgarm met camera; via teleoperatie kan een model leren reageren op wat de camera ziet. Na initieel geklooi met kalibratie gebruikt Knight OpenClaw en Codex om verbindingen te configureren, gewrichten te kalibreren en een Python-script te genereren dat een rode bal herkent en de grijper sluit. Vervolgens hielp OpenClaw bij het trainen van een model om objecten te pakken en controleerde foutpercentages. De tekst bespreekt de “code as policy”-aanpak (paper uit 2022), het CaP‑X-benchmark en CaP‑Gym/CaP‑Agent0-werk van Ken Goldberg e.a., en noemt dat Gemini volgens CaP‑X uitblinkt. Onderzoekers geloven dat AI-gestuurde codering de drempel voor robotica democratiseren kan, ondanks bugs en hallucinatierisico’s. <a href=https://www.wired.com/story/i-gave-my-openclaw-agent-physical-body-robot/ target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
