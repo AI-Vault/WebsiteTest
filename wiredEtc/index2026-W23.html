@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W22.html" class="week-display" id="week-display">2026-W22</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 22;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Norse Atlantic Airways biedt spotgoedkope vliegtickets. Er zit een addertje onder het gras. (.wired:1-6-2026)</div>
+        <p>Norse Atlantic Airways voert een tech-first klantenservice met AI-agents (Odin, later Freya) en geen duidelijk telefoonnummer. WIRED kreeg via de FTC ongeveer 75 klachten: reizigers konden geen mens bereiken, werden door Google-resultaten naar valse helpnummers geleid en vielen soms voor oplichting waarbij honderden tot duizenden dollars werden afgeschreven (21 van 41 meldingen > $1.000). Norse zegt 99% van vragen met AI te behandelen en snijdt in administratief personeel; deskundigen waarschuwen dat die automatisering klanten extra kwetsbaar maakt voor fraude. Auteur kreeg na contact met een topfunctionaris uiteindelijk wel restitutie. Thema’s: automatisering vs menselijk contact, oplichting, consumentenbescherming, kostenbesparing. <a href=https://www.wired.com/story/norse-airlines-ftc-complaints-ai-scams/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Nvidia lanceert 'superchip' die AI-kracht naar laptops en pc's brengt (.theguardian:1-6-2026)</div>
+        <p>Nvidia introduceert de RTX Spark, een “superchip” voor Windows-laptops en -pc’s die AI-agents lokaal draait en traditionele muis/keyboard-interactie kan vervangen. Ontwikkeld met Microsoft en MediaTek, wordt de chip later dit jaar ingebouwd door fabrikanten als Dell, Lenovo, Asus en HP en maakt dunne, lichte pc’s met krachtige on-device AI mogelijk. Tegelijk toont Nvidia ook de Vera-CPU voor AI-klussen; het bedrijf breidt zich van datacentergrafische kaarten uit naar geïntegreerde pc-chips. Thema’s: edge-AI, heruitvinding van de pc, concurrentie met Intel/Apple/Qualcomm/AMD, impact op arbeidsmarkt en langetermijnstrategieën voor groeimarkten. <a href=https://www.theguardian.com/technology/2026/jun/01/nvidia-launches-chip-ai-laptops-pc-rtx-spark-microsoft-windows target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Hulporganisaties hekelen Brits plan om AI te gebruiken voor leeftijdsbeoordeling van jonge asielzoekers (.theguardian:1-6-2026)</div>
+        <p>Het Britse Home Office heeft een contract (£322.000 over drie jaar) gegund aan Akhter Computers Ltd voor AI-gezichtsalgoritmes om snel de leeftijd van betwiste jonge asielzoekers te schatten, met landelijke uitrol gepland na testen in 2027. Een coalitie van meer dan 100 organisaties, en een rapport van het Refugee and Migrant Children’s Consortium, waarschuwen dat AI onbetrouwbaar kan zijn voor jongeren die door trauma, ondervoeding en zware reizen anders van uiterlijk zijn, en dat bias, slechte beeldkwaliteit en valse zekerheid kunnen leiden tot meer kinderen die ten onrechte in volwassen detentie of gevangenissen belanden. Zij pleiten dat AI slechts adviserend wordt gebruikt, niet bepalend, en vragen garanties zoals toegang tot een passende volwassene, juridische bijstand en het recht om besluiten aan te vechten. De regering stelt dat technologie misbruik door volwassenen moet tegengaan, terwijl definitieve beslissingen bij immigratieambtenaren blijven. <a href=https://www.theguardian.com/uk-news/2026/jun/01/charities-decry-uk-plan-to-use-ai-to-assess-age-of-young-asylum-seekers target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Nex Playground: het gadget voor de familiespelavond dat de geest van de Wii nieuw leven inblaast (.theguardian:1-6-2026)</div>
+        <p>Nex Playground is een klein, camera-gestuurd thuisconsole (ter grootte van ~2,5 Rubiks-cubes) dat de motion-control geest van de Wii wil doen herleven. Met een groothoeklens en AI-bodytracking biedt het meer dan 50 minigames (dansen, springen, Fruit Ninja-achtige spellen), zet spelers fysiek in beeld en bewaart geen cameragegevens om privacy te waarborgen. Lancering VK 22 juni; prijs £269 met slechts vijf gratis games en een Play Pass-abonnement van £90 p/jaar. In de VS verkocht het >1 miljoen units en overtrof het Xbox tijdens Black Friday 2025. Nex positioneert het als aanvullend op gewone consoles: gericht op actieve gezinsentertainment, fitheid en verbinding (playdates voor grootouders), met sportpartnerschappen (NHL, basketbal, Wimbledon) en licenties van Hasbro/DreamWorks/Mattel. Maandelijkse updates en hoge verlengingscijfers (~90%) moeten retentie veiligstellen, maar het abonnement en contentvariatie blijven bepalend voor succes. <a href=https://www.theguardian.com/games/2026/jun/01/nex-playground-it-outsells-xbox-and-aims-to-end-loneliness-is-this-a-family-game-night-saviour target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
