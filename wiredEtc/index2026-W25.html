@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W24.html" class="week-display" id="week-display">2026-W24</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 24;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Meta schakelde een Pentagon‑leverancier in om een prototype van gezichtsherkenning voor zijn bril te ontwikkelen (.wired:15-6-2026)</div>
+        <p>Hoofdonderwerp: Meta licentieerde gezichtserkenningssoftware van Rank One—een leverancier met talloze defensie- en politierelaties—for prototype-integratie in zijn smart‑glasses‑app.
+
+Belangrijke thema's: surveillance en privacy, militaire en politietechnologie in consumententoepassingen, institutionele banden (FBI/CIA/pentagon), technische bias en regelgevingsleemtes.
+
+Meta verkreeg een actieve licentie voor Rank One’s gezichtsherkenning en liveness‑controle (tot 10 miljoen templates); codefragmenten van die integratie bleven dormant in de Meta AI‑app die miljoenen gebruikers bereikte maar werden op 5 juni verwijderd. Rank One levert aan US Marshals, NCIS, SOCOM en politie, heeft leiders uit inlichtingendiensten, en vertoont in NIST‑testen variabele foutpercentages tussen demografische groepen. Artikel waarschuwt voor vervagende grens tussen surveillance‑tools voor overheid en massaconsumententechnologie en beperkte wettelijke bescherming in de VS. <a href=https://www.wired.com/story/meta-rank-one-computing-face-recognition-smart-glasses/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Socialmediabedrijven slaan terug nadat Starmer een verbod voor onder 16-jarigen in het VK aankondigt (.theguardian:15-6-2026)</div>
+        <p>Keir Starmer kondigde een verbod aan op sociale media voor onder-16’s in het VK, met het doel apps zoals Snapchat, TikTok, YouTube, Instagram, Facebook en X te blokkeren voor jongeren en livestreamen te verbieden; onder-18’s mogen geen romantische chatbots gebruiken. Techbedrijven (Meta, YouTube, Snapchat) keuren het af en waarschuwen dat een algeheel verbod tieners naar anonieme, ongereguleerde en onveiligere platformen zal drijven. Starmer stelt dat social media schadelijk is voor het geluk en de geestelijke gezondheid van kinderen en noemt het een morele keuze die wetten en gezinsgesprekken zal veranderen; campagnevoerders en veel ouders steunen het plan. Er blijven vragen over handhaving en effectiviteit, met verwijzingen naar ervaringen in Australië. <a href=https://www.theguardian.com/media/2026/jun/15/social-media-ban-uk-under-16-starmer target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Andrew Hastie vergelijkt AI met de nucleaire wapenwedloop uit de Koude Oorlog en waarschuwt dat Australië achterop kan raken (.theguardian:15-6-2026)</div>
+        <p>Andrew Hastie vergelijkt AI met de koudeoorlogse wapenwedloop en waarschuwt dat Australië zijn strategische autonomie kan verliezen als het niet fors in AI investeert. In de Tom Hughes-oratie pleit hij voor een AI‑ambassadeur, een herzien onderwijssysteem en een zuidelijk technologisch knooppunt. Hij waarschuwt voor een VS‑China concurrentiestrijd rond AI en Taiwan/chips, massale automatisering van banen, sociale onrust en dat Australië economisch en strategisch achterop raakt. <a href=https://www.theguardian.com/australia-news/2026/jun/15/andrew-hastie-ai-artificial-intelligence-power-cold-war-nuclear-arms-race-comparison-australia target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Mr Monopoly vs Mr Burns: De Simpsons veroveren Monopoly Go (.theguardian:15-6-2026)</div>
+        <p>Monopoly Go! kreeg een twee maanden durende Simpsons-overname waarbij ontwikkelaar Scopely nauw samenwerkte met Simpsons-schrijvers, -animators en stemtalent. Resultaat: originele verhaallijnen, een nieuwe korte animatie met Dan Castellaneta, Nancy Cartwright, Harry Shearer en Will Ferrell, thematische minigames en veel personages (o.a. Rich Texan, Plopper, Cowboy Carl). Makers benadrukken echte creatieve betrokkenheid en detailobsessie, met veteraan-animator Eric Keyes als kwaliteitscontrole. Thema’s: Springfield als rijk, uitbreidbaar universum; de franchise’ vermogen om genres te dragen; games als levenslange live-serviceplatforms die nostalgie omzetten in nieuw materiaal. Seizoen loopt tot 29 juli, gratis op iOS en Android. <a href=https://www.theguardian.com/games/2026/jun/15/mr-monopoly-vs-mr-burns-the-simpsons-take-over-monopoly-go target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
