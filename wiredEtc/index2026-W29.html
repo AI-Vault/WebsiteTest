@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W28.html" class="week-display" id="week-display">2026-W28</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 28;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="mit">
+        <div class="headline">Nieuwe methode moet kinderen beschermen tegen illegale AI-gegenereerde inhoud (.mit:13-7-2026)</div>
+        <p>MIT-onderzoekers ontwikkelden een niet-generatieve auditmethode die via Gaussian probing van LoRA-adapters kan vaststellen of open-source generatieve modellen zijn aangepast om illegale inhoud zoals kinderseksueel misbruikmateriaal (CSAM) te produceren, zonder ooit beelden te genereren. Door willekeurige inputs door het interne multilagenstelsel te sturen en de adaptatie-signalen te meten en te middelen, identificeerden ze CSAM-gespecialiseerde modelvarianten met 100% nauwkeurigheid. Belangrijke thema’s: AI-veiligheid, fine-tuning (LoRA), juridisch/ethische beperkingen van output-gebaseerde audits, samenwerking met kinderbeschermingsorganisatie Thorn, schaalbaarheid en toepassing door hostingplatforms; vervolgwerk: grotere datasets en detectie vóór adaptatie van basismodellen. <a href=https://news.mit.edu/2026/new-method-keeps-kids-safe-from-illegal-ai-generated-content-0713 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Is het populairste nummer op Australische radiostations het product van generatieve AI? (.theguardian:13-7-2026)</div>
+        <p>De Australische producer Josh Fawaz werd in korte tijd een hit met zijn cover van Madonna’s Like a Prayer (35m Spotify-streams, nr.1 National Radio Airplay, wereldwijd nr.1 iTunes Electronic). Muzikanten en onderzoekers vermoeden dat de track met generatieve AI is gemaakt: kenmerken als zware compressie en artefacten doen denken aan tools als Suno. Fawaz en zijn credits noemen hem als uitvoerder en zijn oom Fadi Fawaz als producent; Fawaz zegt AI hooguit als hulpmiddel te gebruiken. Critici vrezen dat AI-muziek royalties wegkaapt, dat radiostations onvoldoende transparant zijn (een nieuwe radiocode vereist sinds 1 juli melding van AI-stemmen, maar geldt niet voor muziek), en dat grote techbedrijven copyright willen versoepelen om data te scrapen. APRA/AMCOS benadrukken dat oorspronkelijke rechthebbenden recht hebben op prestatiesvergoedingen. <a href=https://www.theguardian.com/music/2026/jul/13/josh-fawaz-like-a-prayer-song-is-it-ai-radio target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Christopher Nolan: mensen 'minachten' AI en het idee dat het mensen vervangt is 'onzin' (.theguardian:13-7-2026)</div>
+        <p>Christopher Nolan, ter promotie van zijn grote verfilming The Odyssey, zegt dat veel mensen – vooral jongeren die spreken van “AI slop” – AI verwerpen en dat het idee dat AI menselijke creativiteit en beroepen volledig zal vervangen “onzin” is. Hij erkent dat AI nuttige beeldhulpmiddelen kan opleveren, maar waarschuwt voor verantwoordelijkheid van werkgevers bij het gebruik ervan, een kwestie die ook speelde bij de grote Hollywood-staking van 2023. Nolan’s Odyssey (gerapporteerd budget $250m) werd op locatie in het Middellandse Zeegebied opgenomen met sterren als Matt Damon, Zendaya, Tom Holland, Robert Pattinson en Anne Hathaway. Hij noemt kritiek op de casting van Lupita Nyong’o als Helen of Troy – aangevoerd door rechts‑populisten zoals Elon Musk – irrelevant en zegt dat voorbarige discussies het werk zelf niet vatten. <a href=https://www.theguardian.com/film/2026/jul/13/christopher-nolan-odyssey-director-comments-ai-artificial-intelligence target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
