@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W31.html" class="week-display" id="week-display">2026-W31</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 31;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">AI veroverde programmeren. Fastfood volgt. (.wired:3-8-2026)</div>
+        <p>Fastfoodketens zetten steeds vaker spraak‑AI in bij de drive‑thru: testen van McDonald’s, Taco Bell, Dairy Queen, White Castle en anderen groeiden ondanks vroege fiasco’s en virale misorders. Eerste generatie miste accenten, maakte fouten en oogstte publieke spot, wat sommige ketens deed terugschakelen (o.a. Del Taco, eerdere McDonald’s‑proeven). Andere ketens bleven en schalen nu op; technologie is verbeterd, versnelt bestellingen, verhoogt upselling en kan klantherkenning en meertaligheid bieden. Kritiek blijft: minder warmte, accuraatheidsproblemen en zorgen over sociale verbindingen en profilering. Werkgevers melden tot nu toe geen grote banenverlies; tevredenheid en retentie zijn gemengd. <a href=https://www.wired.com/story/ai-conquered-coding-fast-food-is-next/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="wired">
+        <div class="headline">De 'man van de vangrail' ging viraal nadat hij over Flock‑camera's had gepost. Daarna vernielde iemand ze. (.wired:3-8-2026)</div>
+        <p>Steve Eimers (de “Guardrail Guy”) bouwde online aanhang door gebrekkige vangrails te filmen nadat zijn dochter door een defecte vangrail om het leven kwam. Sinds april postte hij ook over ALPR‑camera’s (automatische kentekenlezers), waarvan hij zegt dat ze vaak té dicht bij vangrails of op breekbare signaalpalen zijn geplaatst en daardoor de crashveiligheid ondermijnen. Zijn video’s polariseerden publiek; sommige volgers riep op tot vernieling. Kort na een door Flock aangekondigde landelijke audit vond Eimers twee door hem gedocumenteerde Flock‑camera’s zwaar beschadigd (mogelijk door schieten). Hij staakte zijn ALPR‑advocacy. De politie arresteerde Adam Heimerman op aanklacht van zware vernieling; sommige online reacties juichten de dader toe. Flock veroordeelt vernieling en bevestigt de audit. Eimers vreest escalerend geweld en wil zich voortaan op wegbeschoeiing‑veiligheid richten; privacykwesties laat hij aan burgerrechtenorganisaties over. Belangrijke thema’s: surveillance, weggveiligheid, sociale‑media‑activisme en vigilantisme. <a href=https://www.wired.com/story/flock-cameras-guardrail-guy-advocacy-damage-people-dont-like-alprs/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Het einde van de wereld: hoe spelers rouwen om de dood van hun favoriete onlinegames (.theguardian:3-8-2026)</div>
+        <p>Spelers rouwen bij het einde van onlinegames: communities organiseren afscheidspartijen (zoals Halo 3-spelers tijdens de servershutdown) en delen spontane rituelen. De opkomst van online multiplayer en live‑servicemodellen maakt spelers afhankelijk van betaalde servers; studio’s sluiten werelden wegens kosten of marktfalen (Highguard). Onderzoekers (Evan Conaway, HongLan Xu) wijzen op plaats‑gevoel, collectief verlies en soms woede (WoW‑shutdown China 2023). Rouw is zowel plotseling als geleidelijk bij updates; men bewaart fysieke memorabilia (oude serverblades) en leeft met de onzekerheid over het behoud van virtuele levens, vriendschappen en investeringen. <a href=https://www.theguardian.com/games/2026/aug/03/the-end-of-the-world-how-players-mourn-the-death-of-their-favourite-online-games target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
