@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W33.html" class="week-display" id="week-display">2026-W33</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 33;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Sainsbury's-winkel schort AI-scanning op na valse beschuldiging van winkeldiefstal (.theguardian:17-8-2026)</div>
+        <p>Sainsbury’s heeft AI‑gezichtsscanning in het East Dulwich‑filiaal gepauzeerd nadat klant Matt Arnold (46) ten onrechte als winkeldief werd aangeduid en uit de winkel werd geleid. Arnold, comedy‑promoter, voelde zich vernederd; op CCTV verscheen een rode cirkel rond zijn gezicht terwijl hij vroeg of zijn boodschappen bewaard konden worden voor een collega. Sainsbury’s verontschuldigde zich en zegt dat het incident door menselijke fout, niet door Facewatch‑technologie, werd veroorzaakt. Facewatch stelt dat de alert correct was maar verkeerd door personeel is afgehandeld. Het bedrijf noemt een nauwkeurigheid van 99,98%, zegt dat matches door managers worden gecontroleerd, alerts tot een uur zichtbaar blijven en misidentificaties worden gelogd. Arnold en critici pleiten voor opschorting van de technologie vanwege surveillance‑zorgen en risico’s voor kwetsbare mensen; Sainsbury’s noemt de stillegging een voorzorgsmaatregel terwijl personeel extra training krijgt. Eerdere vergelijkbare gevallen bij Sainsbury’s, Home Bargains en B&M worden vermeld. <a href=https://www.theguardian.com/technology/2026/aug/17/humiliated-sainsburys-store-pauses-ai-scanning-after-false-shoplifting-accusation target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Worden Microsofts AI-plannen geremd door een tekort aan chips? (.theguardian:17-8-2026)</div>
+        <p>Een Guardian‑onderzoek vindt een opvallend verschil tussen Microsofts publieke beweringen over zijn AI‑capaciteit en het aantal geavanceerde AI‑chips dat daadwerkelijk in werking is. Interne documenten tonen ongeveer 2,2 miljoen AI‑chips, veel minder dan schattingen op basis van Microsofts vermelde datacenter‑vermogen (GW). Experts berekenen dat bij 8–10GW aan AI‑vermogen miljoenen GPUs nodig zouden zijn (H100/Blackwell), maar Microsofts duurzaamheidsrapporten en bronnen binnen het bedrijf suggereren lagere werkende capaciteit en dat veel projecten (zoals Fairwater) nog niet volledig online zijn. Mogelijke oorzaken: chips in voorraad omdat er geen “warm shells” of voldoende stroom zijn, beperkte transparantie van Nvidia‑verkopen, en onduidelijke rapportagepraktijken. Thema’s: AI‑wapenwedloop, chiptoelevering versus installatie, datacenter‑energie en gebrek aan transparantie. <a href=https://www.theguardian.com/technology/2026/aug/17/are-microsofts-ai-plans-being-held-back-by-a-shortage-of-chips target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Temperaturen dalen in heel Europa terwijl zware regen naar delen van het VK trekt (.theguardian:17-8-2026)</div>
+        <p>Verlichting van de aanhoudende hitte arriveert deze week in West‑Europa: een koudefront uit de Atlantische oceaan zorgt voor temperatuurdalingen tot meer dan 15°C vergeleken met afgelopen donderdag, en op sommige plaatsen in het VK tot circa 3°C onder normaal tegen donderdag. Vanaf maandagavond/tijdens dinsdag kan zuid‑Engeland substantiële regen krijgen (Wisley, Surrey registreerde 62 droge dagen sinds 16 juni). Vanaf woensdag brengt een lagedrukgebied frequente felle buien en mogelijk onweders; Frankrijk en Duitsland worden natter, zuidelijker blijft neerslag lokaal en onweersgevoelig. In de zuidelijke VS gelden uitgebreide hittewaarschuwingen door weinig nachtelijke afkoeling (minima 27–28°C), hoge luchtvochtigheid en hitte‑indexen lokaal boven 46°C. Beeld: verschroeid gras op Primrose Hill, Londen. <a href=https://www.theguardian.com/environment/2026/aug/17/temperatures-fall-europe-rain-uk target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Rapport ter ondersteuning van Australiës verbod op sociale media voor tieners lijkt AI-hallucinaties te bevatten, hoort de Senaat (.theguardian:17-8-2026)</div>
+        <p>Een rapport van de UK‑organisatie Age Check Certification Scheme (ACCS) dat technologieën testte voor Australië’s onder‑16 socialemediaverbod bevat volgens onderzoek van The Guardian meerdere foutieve citaties die mogelijk AI‑hallucinaties zijn. Het $3,48m age‑assurance‑onderzoek werd door communications minister Anika Wells aangehaald als bewijs van “effectieve opties”, maar een Senaatsenquête kreeg inzendingen die wijzen op niet‑bestaande DOIs, verkeerde auteur‑/jaarinformatie en bronnen die niet zeggen wat het rapport beweert. ACCS ontkende aanvankelijk AI‑gebruik maar gaf later toe ChatGPT te hebben gebruikt voor herschrijven; sommige links bevatten ChatGPT‑metadata. Correcties van ACCS bleken ook fouten te bevatten. Ambtenaren stellen dat links destijds werkte(n); experts waarschuwen dat valse referenties beleidsbeslissingen en vertrouwen kunnen schaden. Senator Fatima Payman eist excuses en terugbetaling; eerdere gevallen (Deloitte) tonen vergelijkbare problemen. <a href=https://www.theguardian.com/australia-news/2026/aug/17/australia-social-media-ban-report-ai-hallucinations-ntwnfb target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Ithaca: een sprankelende eco-thriller-RPG die onze gewelddadige tijd wil confronteren. (.theguardian:17-8-2026)</div>
+        <p>Ithaca is een eco-thriller RPG van studio The Pixel Hunt waarin milieuadvocaat Penelope tijdens een roadtrip ontdekt dat een oliemaatschappĳ-CEO bewusteloos in haar kofferbak ligt. Spelers rijden over procedureel gegenereerde wegen, voeren dialogen, nemen beslissingen die verhaallijnen vertakken en moeten morele keuzes maken: de CEO vrijlaten, straffen of iets anders. Ontwikkelaar Florent Maurin maakte het vanuit bezorgdheid over de klimaatcrisis en persoonlijke verantwoordelijkheid; de studio staat bekend om “reality-inspired” games over vluchtelingen en misbruik. Thema’s: klimaatverandering en ecologische achteruitgang (droogte in Bourgondië), ethiek van politiek geweld, collectieve toekomst en het idee van thuis (Ithaca als allegorie). Verwacht voor pc en consoles in 2027. <a href=https://www.theguardian.com/games/2026/aug/17/ithaca-pixel-hunt target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
