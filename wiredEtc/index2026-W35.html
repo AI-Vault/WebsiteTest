@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W34.html" class="week-display" id="week-display">2026-W34</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 34;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="wired">
+        <div class="headline">Ze wijdden hun leven aan het lesgeven. Toen begonnen de deepfakes. (.wired:24-8-2026)</div>
+        <p>Hoofdonderwerp: non‑consensuele, door AI gemaakte deepfakes van leraren op sociale media en in scholen. Vier docenten vertellen hoe leerlingen seksuele of vernederende beelden en video’s van hen maakten of imiteerden (o.a. Luis DeSantiago: lingerie‑foto verspreid via TikTok/Snapchat; anonieme middelbare docent: fake TikTok die haar stem en seksuele uitspraken toeschreef; Alice (VK): gemanipuleerde video van onthullende dans; Luke Red: beeld van twee leraren zoenend). Scholen reageerden wisselvallig, disciplinaire maatregelen beperkt; platformen hebben beleidslijnen maar handhaving lastig. Thema’s: grensoverschrijdend gedrag, gebrek aan verantwoordelijkheidsstructuren, juridische en veiligheidsvraagstukken (cyberstalking, Take It Down Act), en de emotionele impact op vertrouwen tussen leraren en leerlingen. <a href=https://www.wired.com/story/teachers-deepfake-ai-students-content/ target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Fairphone 6+ recensie: de meest repareerbare, ethische telefoon wordt sneller (.theguardian:24-8-2026)</div>
+        <p>Fairphone 6+ is een lichte upgrade van de Fairphone 6: hetzelfde modulaire, thuis-repareerbare ontwerp met 51% gerecyclede/ethisch gewonnen materialen, nu ook rechtstreeks verkrijgbaar in de VS. Hardware: Snapdragon 7s Gen 4, 12GB RAM, 256GB + microSD, 6,31" 120Hz OLED, 50MP + 13MP camera, 32MP selfie, IP55 en Android 16 (software‑ondersteuning tot minstens 2033) of het privacy‑gerichte /e/OS. Batterij levert ongeveer 1,5 dag gebruik; opladen naar vol ~80 min met 30W. Camera en batterij zijn degelijk maar niet toonaangevend; prestaties mid‑range. Uitstekende reparatiebaarheid (iFixit 10/10), losse onderdelen en modulaire accessoires. Prijs £569; ideaal voor kopers die duurzaamheid en reparatie prioriteren, minder geschikt voor wie top‑hardware wil. <a href=https://www.theguardian.com/technology/2026/aug/24/fairphone-6-review-the-most-repairable-ethical-phone-gets-faster target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Een cognitieve kakofonie': aan de slag met de bètatest van Call of Duty: Modern Warfare 4 (.theguardian:24-8-2026)</div>
+        <p>De hands-on beta van Call of Duty: Modern Warfare 4 levert wat fans verwachten: snelle boots-on-the-ground actie met effectieve wapens (Han 86, Nightshade SMG, KG-7 Vulcan) en vernieuwde gadgets en killstreaks (smokewall, razor-wire, Artillery Beacon, Wheelson). Kaarten variëren van krappe stads- en depotgebieden tot grotere long-range maps; Rooftops steekt eruit. Nieuwe en terugkerende modi waaronder het chaotische tien-tegen-tien Kill Block zorgen voor constante confrontatie. Gameplay is razendsnel en overprikkeld — “TikTok van gaming” — en hoewel omnisprongen zijn verwijderd voelt beweging nog steeds glibberig en vatbaar voor exploits. Een korte campaign-missie (Entrenched) toont trench‑gevechten en parkour. Genot en thrill blijven aanwezig, maar concurrentie en verzadiging van de markt (Wardogs, GTA6) roepen vraagtekens op. Release: 23 oktober op pc, PS5, Switch 2, Xbox. <a href=https://www.theguardian.com/games/2026/aug/24/a-cognitive-cacophony-hands-on-with-the-call-of-duty-modern-warfare-4-beta-test target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">My Arms Are Longer Now — komische stealthgame brengt wetteloosheid naar nieuw terrein (.theguardian:24-8-2026)</div>
+        <p>My Arms Are Longer Now is een komische stealthgame van Toot Games waarin je speelt als één extreem verlengde arm die diefstal, verstoring en zelfs een baby kan slaan. Ontstaan als weekendprototype door Matthew Jackson en Millie Holten uit Melbourne’s improv-scene, groeide het concept uit tot een spel dat vooral een “vessel for jokes” is: meer dan 40 gesproken personages, Australische komieken die improviseren, en geen klassieke failstates. Na vijf maanden werd het 2D-prototype herbouwd in 3D met een procedurele, buisachtige ledemaat en geforceerd perspectief om visuele stijl en fysische botsingen te combineren. Ontwikkeling duurde jaren, met veel polijstwerk aan de arm (“going into the armpit”), en de uitgever Jackbox steunde de korte, humorgerichte ervaring. Verwacht op pc in 2027. <a href=https://www.theguardian.com/games/2026/aug/24/my-arms-are-longer-now-comedy-stealth-game-preview target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
