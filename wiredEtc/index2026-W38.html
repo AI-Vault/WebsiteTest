@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Vertaalde Nieuwsitems</title>
+    <style>
+        body {
+            background-color: #FAF9F6;
+            font-family: Georgia, serif;
+            margin: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .headline {
+            font-weight: bold;
+        }
+        .checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+        .checkbox.checked {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .week-display:hover {
+            text-decoration: underline;
+        }
+        .week-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .week-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div id="custom-filters">
+        <div class="checkbox checked notranslate" data-source="mit">MIT</div>
+        <div class="checkbox checked notranslate" data-source="wired">Wired</div>
+        <div class="checkbox checked notranslate" data-source="techcrunch">TechCrunch</div>
+        <div class="checkbox checked notranslate" data-source="theguardian">theGuardian</div>
+        <div class="checkbox checked notranslate" data-source="theverge">theVerge</div>
+        <div class="checkbox checked notranslate" data-source="arstechnica">arsTechnica</div>
+    </div>
+    
+    <div class="week-counter">
+        <button class="week-button" id="week-button-minus">-</button>
+        <a href="https://ai-vault.github.io/WebsiteTest/wiredEtc/index2026-W37.html" class="week-display" id="week-display">2026-W37</a>
+        <button class="week-button" id="week-button-plus">+</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentWeek = 37;
+    let currentYear = 2026;
+    
+    function filterArticles() {
+        const visibleSources = Array.from(document.querySelectorAll('.checkbox.checked'))
+            .map(el => el.dataset.source);
+        document.querySelectorAll(".news-item").forEach(article => {
+            const source = article.dataset.source;
+            article.style.display = visibleSources.includes(source) ? "" : "none";
+        });
+    }
+
+    function updateWeekDisplay() {
+        const weekDisplay = document.getElementById('week-display');
+        const weekText = `${currentYear}-W${currentWeek.toString().padStart(2, '0')}`;
+        weekDisplay.textContent = weekText;
+        weekDisplay.href = `https://ai-vault.github.io/WebsiteTest/wiredEtc/index${weekText}.html`;
+    }
+
+    function decrementWeek() {
+        currentWeek--;
+        if (currentWeek < 1) {
+            currentYear--;
+            // Bepaal het aantal weken in het vorige jaar
+            const maxWeeksInYear = getWeeksInYear(currentYear);
+            currentWeek = maxWeeksInYear;
+        }
+        updateWeekDisplay();
+    }
+
+    function incrementWeek() {
+        const maxWeeksInYear = getWeeksInYear(currentYear);
+        currentWeek++;
+        if (currentWeek > maxWeeksInYear) {
+            currentWeek = 1;
+            currentYear++;
+        }
+        updateWeekDisplay();
+    }
+
+    function getWeeksInYear(year) {
+        // ISO week date systeem: een jaar heeft 52 of 53 weken
+        const jan4 = new Date(year, 0, 4);
+        const jan4WeekDay = (jan4.getDay() + 6) % 7; // Maandag = 0
+        const dec28 = new Date(year, 11, 28);
+        const dec28WeekDay = (dec28.getDay() + 6) % 7;
+        
+        if (jan4WeekDay === 0 || dec28WeekDay === 0) {
+            return 53;
+        }
+        return 52;
+    }
+
+    document.querySelectorAll('.checkbox').forEach(el => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('checked');
+            filterArticles();
+        });
+    });
+
+    document.getElementById('week-button-minus').addEventListener('click', decrementWeek);
+    document.getElementById('week-button-plus').addEventListener('click', incrementWeek);
+
+    filterArticles();
+});
+</script>
+
+    <div class="container">
+
+    <div class="news-item" data-source="mit">
+        <div class="headline">Nieuwe methode maakt AI inzetbaar in veiligheidskritische situaties (.mit:14-9-2026)</div>
+        <p>MIT-onderzoekers introduceerden HardFlow, een deploy-time algoritme dat pretrained generatieve modellen (vooral flow-matching modellen zoals FLUX) in staat stelt harde, niet-onderhandelbare beperkingen te respecteren zonder retraining. In plaats van elke tussenstap te forceren, geeft HardFlow het model meer vrijheid tijdens sampling en formuleert constraint-sampling als een trajectoptimalisatieprobleem met technieken uit de regeltheorie. Door het probleem te decomponeren in haalbare éénstaps-subproblemen ontstaat een efficiënte, schaalbare methode die zowel feasiliteit garandeert als oplossingkwaliteit verbetert (bv. kortere, botsingsvrije robotpaden). Tests in robotmanipulatie, doolhofnavigatie en tekstgestuurde bewerking toonden perfecte constraint-naleving en betere prestaties dan bestaande methoden, met vergelijkbare of lagere rekentijd. Auteur: Navid Azizan (senior), Zeyang Li (lead), Kaveh Alim; publicatie in IEEE TPAMI. Kern: generatieve AI, harde constraints, veiligheid, trajectoptimalisatie, deployment zonder retraining. <a href=https://news.mit.edu/2026/new-method-enables-ai-safety-critical-situations-0914 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="mit">
+        <div class="headline">MIT-spin-off zet plasticafval om in robuuste bouwmaterialen (.mit:14-9-2026)</div>
+        <p>Atlas Building Composites, een MIT-spinout uit MIT HAUS, ontwikkelt een AI-gestuurd robotisch productieplatform dat eenmalig plastic zonder water recyclet tot duurzame composietbouwdelen. Geshredderd plastic wordt gesmolten, met Amerikaanse glasvezel versterkt en grootschalig 3D-geprint tot trussen, vloeren, muren, dekjes en bruggen; recent leverde Atlas gerecyclede trussen voor een 12 m (40 ft) brug voor het U.S. Army Corps. Trussen kunnen in <13 minuten geprint worden en dragen meer dan 4.000 lb (~1.800 kg). Labproductie haalt 60–80 lb/uur; Atlas-fabrieken mikken op 150–200 lb/uur. Doel: 1 miljard woningen bouwen via lokale, waterloze recycling en franchisemodellen om ontbossing, transportemissies en afval te verminderen en langdurige, onderhoudsarme bouwmaterialen te leveren. <a href=https://news.mit.edu/2026/mit-spinout-turns-plastic-waste-into-resilient-building-materials-0914 target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Jack Thorne waarschuwt dat sommige collega-scenaristen AI 'gebruiken om te valsspelen' (.theguardian:14-9-2026)</div>
+        <p>Jack Thorne, succesvol scenarioschrijver (co-auteur van Netflix-hit Adolescence en schrijver van Harry Potter and the Cursed Child) en voorzitter van de Writers’ Guild, waarschuwt dat sommige collega’s AI “gebruiken om te sjoemelen” — prompts inzetten als vervanging voor echt schrijven en AI-werk als eigen creatie presenteren. Hij pleit voor wetten die geheim gebruik van AI strafbaar maken (fraude), beroepssankties mogelijk maken en aanbieders toestaan overtreders aan te klagen. Thorne bekritiseert de regering voor onvoldoende actie tegen massale scraping voor AI-training, eist betere auteursrechtbescherming en een verbod op AI‑imitaties van acteurs, regisseurs en schrijvers. De overheid zegt te werken aan een balans tussen creatieve bescherming en AI‑innovatie. <a href=https://www.theguardian.com/stage/2026/sep/14/jack-thorne-scriptwriters-ai-artificial-intelligence target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">AI‑CEO's zeggen dat ze het tempo van ontwikkeling moeten vertragen. Maar zullen ze dat doen? (.theguardian:14-9-2026)</div>
+        <p>CEO van Anthropic Dario Amodei riep op tot vertraging van AI‑ontwikkeling om publieke veiligheid te waarborgen; OpenAI’s Sam Altman, Google DeepMind’s Demis Hassabis en Elon Musk steunden het essay "We Must Pace the Frontier". Amodei stelt drie pijlers voor: onafhankelijke beoordelaars met werknemerstoegang, overeenkomsten tussen democratische staten over veiligheidsnormen en wereldwijde coördinatie, ook met autoritaire regimes. Critici noemen het mogelijk zelfregulering en regulatoire vangnetten, wijzen op lobbyen, antitrust‑zorgen en regulatoire capture. De VS benadrukt rivaliteit met China; president Trump verwerpt een vertraging. Artikel belicht ook eerdere gebrek aan transparantie en interne onduidelijkheden binnen AI‑bedrijven. <a href=https://www.theguardian.com/technology/2026/sep/14/ai-ceo-safety-slowdown target="_blank">link</a></p> 
+    </div>
+    <div class="news-item" data-source="theguardian">
+        <div class="headline">Kun je je carrière toekomstbestendig maken door te kiezen voor een AI‑bestendige studie? (.theguardian:14-9-2026)</div>
+        <p>Charlie Ball van Jisc stelt dat het bijna onmogelijk is een 45 jaar durende loopbaan volledig tegen AI te ‘futureproofen’; in plaats daarvan moeten jongeren brede, aanpasbare vaardigheden ontwikkelen. Beroepen met veel menselijk, face‑to‑face contact zijn het minst kwetsbaar. Mogelijk relatief AI‑bestendige terreinen: R&D/STEM (menselijke creativiteit en verbeelding), engineering (fysieke uitvoering en toezicht), creatieve kunsten (originele menselijke stem), geneeskunde (diagnose, verantwoordelijkheid en communicatie), verpleegkunde/verloskunde (persoonlijke zorg) en onderwijs (didactiek en pastoraliteit). AI zal ondersteunen maar niet vervangen waar menselijke verantwoordelijkheid, empathie en innovatie cruciaal zijn. <a href=https://www.theguardian.com/education/2026/sep/14/futureproof-your-career-by-choosing-an-ai-resistant-degree target="_blank">link</a></p> 
+    </div>
+    </div>
+</body>
+</html>
