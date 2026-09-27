@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirabelle</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;
+        }
+        h1 { text-align: center; color: #333; }
+        .toggle-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .mode-toggle, .translation-toggle { display: flex; }
+        .mode-toggle button, .translation-toggle button {
+            padding: 10px 20px; font-size: 16px; border: 2px solid #007bff;
+            background: white; color: #007bff; cursor: pointer; transition: all 0.2s;
+        }
+        .mode-toggle button:first-child, .translation-toggle button:first-child { border-radius: 8px 0 0 8px; }
+        .mode-toggle button:last-child, .translation-toggle button:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+        .mode-toggle button.active, .translation-toggle button.active { background: #007bff; color: white; }
+        .translation-toggle button { border-color: #28a745; color: #28a745; }
+        .translation-toggle button.active { background: #28a745; color: white; }
+        .navigation { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; }
+        button { padding: 12px 24px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        button:hover:not(:disabled) { transform: scale(1.05); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .nav-btn { background-color: #007bff; color: white; }
+        .nav-btn:hover:not(:disabled) { background-color: #0056b3; }
+        .play-btn { background-color: #28a745; color: white; min-width: 120px; }
+        .play-btn.playing { background-color: #dc3545; }
+        .play-btn:hover:not(:disabled) { filter: brightness(1.1); }
+        .page-indicator { font-size: 16px; color: #666; min-width: 150px; text-align: center; }
+        .text-container { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); min-height: 200px; }
+        .text-content { font-size: 20px; line-height: 1.8; color: #333; white-space: pre-wrap; }
+        .page-title { font-size: 14px; color: #999; margin-bottom: 15px; text-align: center; }
+        .sentence-highlight { background-color: #fff3cd; padding: 2px 4px; border-radius: 4px; }
+        .translation-container { margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd; }
+        .translation-label { font-size: 14px; color: #28a745; margin-bottom: 10px; font-weight: bold; }
+        .translation-text { font-size: 18px; line-height: 1.6; color: #555; font-style: italic; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Mirabelle</h1>
+    <div class="toggle-row">
+        <div class="mode-toggle">
+            <button id="mode-page" class="active">Pagina</button>
+            <button id="mode-sentence">Zinnen</button>
+        </div>
+        <div class="translation-toggle">
+            <button id="trans-off" class="active">Vertaling uit</button>
+            <button id="trans-on">Vertaling aan</button>
+        </div>
+    </div>
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" disabled>&larr; Vorige</button>
+        <span class="page-indicator" id="page-indicator">-</span>
+        <button class="nav-btn" id="next-btn" disabled>Volgende &rarr;</button>
+    </div>
+    <div class="navigation">
+        <button class="play-btn" id="play-btn" disabled>&#9658; Play</button>
+    </div>
+    <div class="text-container">
+        <div class="page-title" id="page-title"></div>
+        <div class="text-content" id="text-content"></div>
+        <div class="translation-container hidden" id="translation-container">
+            <div class="translation-label">Nederlandse vertaling:</div>
+            <div class="translation-text" id="translation-text"></div>
+        </div>
+    </div>
+    <audio id="audio-player"></audio>
+    <script>
+        const DATA = {"name": "Mirabelle", "items": [{"jpegname": "page 01.jpeg", "text": "Chapter\nONE\n\nIt was the first day of a new term at witch school and I was up early, before anyone else in my family.\n\n'Let's make breakfast for everyone,' I said to my pet dragon, Violet, as she fluttered in the air next to my ear. 'It will be a nice surprise!' Violet did a little snort and purple flames shot out of her snout. I\n\n9", "mp3": "./Mirabelle/page 01.mp3", "text_nl": "Hoofdstuk\nEEN\n\nHet was de eerste dag van een nieuw schooltrimester op de heksenschool en ik was al vroeg op, voor iedereen anders in mijn familie.\n\n'Laten we ontbijt voor iedereen maken,' zei ik tegen mijn huisdraak, Violet, terwijl ze in de lucht naast mijn oor flaterde. 'Dat zal een leuke verrassing zijn!' Violet snoof even en paarse vlammen schoten uit haar snuit. Ik", "sentences": [{"text": "Chapter\nONE\n\nIt was the first day of a new term at witch school and I was up early, before anyone else in my family.", "text_nl": "Hoofdstuk\nEEN\n\nHet was de eerste dag van een nieuw trimester op de heksenschool en ik was vroeg wakker, voor iedereen anders in mijn familie.", "mp3": "./Mirabelle/page 01-01.mp3"}, {"text": "'Let's make breakfast for everyone,' I said to my pet dragon, Violet, as she fluttered in the air next to my ear.", "text_nl": "'Laten we voor iedereen ontbijt maken,' zei ik tegen mijn huisdraak Violet, terwijl zij in de lucht naast mijn oor fladderде.", "mp3": "./Mirabelle/page 01-02.mp3"}, {"text": "'It will be a nice surprise!' Violet did a little snort and purple flames shot out of her snout.", "text_nl": "'Het zal een mooie verrassing zijn!' Violet snoof even en paarse vlammen schoten uit haar snuit.", "mp3": "./Mirabelle/page 01-03.mp3"}, {"text": "I\n\n9", "text_nl": "Ik", "mp3": "./Mirabelle/page 01-04.mp3"}]}, {"jpegname": "page 02.jpeg", "text": "hurriedly batted them away with a tea towel. My mum gets funny about scorch marks around the house.\n\nI started to put bowls and plates on the table, and put some bread in the toaster for Mum. We all eat very different breakfasts in my family. My mum is a witch and eats all sorts of horrid things. Her favourite breakfast is spider sprinkled toast. My dad on the other hand, is a fairy. He likes eating flower nectar yoghurt and lots of green salads. Fairies love nature!\n\nThe toast popped and I reached for Mum's jar of frizzled spiders.\n\n'Yuck!' I said as I tipped a heap of\n\n10", "mp3": "./Mirabelle/page 02.mp3", "text_nl": "haastig weggeveegd met een theedoek. Mijn moeder wordt raar van brandplekken in huis.\n\nIk begon kommen en borden op tafel te zetten en deed wat brood in de broodrooster voor mama. We eten allemaal heel verschillende ontbijten in mijn familie. Mijn moeder is een heks en eet allerlei afschuwelijke dingen. Haar favoriete ontbijt is toast met spinnen erop gestrooid. Mijn vader daarentegen is een fee. Hij houdt van het eten van bloemennectar-yoghurt en veel groene salades. Feeën houden van de natuur!\n\nHet brood sprong eruit en ik greep naar mama's potje met gekrulde spinnen.\n\n'Bah!' zei ik terwijl ik een hoop", "sentences": [{"text": "hurriedly batted them away with a tea towel.", "text_nl": "haastig weggeveegd met een theedoek.", "mp3": "./Mirabelle/page 02-01.mp3"}, {"text": "My mum gets funny about scorch marks around the house.", "text_nl": "Mijn moeder wordt raar over brandplekken in huis.", "mp3": "./Mirabelle/page 02-02.mp3"}, {"text": "I started to put bowls and plates on the table, and put some bread in the toaster for Mum.", "text_nl": "Ik begon kommen en borden op tafel te zetten en deed wat brood in de broodrooster voor mam.", "mp3": "./Mirabelle/page 02-03.mp3"}, {"text": "We all eat very different breakfasts in my family.", "text_nl": "We eten allemaal heel verschillende ontbijten in mijn familie.", "mp3": "./Mirabelle/page 02-04.mp3"}, {"text": "My mum is a witch and eats all sorts of horrid things.", "text_nl": "Mijn moeder is een heks en eet allerlei afschuwelijke dingen.", "mp3": "./Mirabelle/page 02-05.mp3"}, {"text": "Her favourite breakfast is spider sprinkled toast.", "text_nl": "Haar favoriete ontbijt is toast met spinazie erover.", "mp3": "./Mirabelle/page 02-06.mp3"}, {"text": "My dad on the other hand, is a fairy.", "text_nl": "Mijn vader daarentegen is een fee.", "mp3": "./Mirabelle/page 02-07.mp3"}, {"text": "He likes eating flower nectar yoghurt and lots of green salads.", "text_nl": "Hij eet graag bloemennek­tar yoghurt en veel groene salades.", "mp3": "./Mirabelle/page 02-08.mp3"}, {"text": "Fairies love nature!", "text_nl": "Feeën houden van de natuur!", "mp3": "./Mirabelle/page 02-09.mp3"}, {"text": "The toast popped and I reached for Mum's jar of frizzled spiders.", "text_nl": "Het brood sprong uit de broodrooster en ik griste naar moeders pot met gekrulde spinnen.", "mp3": "./Mirabelle/page 02-10.mp3"}, {"text": "'Yuck!' I said as I tipped a heap of\n\n10", "text_nl": "'Bah!' zei ik terwijl ik een hoop\n\n10", "mp3": "./Mirabelle/page 02-11.mp3"}]}, {"jpegname": "page 03.jpeg", "text": "them onto her toast.\n\nNext I put some yoghurt and flower petals into a bowl for Dad and then started to make mine and Wilbur's breakfast. Wilbur is half fairy just like me except he doesn't like to admit it.", "mp3": "./Mirabelle/page 03.mp3", "text_nl": "hen op haar toast.\n\nVervolgens deed ik wat yoghurt en bloemblad in een kom voor papa en begon toen aan het ontbijt voor mij en Wilbur. Wilbur is net als ik half fee, alleen wil hij dat niet graag toegeven.", "sentences": [{"text": "them onto her toast.", "text_nl": "hen op haar toast.", "mp3": "./Mirabelle/page 03-01.mp3"}, {"text": "Next I put some yoghurt and flower petals into a bowl for Dad and then started to make mine and Wilbur's breakfast.", "text_nl": "Daarna deed ik wat yoghurt en bloembladen in een kom voor papa en begon toen het ontbijt voor Wilbur en mij klaar te maken.", "mp3": "./Mirabelle/page 03-02.mp3"}, {"text": "Wilbur is half fairy just like me except he doesn't like to admit it.", "text_nl": "Wilbur is halfelf net als ik, behalve dat hij het niet graag wil toegeven.", "mp3": "./Mirabelle/page 03-03.mp3"}]}, {"jpegname": "page 04.jpeg", "text": "He insists that he is a full wizard most of the time. I don't mind my fairy side so much, but I definitely feel more witch! That's why I decided to go to 'Miss Spindlewick's Witch School for Girls'.\n\nAs I was buttering Wilbur's toast my eye was drawn back to Mum's spider jar sitting on the counter. A naughty idea floated into my head.\n\n'Go away!' I told it.\n\nBut the thought would not go away. My toes started tingling at the idea of mischief.\n\nI pulled Mum's spider jar towards me", "mp3": "./Mirabelle/page 04.mp3", "text_nl": "Hij staat erop dat hij het grootste deel van de tijd een volledige tovenaar is. Ik heb niet zoveel moeite met mijn fee-kant, maar ik voel me beslist meer een heks! Daarom besloot ik naar 'Miss Spindlewick's Witch School for Girls' te gaan.\n\nTerwijl ik Wilburs toast insmeerde met boter, werd mijn blik getrokken naar Mums spinnenpot die op het aanrecht stond. Een ondeugend idee kwam in mijn hoofd op.\n\n'Ga weg!' zei ik ertegenin.\n\nMaar de gedachte wilde niet verdwijnen. Mijn tenen begonnen te tintelen bij het idee van kattenkwaad.\n\nIk trok Mums spinnenpot naar me toe.", "sentences": [{"text": "He insists that he is a full wizard most of the time.", "text_nl": "Hij stelt vol dat hij meestal een volledige tovenaar is.", "mp3": "./Mirabelle/page 04-01.mp3"}, {"text": "I don't mind my fairy side so much, but I definitely feel more witch!", "text_nl": "Ik heb niet zoveel moeite met mijn fee-kant, maar ik voel me zeker meer heks!", "mp3": "./Mirabelle/page 04-02.mp3"}, {"text": "That's why I decided to go to 'Miss Spindlewick's Witch School for Girls'.", "text_nl": "Daarom besloot ik naar 'Juffrouw Spindelwicks Heksenschool voor Meisjes' te gaan.", "mp3": "./Mirabelle/page 04-03.mp3"}, {"text": "As I was buttering Wilbur's toast my eye was drawn back to Mum's spider jar sitting on the counter.", "text_nl": "Terwijl ik Wilburs toast insmeerde met boter, werd mijn blik weer naar Mums spinnenpot op het aanrecht getrokken.", "mp3": "./Mirabelle/page 04-04.mp3"}, {"text": "A naughty idea floated into my head.", "text_nl": "Een ondeugend idee kwam in mijn hoofd op.", "mp3": "./Mirabelle/page 04-05.mp3"}, {"text": "'Go away!' I told it.", "text_nl": "'Ga weg!' zei ik tegen het.", "mp3": "./Mirabelle/page 04-06.mp3"}, {"text": "But the thought would not go away.", "text_nl": "Maar de gedachte wilde niet verdwijnen.", "mp3": "./Mirabelle/page 04-07.mp3"}, {"text": "My toes started tingling at the idea of mischief.", "text_nl": "Mijn tenen begonnen te tintelen bij het idee van ondeugd.", "mp3": "./Mirabelle/page 04-08.mp3"}, {"text": "I pulled Mum's spider jar towards me", "text_nl": "Ik trok mams spinnenpot naar me toe.", "mp3": "./Mirabelle/page 04-09.mp3"}]}, {"jpegname": "page 05.jpeg", "text": "and used a fork to scoop out just one little crispy critter. I dropped it onto Wilbur's toast and then quickly slathered it over with jam. He would never know it was there until he felt it crunch in his mouth! I giggled at the thought of him discovering the spider. Both of us hate witch food.\n\n'Breakfast time!' I called up the stairs.\n\n★ ★ ★\n\n'How thoughtful of you to make everyone breakfast Mirabelle,' said Dad as he tucked into his rose petal yoghurt.\n\nI smiled sweetly", "mp3": "./Mirabelle/page 05.mp3", "text_nl": "en gebruikte een vork om slechts één klein knapperig beestje eruit te scheppen. Ik liet het op Wilburs toast vallen en smeerde het toen snel in met jam. Hij zou er niet achter komen dat het er was totdat hij het in zijn mond voelde kraken! Ik giechelde bij de gedachte aan hem die de spin ontdekte. We hebben allebei een hekel aan heksenfruit.\n\n'Ontbijttijd!' riep ik de trap op.\n\n★ ★ ★\n\n'Wat attent van je om iedereen ontbijt te maken, Mirabelle,' zei papa terwijl hij aanviel op zijn rozenbladyoghurt.\n\nIk glimlachte zoet.", "sentences": [{"text": "and used a fork to scoop out just one little crispy critter.", "text_nl": "en gebruikte een vork om er slechts één klein knapperig beestje uit te scheppen.", "mp3": "./Mirabelle/page 05-01.mp3"}, {"text": "I dropped it onto Wilbur's toast and then quickly slathered it over with jam.", "text_nl": "Ik liet het op Wilburs toast vallen en smeerde het toen snel in met jam.", "mp3": "./Mirabelle/page 05-02.mp3"}, {"text": "He would never know it was there until he felt it crunch in his mouth!", "text_nl": "Hij zou nooit weten dat het daar was totdat hij het in zijn mond voelde kraken!", "mp3": "./Mirabelle/page 05-03.mp3"}, {"text": "I giggled at the thought of him discovering the spider.", "text_nl": "Ik giechelde bij de gedachte dat hij de spin zou ontdekken.", "mp3": "./Mirabelle/page 05-04.mp3"}, {"text": "Both of us hate witch food.", "text_nl": "We beiden haten heksenkost.", "mp3": "./Mirabelle/page 05-05.mp3"}, {"text": "'Breakfast time!' I called up the stairs.", "text_nl": "'Ontbijttijd!' riep ik de trap op.", "mp3": "./Mirabelle/page 05-06.mp3"}, {"text": "★ ★ ★\n\n'How thoughtful of you to make everyone breakfast Mirabelle,' said Dad as he tucked into his rose petal yoghurt.", "text_nl": "'Wat attent van je om iedereen ontbijt klaar te maken Mirabelle,' zei Papa terwijl hij zich over zijn rozenbladyoghurt boog.", "mp3": "./Mirabelle/page 05-07.mp3"}, {"text": "I smiled sweetly", "text_nl": "Ik glimlachte zoet.", "mp3": "./Mirabelle/page 05-08.mp3"}]}, {"jpegname": "page 06.jpeg", "text": "and watched Wilbur from out of the corner of my eye.\n\n'I hope this is a sign of things to come!' said Mum.\n\n'What do you mean?' I asked.\n\n'Well it's the first day of a new school term,' said Mum. 'I'm hoping you're starting as you mean to go on! I don't want to hear any more reports of mischief from your teacher this year.'\n\n'Oh,' I said and felt my cheeks turn a tiny bit pink. Wilbur took another bite of his jammy toast.\n\n*Crunch.*\n\nI gulped. Mum", "mp3": "./Mirabelle/page 06.mp3", "text_nl": "en keek vanuit mijn ooghoek naar Wilbur.\n\n'Ik hoop dat dit een voorteken is!' zei mam.\n\n'Wat bedoel je?' vroeg ik.\n\n'Nou, het is de eerste dag van een nieuw schooljaar,' zei mam. 'Ik hoop dat je goed begint, want zo wil je graag doorgaan! Ik wil dit jaar geen nieuwe meldingen over ondeugd van je leraar horen.'\n\n'Oh,' zei ik en voelde mijn wangen een klein beetje roze worden. Wilbur nam nog een hap van zijn jammietoast.\n\n*Krak.*\n\nIk slikte. Mam", "sentences": [{"text": "and watched Wilbur from out of the corner of my eye.", "text_nl": "en bekeek Wilbur uit een ooghoek.", "mp3": "./Mirabelle/page 06-01.mp3"}, {"text": "'I hope this is a sign of things to come!' said Mum.", "text_nl": "'Ik hoop dat dit een voorteken is van wat nog komen gaat!' zei Mum.", "mp3": "./Mirabelle/page 06-02.mp3"}, {"text": "'What do you mean?' I asked.", "text_nl": "'Wat bedoel je?' vroeg ik.", "mp3": "./Mirabelle/page 06-03.mp3"}, {"text": "'Well it's the first day of a new school term,' said Mum.", "text_nl": "\"Nou ja, het is de eerste dag van een nieuw schooljaar,\" zei Mum.", "mp3": "./Mirabelle/page 06-04.mp3"}, {"text": "'I'm hoping you're starting as you mean to go on!", "text_nl": "Ik hoop dat je begint zoals je verder wilt gaan!", "mp3": "./Mirabelle/page 06-05.mp3"}, {"text": "I don't want to hear any more reports of mischief from your teacher this year.'\n\n'Oh,' I said and felt my cheeks turn a tiny bit pink.", "text_nl": "'Ik wil dit jaar geen rapportages meer over ondeugend gedrag van je leraar horen.'\n\n'Oh,' zei ik en voelde mijn wangen een heel klein beetje roze worden.", "mp3": "./Mirabelle/page 06-06.mp3"}, {"text": "Wilbur took another bite of his jammy toast.", "text_nl": "Wilbur nam nog een hap van zijn toast met jam.", "mp3": "./Mirabelle/page 06-07.mp3"}, {"text": "*Crunch.*\n\nI gulped.", "text_nl": "*Krak.*\n\nIk slikte.", "mp3": "./Mirabelle/page 06-08.mp3"}, {"text": "Mum", "text_nl": "Moeder", "mp3": "./Mirabelle/page 06-09.mp3"}]}, {"jpegname": "page 07.jpeg", "text": "frowned. Wilbur stopped chewing for a moment and then his face turned very white. He spat his mouthful out onto his plate and stared, horrified at the spider legs sticking out of it.\n\n'MIRABELLE!' he shouted angrily. Then he picked up the chewed up mouthful with the spider in it and threw it at me. I ducked just in time!", "mp3": "./Mirabelle/page 07.mp3", "text_nl": "Fronste. Wilbur stopte even met kauwen en werd toen heel bleek. Hij spuwde zijn mond vol uit op zijn bord en staarde, verschrikt naar de spinpoten die eruit staken.\n\n'MIRABELLE!' schreeuwde hij boos. Toen pakte hij de uitgekauwd mond vol met de spin erin en gooide het naar me. Ik dook net op tijd weg!", "sentences": [{"text": "frowned.", "text_nl": "fronste.", "mp3": "./Mirabelle/page 07-01.mp3"}, {"text": "Wilbur stopped chewing for a moment and then his face turned very white.", "text_nl": "Wilbur stopte even met kauwen en toen werd zijn gezicht heel wit.", "mp3": "./Mirabelle/page 07-02.mp3"}, {"text": "He spat his mouthful out onto his plate and stared, horrified at the spider legs sticking out of it.", "text_nl": "Hij spuwde zijn mond vol uit op zijn bord en staarde, geschokt, naar de spinpoten die eruit staken.", "mp3": "./Mirabelle/page 07-03.mp3"}, {"text": "'MIRABELLE!' he shouted angrily.", "text_nl": "'MIRABELLE!' schreeuwde hij boos.", "mp3": "./Mirabelle/page 07-04.mp3"}, {"text": "Then he picked up the chewed up mouthful with the spider in it and threw it at me.", "text_nl": "Toen pakte hij de uitgekauwd mondvol met de spin erin en gooide die naar me.", "mp3": "./Mirabelle/page 07-05.mp3"}, {"text": "I ducked just in time!", "text_nl": "Ik dook net op tijd weg!", "mp3": "./Mirabelle/page 07-06.mp3"}]}, {"jpegname": "page 08.jpeg", "text": "'Mirabelle!' said Mum and her eyes went very dark and glinty like they do when she's getting angry. But the corner of her mouth twitched slightly. My mum has a mischievous streak inside her too, though she does her best to hide it.\n\n'Sorry,' I whispered, but it was hard to get the word out because I was trying not to laugh. Dad looked genuinely disappointed and was worriedly swirling his spoon about in his yogurt.\n\n'I hope you haven't put any spiders in", "mp3": "./Mirabelle/page 08.mp3", "text_nl": "'Mirabelle!' zei mama en haar ogen werden erg donker en glinsterdend zoals ze worden wanneer ze boos wordt. Maar de hoek van haar mond trilde even. Mijn moeder heeft ook een ondeugende ader in zich, hoewel ze haar best doet dat te verbergen.\n\n'Sorry,' fluisterde ik, maar het was moeilijk het woord eruit te krijgen omdat ik moeite had om niet te lachen. Papa zag er echt teleurgesteld uit en roerde bezorgd met zijn lepel in zijn yoghurt.\n\n'Ik hoop dat je geen spinnen in", "sentences": [{"text": "'Mirabelle!' said Mum and her eyes went very dark and glinty like they do when she's getting angry.", "text_nl": "'Mirabelle!' zei mam en haar ogen werden erg donker en glinterend zoals ze worden wanneer ze boos wordt.", "mp3": "./Mirabelle/page 08-01.mp3"}, {"text": "But the corner of her mouth twitched slightly.", "text_nl": "Maar de hoek van haar mond trilde licht.", "mp3": "./Mirabelle/page 08-02.mp3"}, {"text": "My mum has a mischievous streak inside her too, though she does her best to hide it.", "text_nl": "Mijn moeder heeft ook een schalkse kant in zich, hoewel ze haar best doet dit te verbergen.", "mp3": "./Mirabelle/page 08-03.mp3"}, {"text": "'Sorry,' I whispered, but it was hard to get the word out because I was trying not to laugh.", "text_nl": "'Sorry,' fluisterde ik, maar het was moeilijk om het woord eruit te krijgen omdat ik probeerde niet te lachen.", "mp3": "./Mirabelle/page 08-04.mp3"}, {"text": "Dad looked genuinely disappointed and was worriedly swirling his spoon about in his yogurt.", "text_nl": "Papa zag er echt teleurgesteld uit en roerde bezorgd met zijn lepel in zijn yoghurt.", "mp3": "./Mirabelle/page 08-05.mp3"}, {"text": "'I hope you haven't put any spiders in", "text_nl": "'Ik hoop dat je geen spinnen erin hebt gedaan'", "mp3": "./Mirabelle/page 08-06.mp3"}]}, {"jpegname": "page 09.jpeg", "text": "MY breakfast!' he said. 'You know I'm a vegetarian! This is really disgraceful behavior Mirabelle. I'm hoping for better from you this year at Witch School.'\n\nBy half past eight Wilbur and I were ready by the front door with our broomsticks.", "mp3": "./Mirabelle/page 09.mp3", "text_nl": "'MIJN ontbijt!' zei hij. 'Je weet dat ik vegetariër ben! Dit is echt schandalig gedrag, Mirabelle. Ik hoop dit jaar op beter gedrag van je op de Heksenschool.'\n\nOm half negen waren Wilbur en ik klaar bij de voordeur met onze bezems.", "sentences": [{"text": "MY breakfast!' he said.", "text_nl": "MIJN ontbijt!' zei hij.", "mp3": "./Mirabelle/page 09-01.mp3"}, {"text": "'You know I'm a vegetarian!", "text_nl": "Je weet dat ik vegetariër ben!", "mp3": "./Mirabelle/page 09-02.mp3"}, {"text": "This is really disgraceful behavior Mirabelle.", "text_nl": "Dit is werkelijk schandalig gedrag, Mirabelle.", "mp3": "./Mirabelle/page 09-03.mp3"}, {"text": "I'm hoping for better from you this year at Witch School.'\n\nBy half past eight Wilbur and I were ready by the front door with our broomsticks.", "text_nl": "'Ik hoop dit jaar meer van je te zien op de Heksenschool.'\n\nOm half negen waren Wilbur en ik klaar bij de voordeur met onze bezemstelen.", "mp3": "./Mirabelle/page 09-04.mp3"}]}, {"jpegname": "page 10.jpeg", "text": "'Have a lovely first day back at school!' said Mum as she kissed us both goodbye.\n\n'And remember to behave yourselves,' said Dad.\n\n'I always behave myself!' said Wilbur indignantly.\n\n'I'm not talking to you,' said Dad and stared pointedly at me.\n\n18", "mp3": "./Mirabelle/page 10.mp3", "text_nl": "'Veel sterkte met je eerste schooldag!' zei Mum terwijl ze ons beiden kuste en afscheid nam.\n\n'En zorg ervoor dat jullie je gedragen,' zei Dad.\n\n'Ik gedraag me altijd netjes!' zei Wilbur verontwaardigd.\n\n'Ik heb het niet tegen jou,' zei Dad en staarde me veelzeggend aan.", "sentences": [{"text": "'Have a lovely first day back at school!' said Mum as she kissed us both goodbye.", "text_nl": "'Veel sterkte met je eerste schooldag!' zei Mum terwijl ze ons beiden kuste ter afscheid.", "mp3": "./Mirabelle/page 10-01.mp3"}, {"text": "'And remember to behave yourselves,' said Dad.", "text_nl": "'En vergeet niet jezelf goed te gedragen,' zei vader.", "mp3": "./Mirabelle/page 10-02.mp3"}, {"text": "'I always behave myself!' said Wilbur indignantly.", "text_nl": "'Ik gedraag me altijd goed!' zei Wilbur verontwaardigd.", "mp3": "./Mirabelle/page 10-03.mp3"}, {"text": "'I'm not talking to you,' said Dad and stared pointedly at me.", "text_nl": "'Ik praat niet met je,' zei Dad en staarde me doelbewust aan.", "mp3": "./Mirabelle/page 10-04.mp3"}, {"text": "18", "text_nl": "18", "mp3": "./Mirabelle/page 10-05.mp3"}]}]};
+
+        let mode = 'page'; // 'page' of 'sentence'
+        let showTranslation = false;
+        let currentPageIndex = 0;
+        let currentSentenceIndex = 0;
+        let sortedItems = [];
+        let allSentences = [];
+
+        const audio = document.getElementById('audio-player');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const playBtn = document.getElementById('play-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        const pageTitle = document.getElementById('page-title');
+        const textContent = document.getElementById('text-content');
+        const modePageBtn = document.getElementById('mode-page');
+        const modeSentenceBtn = document.getElementById('mode-sentence');
+        const transOffBtn = document.getElementById('trans-off');
+        const transOnBtn = document.getElementById('trans-on');
+        const translationContainer = document.getElementById('translation-container');
+        const translationText = document.getElementById('translation-text');
+
+        function getPageNumber(filename) {
+            const match = filename.match(/(\d+)/);
+            return match ? parseInt(match[1]) : 0;
+        }
+
+        function sortItems(items) {
+            return [...items].sort((a, b) => getPageNumber(a.jpegname) - getPageNumber(b.jpegname));
+        }
+
+        function buildAllSentences() {
+            allSentences = [];
+            sortedItems.forEach((item, pageIdx) => {
+                (item.sentences || []).forEach((sentence, sentIdx) => {
+                    allSentences.push({
+                        pageIndex: pageIdx,
+                        sentenceIndex: sentIdx,
+                        text: sentence.text,
+                        text_nl: sentence.text_nl,
+                        mp3: sentence.mp3,
+                        pageName: item.jpegname
+                    });
+                });
+            });
+        }
+
+        function init() {
+            sortedItems = sortItems(DATA.items);
+            buildAllSentences();
+            updateUI();
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            modePageBtn.classList.toggle('active', mode === 'page');
+            modeSentenceBtn.classList.toggle('active', mode === 'sentence');
+
+            if (mode === 'sentence' && allSentences.length > 0) {
+                const firstSentence = allSentences.findIndex(s => s.pageIndex === currentPageIndex);
+                currentSentenceIndex = firstSentence >= 0 ? firstSentence : 0;
+            }
+            stopAudio();
+            updateUI();
+        }
+
+        function setTranslation(show) {
+            showTranslation = show;
+            transOffBtn.classList.toggle('active', !show);
+            transOnBtn.classList.toggle('active', show);
+            updateUI();
+        }
+
+        function updateUI() {
+            if (mode === 'page') {
+                updateUIPage();
+            } else {
+                updateUISentence();
+            }
+        }
+
+        function updateUIPage() {
+            if (sortedItems.length === 0) {
+                pageIndicator.textContent = '-';
+                pageTitle.textContent = '';
+                textContent.textContent = 'Geen paginas gevonden';
+                translationContainer.classList.add('hidden');
+                return;
+            }
+            const item = sortedItems[currentPageIndex];
+            prevBtn.disabled = currentPageIndex === 0;
+            nextBtn.disabled = currentPageIndex === sortedItems.length - 1;
+            playBtn.disabled = !item.mp3;
+            pageIndicator.textContent = 'Pagina ' + (currentPageIndex + 1) + ' / ' + sortedItems.length;
+            pageTitle.textContent = item.jpegname;
+            textContent.textContent = item.text || 'Geen tekst beschikbaar';
+            if (item.mp3) { audio.src = item.mp3; }
+
+            // Vertaling
+            if (showTranslation && item.text_nl) {
+                translationText.textContent = item.text_nl;
+                translationContainer.classList.remove('hidden');
+            } else {
+                translationContainer.classList.add('hidden');
+            }
+        }
+
+        function updateUISentence() {
+            if (allSentences.length === 0) {
+                pageIndicator.textContent = '-';
+                pageTitle.textContent = '';
+                textContent.textContent = 'Geen zinnen gevonden';
+                translationContainer.classList.add('hidden');
+                return;
+            }
+            const sentence = allSentences[currentSentenceIndex];
+            prevBtn.disabled = currentSentenceIndex === 0;
+            nextBtn.disabled = currentSentenceIndex === allSentences.length - 1;
+            playBtn.disabled = !sentence.mp3;
+            pageIndicator.textContent = 'Zin ' + (currentSentenceIndex + 1) + ' / ' + allSentences.length;
+            pageTitle.textContent = sentence.pageName + ' - zin ' + (sentence.sentenceIndex + 1);
+            textContent.innerHTML = '<span class="sentence-highlight">' + sentence.text + '</span>';
+            if (sentence.mp3) { audio.src = sentence.mp3; }
+
+            // Vertaling
+            if (showTranslation && sentence.text_nl) {
+                translationText.textContent = sentence.text_nl;
+                translationContainer.classList.remove('hidden');
+            } else {
+                translationContainer.classList.add('hidden');
+            }
+        }
+
+        function goPrev() {
+            if (mode === 'page') {
+                if (currentPageIndex > 0) { currentPageIndex--; stopAudio(); updateUI(); }
+            } else {
+                if (currentSentenceIndex > 0) { currentSentenceIndex--; stopAudio(); updateUI(); }
+            }
+        }
+
+        function goNext() {
+            if (mode === 'page') {
+                if (currentPageIndex < sortedItems.length - 1) { currentPageIndex++; stopAudio(); updateUI(); }
+            } else {
+                if (currentSentenceIndex < allSentences.length - 1) { currentSentenceIndex++; stopAudio(); updateUI(); }
+            }
+        }
+
+        function togglePlay() { if (audio.paused) { audio.play(); } else { audio.pause(); } }
+        function stopAudio() { audio.pause(); audio.currentTime = 0; updatePlayButton(false); }
+        function updatePlayButton(isPlaying) {
+            if (isPlaying) { playBtn.innerHTML = '&#10074;&#10074; Pauze'; playBtn.classList.add('playing'); }
+            else { playBtn.innerHTML = '&#9658; Play'; playBtn.classList.remove('playing'); }
+        }
+
+        modePageBtn.addEventListener('click', () => setMode('page'));
+        modeSentenceBtn.addEventListener('click', () => setMode('sentence'));
+        transOffBtn.addEventListener('click', () => setTranslation(false));
+        transOnBtn.addEventListener('click', () => setTranslation(true));
+        prevBtn.addEventListener('click', goPrev);
+        nextBtn.addEventListener('click', goNext);
+        playBtn.addEventListener('click', togglePlay);
+        audio.addEventListener('play', () => updatePlayButton(true));
+        audio.addEventListener('pause', () => updatePlayButton(false));
+        audio.addEventListener('ended', () => updatePlayButton(false));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') goPrev();
+            else if (e.key === 'ArrowRight') goNext();
+            else if (e.key === ' ') { e.preventDefault(); if (!playBtn.disabled) togglePlay(); }
+            else if (e.key === 't' || e.key === 'T') setTranslation(!showTranslation);
+        });
+
+        init();
+    </script>
+</body>
+</html>
